@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Cetes</title>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/css/font-awesome.css"/>
+    <link rel="stylesheet" href="/css/smart-forms.css"/>
+    <link rel="stylesheet" href="/css/main-styles.css"/>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row smart-forms">
+        <div class="col-3 seccion">
+          <form style="margin-top: 20px;">
+            <div class="spacer-b30">
+              <div class="tagline" style="">
+                <span>Cetes</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="field prepend-icon">
+                <input id="monto" class="gui-input" name="monto" placeholder="Monto" type="text" />
+                <span class="field-icon">
+                  <i class="fa fa-usd"/>
+                </span>
+              </label>
+            </div>
+            <div class="form-group">
+              <div class="field select">
+                <select id="country" name="country">
+                  <option value="">Seleccione un plazo</option>
+                  <option value="28">28</option>
+                  <option value="91">91</option>
+                  <option value="182">182</option>
+                  <option value="364">364</option>
+                </select>
+                <i class="arrow"></i>
+              </div>
+            </div>
+            <div class="option-group field">
+              <label class="option block">
+                  <input name="mobileos" value="FR" type="checkbox"/>
+                  <span class="checkbox"></span>  ¿Quieres que se reinviertan automáticamente el capital y los rendimientos en cetes 28 días?
+              </label>
+            </div>
+          </form>
+        </div>
+        <div class="col-9"></div>
+      </div>
+    </div>
+  </body>
+  <script src="/js/jquery-3.2.1.js" charset="utf-8"></script>
+</html>
