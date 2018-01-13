@@ -8,6 +8,48 @@
   position: static;
 }
 
+.resultado-calc-div{
+  margin-top: 15px;
+  margin-left: 35px;
+  font-size: 11px;
+}
+
+.row-cetes{
+  margin-left: -40px;
+  margin-top: 15px;
+}
+
+.label-calc{
+  color: #919191;
+}
+
+.label-resultado{
+  color: #1C83C6;
+}
+
+.line{
+  width: 120%;
+  height: 10px;
+  border-bottom: 2px solid #337AB6;
+  position: inherit;
+  margin-bottom: 15px;
+  float: right;
+}
+
 body{
   background-color: #F0F0F0;
+}
+
+input[type="range"]::-moz-range-progress {
+  background-color: #1C83C6;
+}
+input[type="range"]::-moz-range-track {
+  background-color: #1C83C6;
+}
+/* IE*/
+input[type="range"]::-ms-fill-lower {
+  background-color: #1C83C6;
+}
+input[type="range"]::-ms-fill-upper {
+  background-color: #1C83C6;
 }

@@ -761,15 +761,15 @@ html, body {
 }
 
 .smart-forms .btn-primary {
-  background-color: #4ebd4a
+  background-color: #1C83C6
 }
 
 .smart-forms .btn-primary:hover, .smart-forms .btn-primary:focus {
-  background-color: #6bc868
+  background-color: #1C83C6
 }
 
 .smart-forms .btn-primary:active {
-  background-color: #3c9b39
+  background-color: #1C83C6
 }
 
 .smart-forms .btn-primary, .smart-forms .btn-primary:hover, .smart-forms .btn-primary:focus, .smart-forms .btn-primary:active {
