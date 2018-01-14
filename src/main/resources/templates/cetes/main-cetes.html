@@ -11,8 +11,8 @@
   <body>
     <div class="container-fluid">
       <div class="row smart-forms">
-        <div class="col-3 seccion">
-          <form style="margin-top: 20px;">
+        <div class="col-2 seccion">
+          <form style="margin-top: 20px;" id="form-cetes">
             <div class="spacer-b30">
               <div class="tagline" style="">
                 <span>Cetes</span>
@@ -21,6 +21,7 @@
             <div class="form-group">
               <label class="field prepend-icon">
                 <input id="monto" class="gui-input" name="monto" placeholder="Monto" type="text" />
+                <small id="errorMonto" class="form-text text-red" style="display: none;">El monto es un campo requerido.</small>
                 <span class="field-icon">
                   <i class="fa fa-usd"/>
                 </span>
@@ -28,18 +29,19 @@
             </div>
             <div class="form-group">
               <div class="field select">
-                <select id="country" name="country">
+                <select id="plazo" name="plazo">
                   <option value="">Seleccione un plazo</option>
                   <option value="28">28</option>
                   <option value="91">91</option>
                   <option value="182">182</option>
-                  <option value="364">364</option>
+                  <option value="360">360</option>
                 </select>
+                <small id="errorPlazo" class="form-text text-red" style="display: none;">El plazo es un campo requerido.</small>
                 <i class="arrow"></i>
               </div>
             </div>
             <div class="row justify-content-center" style="margin-bottom: 3rem; margin-top: 3rem;">
-              <input type="button" name="" value="Calcular" class="button btn-primary"/>
+              <input type="button" name="" value="Calcular" class="button btn-primary" v-on:click="calcular"/>
             </div>
             <div class="form-group field">
               <label class="option block">
@@ -51,7 +53,7 @@
               <div id="slidecontainer">
                 <div class="row">
                   <div class="col-2"><span class="text">Tiempo</span></div>
-                  <div class="col-9"><input type="range" min="1" max="12" value="1" id="myRange" style="width:100%;" /></div>
+                  <div class="col-9"><input type="range" min="1" max="12" value="1" id="myRange" style="width:100%; padding-left: 20px;" /></div>
                 </div>
               </div>
             </div>
@@ -62,95 +64,410 @@
         </div>
         <div class="col seccion">
           <div class="row">
-            <div class="col resultado-calc-div">
-              <div class="row">
-                <div class="col-2"></div>
-                <div class="col-5"><span class="label-calc">Titulos</span></div>
+            <div style="display:none;" id="result-1" class="col-3 resultado-calc-div">
+              <div class="row row-cetes">
+                <div class="col-4"></div>
+                <div class="col-3"><span class="label-calc">Titulos</span></div>
                 <div class="col-5"><span class="label-calc">Tasa bruta</span></div>
               </div>
-              <div class="row">
-                <div class="col-2"><span class="label-calc pull-right">Cetes:</span></div>
-                <div class="col-5"><span class="label-resultado">123</span></div>
+              <div class="row row-cetes">
+                <div class="col-4"><span class="label-calc pull-right">Cetes:</span></div>
+                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosCetes }}</span></div>
+                <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaCetes }} %</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-4"><span class="label-calc pull-right">Bonddia:</span></div>
+                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosBonddia }}</span></div>
+                <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaBonddia }}%</span></div>
+              </div>
+              <div class="line"></div>
+              <br/>
+
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-6"><span class="label-calc pull-right">Inversion Cetes:</span></div>
+                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionCetes }}</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-6"><span class="label-calc pull-right">Inversion Bonddia:</span></div>
+                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionBonddia }}</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-6"><span class="label-calc pull-right">Interes Bruto:</span></div>
+                <div class="col-4 col-result"><span class="label-resultado">$ {{ interesBruto }}</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-6"><span class="label-calc pull-right">ISR:</span></div>
+                <div class="col-4 col-result"><span class="label-calc-bold">$ {{ isr }}</span></div>
+              </div>
+              <div class="line"></div>
+              <br/>
+
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-6"><span class="label-calc pull-right">Monto total:</span></div>
+                <div class="col-4 col-result"><span class="label-resultado">$ {{ montoTotal }}</span></div>
+              </div>
+
+            </div>
+            <div style="display:none;" class="col-3 resultado-calc-div">
+              <div class="row row-cetes">
+                <div class="col-4"></div>
+                <div class="col-3"><span class="label-calc">Titulos</span></div>
+                <div class="col-5"><span class="label-calc">Tasa bruta</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-4"><span class="label-calc pull-right">Cetes:</span></div>
+                <div class="col-3"><span class="label-resultado">123</span></div>
                 <div class="col-5"><span class="label-resultado">12.1%</span></div>
               </div>
-              <div class="row">
-                <div class="col-2"><span class="label-calc pull-right">Bonddia:</span></div>
-                <div class="col-5"><span class="label-resultado">123</span></div>
+              <div class="row row-cetes">
+                <div class="col-4"><span class="label-calc pull-right">Bonddia:</span></div>
+                <div class="col-3"><span class="label-resultado">123</span></div>
                 <div class="col-5"><span class="label-resultado">12.1%</span></div>
               </div>
               <div class="line"></div>
+              <br/>
 
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Inversion Cetes:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
               <div class="row row-cetes">
                 <div class="col-1"><img src="images/question.png" alt="" /> </div>
                 <div class="col-7"><span class="label-calc pull-right">Inversion Bonddia:</span></div>
                 <div class="col-3"><span class="label-resultado">12.1%</span></div>
               </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Interes Bruto:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">ISR:</span></div>
+                <div class="col-3"><span class="label-calc-bold">12.1%</span></div>
+              </div>
+              <div class="line"></div>
+              <br/>
+
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Monto total:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
 
             </div>
-            <div class="col resultado-calc-div">
-              <div class="row">
-                <div class="col-2"></div>
-                <div class="col-5"><span class="label-calc">Titulos</span></div>
+            <div style="display:none;" class="col-3 resultado-calc-div">
+              <div class="row row-cetes">
+                <div class="col-4"></div>
+                <div class="col-3"><span class="label-calc">Titulos</span></div>
                 <div class="col-5"><span class="label-calc">Tasa bruta</span></div>
               </div>
-              <div class="row">
-                <div class="col-2"><span class="label-calc pull-right">Cetes:</span></div>
-                <div class="col-5"><span class="label-resultado">123</span></div>
+              <div class="row row-cetes">
+                <div class="col-4"><span class="label-calc pull-right">Cetes:</span></div>
+                <div class="col-3"><span class="label-resultado">123</span></div>
                 <div class="col-5"><span class="label-resultado">12.1%</span></div>
               </div>
-              <div class="row">
-                <div class="col-2"><span class="label-calc pull-right">Bonddia:</span></div>
-                <div class="col-5"><span class="label-resultado">123</span></div>
+              <div class="row row-cetes">
+                <div class="col-4"><span class="label-calc pull-right">Bonddia:</span></div>
+                <div class="col-3"><span class="label-resultado">123</span></div>
                 <div class="col-5"><span class="label-resultado">12.1%</span></div>
               </div>
               <div class="line"></div>
+              <br/>
+
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Inversion Cetes:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Inversion Bonddia:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Interes Bruto:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">ISR:</span></div>
+                <div class="col-3"><span class="label-calc-bold">12.1%</span></div>
+              </div>
+              <div class="line"></div>
+              <br/>
+
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Monto total:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+
             </div>
-            <div class="col resultado-calc-div">
-              <div class="row">
-                <div class="col-2"></div>
-                <div class="col-5"><span class="label-calc">Titulos</span></div>
+            <div style="display:none;" class="col-3 resultado-calc-div">
+              <div class="row row-cetes">
+                <div class="col-4"></div>
+                <div class="col-3"><span class="label-calc">Titulos</span></div>
                 <div class="col-5"><span class="label-calc">Tasa bruta</span></div>
               </div>
-              <div class="row">
-                <div class="col-2"><span class="label-calc pull-right">Cetes:</span></div>
-                <div class="col-5"><span class="label-resultado">123</span></div>
+              <div class="row row-cetes">
+                <div class="col-4"><span class="label-calc pull-right">Cetes:</span></div>
+                <div class="col-3"><span class="label-resultado">123</span></div>
                 <div class="col-5"><span class="label-resultado">12.1%</span></div>
               </div>
-              <div class="row">
-                <div class="col-2"><span class="label-calc pull-right">Bonddia:</span></div>
-                <div class="col-5"><span class="label-resultado">123</span></div>
+              <div class="row row-cetes">
+                <div class="col-4"><span class="label-calc pull-right">Bonddia:</span></div>
+                <div class="col-3"><span class="label-resultado">123</span></div>
                 <div class="col-5"><span class="label-resultado">12.1%</span></div>
               </div>
               <div class="line"></div>
-            </div>
-            <div class="col resultado-calc-div">
-              <div class="row">
-                <div class="col-2"></div>
-                <div class="col-5"><span class="label-calc">Titulos</span></div>
-                <div class="col-5"><span class="label-calc">Tasa bruta</span></div>
+              <br/>
+
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Inversion Cetes:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
               </div>
-              <div class="row">
-                <div class="col-2"><span class="label-calc pull-right">Cetes:</span></div>
-                <div class="col-5"><span class="label-resultado">123</span></div>
-                <div class="col-5"><span class="label-resultado">12.1%</span></div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Inversion Bonddia:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
               </div>
-              <div class="row">
-                <div class="col-2"><span class="label-calc pull-right">Bonddia:</span></div>
-                <div class="col-5"><span class="label-resultado">123</span></div>
-                <div class="col-5"><span class="label-resultado">12.1%</span></div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Interes Bruto:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">ISR:</span></div>
+                <div class="col-3"><span class="label-calc-bold">12.1%</span></div>
               </div>
               <div class="line"></div>
+              <br/>
+
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Monto total:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+
             </div>
           </div>
+          <div style="display:none;" class="row">
+            <span class="titulo">Con Reinversion automatica</span>
+          </div>
           <div class="row">
-            <div class="col-3"></div>
-            <div class="col-3"></div>
-            <div class="col-3"></div>
-            <div class="col-3"></div>
+            <div style="display:none;" class="col-3 resultado-calc-div">
+              <div class="row row-cetes">
+                <div class="col-4"></div>
+                <div class="col-3"><span class="label-calc">Titulos</span></div>
+                <div class="col-5"><span class="label-calc">Tasa bruta</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-4"><span class="label-calc pull-right">Cetes:</span></div>
+                <div class="col-3"><span class="label-resultado">123</span></div>
+                <div class="col-5"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-4"><span class="label-calc pull-right">Bonddia:</span></div>
+                <div class="col-3"><span class="label-resultado">123</span></div>
+                <div class="col-5"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="line"></div>
+              <br/>
+
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Inversion Cetes:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Inversion Bonddia:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Interes Bruto:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">ISR:</span></div>
+                <div class="col-3"><span class="label-calc-bold">12.1%</span></div>
+              </div>
+              <div class="line"></div>
+              <br/>
+
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Monto total:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+
+            </div>
+            <div style="display:none;" class="col-3 resultado-calc-div">
+              <div class="row row-cetes">
+                <div class="col-4"></div>
+                <div class="col-3"><span class="label-calc">Titulos</span></div>
+                <div class="col-5"><span class="label-calc">Tasa bruta</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-4"><span class="label-calc pull-right">Cetes:</span></div>
+                <div class="col-3"><span class="label-resultado">123</span></div>
+                <div class="col-5"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-4"><span class="label-calc pull-right">Bonddia:</span></div>
+                <div class="col-3"><span class="label-resultado">123</span></div>
+                <div class="col-5"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="line"></div>
+              <br/>
+
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Inversion Cetes:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Inversion Bonddia:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Interes Bruto:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">ISR:</span></div>
+                <div class="col-3"><span class="label-calc-bold">12.1%</span></div>
+              </div>
+              <div class="line"></div>
+              <br/>
+
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Monto total:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+
+            </div>
+            <div style="display:none;" class="col-3 resultado-calc-div">
+              <div class="row row-cetes">
+                <div class="col-4"></div>
+                <div class="col-3"><span class="label-calc">Titulos</span></div>
+                <div class="col-5"><span class="label-calc">Tasa bruta</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-4"><span class="label-calc pull-right">Cetes:</span></div>
+                <div class="col-3"><span class="label-resultado">123</span></div>
+                <div class="col-5"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-4"><span class="label-calc pull-right">Bonddia:</span></div>
+                <div class="col-3"><span class="label-resultado">123</span></div>
+                <div class="col-5"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="line"></div>
+              <br/>
+
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Inversion Cetes:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Inversion Bonddia:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Interes Bruto:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">ISR:</span></div>
+                <div class="col-3"><span class="label-calc-bold">12.1%</span></div>
+              </div>
+              <div class="line"></div>
+              <br/>
+
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Monto total:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+
+            </div>
+            <div style="display:none;" class="col-3 resultado-calc-div">
+              <div class="row row-cetes">
+                <div class="col-4"></div>
+                <div class="col-3"><span class="label-calc">Titulos</span></div>
+                <div class="col-5"><span class="label-calc">Tasa bruta</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-4"><span class="label-calc pull-right">Cetes:</span></div>
+                <div class="col-3"><span class="label-resultado">123</span></div>
+                <div class="col-5"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-4"><span class="label-calc pull-right">Bonddia:</span></div>
+                <div class="col-3"><span class="label-resultado">123</span></div>
+                <div class="col-5"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="line"></div>
+              <br/>
+
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Inversion Cetes:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Inversion Bonddia:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Interes Bruto:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">ISR:</span></div>
+                <div class="col-3"><span class="label-calc-bold">12.1%</span></div>
+              </div>
+              <div class="line"></div>
+              <br/>
+
+              <div class="row row-cetes">
+                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-7"><span class="label-calc pull-right">Monto total:</span></div>
+                <div class="col-3"><span class="label-resultado">12.1%</span></div>
+              </div>
+
+            </div>
           </div>
         </div>
       </div>
     </div>
   </body>
   <script src="/js/jquery-3.2.1.js" charset="utf-8"></script>
+  <script src="/js/util.js" charset="utf-8"></script>
+  <script src="/js/vue.js" charset="utf-8"></script>
+  <script src="/js/cetes.js" charset="utf-8"></script>
 </html>
