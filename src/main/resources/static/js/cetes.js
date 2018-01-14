@@ -76,7 +76,7 @@ var formCetes = new Vue({
           data["plazo"] = $('#plazo').val();
 
           //obtener los periodos
-          var periodos = $('#myRange').val() / $('#plazo').val();
+          var periodos = $('#myRange').val() / 28;
           console.log('periodos : ' + parseInt(periodos));
           data["periodos"] = parseInt(periodos);
 

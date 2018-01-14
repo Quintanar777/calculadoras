@@ -4,6 +4,7 @@ import com.cetes.directo.calculadoras.business.CetesDelegate;
 import com.cetes.directo.calculadoras.dto.CetesDto;
 import com.cetes.directo.calculadoras.request.RequestCommonsDTO;
 import com.cetes.directo.calculadoras.request.RequestReInvertir;
+import com.cetes.directo.calculadoras.util.Constantes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,11 +62,11 @@ public class CetesController {
 
         for(int i=1; i<=request.getPeriodos(); i++){
             if(i==1){
-                CetesDto cetes = cetesDelegate.calcCetes(request.getMonto(), request.getPlazo());
+                CetesDto cetes = cetesDelegate.calcCetes(request.getMonto(), Constantes.PLAZO_28);
                 montoReinvertir = Double.parseDouble(cetes.getMontoTotal().replace(",", ""));
                 requestCetes.add(cetes);
             }else{
-                CetesDto cetes = cetesDelegate.calcCetes(montoReinvertir, request.getPlazo());
+                CetesDto cetes = cetesDelegate.calcCetes(montoReinvertir, Constantes.PLAZO_28);
                 montoReinvertir = Double.parseDouble(cetes.getMontoTotal().replace(",", ""));
                 requestCetes.add(cetes);
             }
