@@ -14,6 +14,22 @@ var result1 = new Vue({
   }
 })
 
+//Resultado de primer re inversion
+var result2 = new Vue({
+  el: '#result-2',
+  data: {
+    interesBruto: "0.0",
+    inversionBonddia: "0.0",
+    inversionCetes: "0.0",
+    isr: "0.0",
+    montoTotal: "0.0",
+    noTitulosBonddia: "0.0",
+    noTitulosCetes: "0.0",
+    tasaBrutaBonddia: "0.0",
+    tasaBrutaCetes: "0.0"
+  }
+})
+
 
 //se crea el objeto del div de los campos de captura de Cetes
 
@@ -48,12 +64,57 @@ var formCetes = new Vue({
                 result1.noTitulosCetes= data.noTitulosCetes
                 result1.tasaBrutaBonddia= data.tasaBrutaBonddia
                 result1.tasaBrutaCetes= data.tasaBrutaCetes
+
+                $('#result-1').show();
             }
         });
 
-        $('#result-1').show();
-      }
+        //validar si sera con re inversión
+        if ($('#check-reinvertir').is(':checked') ) {
+          var data = {}
+          data["monto"] = $('#monto').val();
+          data["plazo"] = $('#plazo').val();
 
+          //obtener los periodos
+          var periodos = $('#myRange').val() / $('#plazo').val();
+          console.log('periodos : ' + parseInt(periodos));
+          data["periodos"] = parseInt(periodos);
+
+          $.ajax({
+              type: "POST",
+  		        contentType: "application/json",
+  		        url: "calc/cetes/reinvertir",
+  		        data: JSON.stringify(data),
+  		        dataType: 'json',
+              success: function (data) {
+                  console.log(data);
+                  result2.interesBruto= data[data.length - 1].interesBruto
+                  result2.inversionBonddia= data[data.length - 1].inversionBonddia
+                  result2.inversionCetes= data[data.length - 1].inversionCetes
+                  result2.isr= data[data.length - 1].isr
+                  result2.montoTotal= data[data.length - 1].montoTotal
+                  result2.noTitulosBonddia= data[data.length - 1].noTitulosBonddia
+                  result2.noTitulosCetes= data[data.length - 1].noTitulosCetes
+                  result2.tasaBrutaBonddia= data[data.length - 1].tasaBrutaBonddia
+                  result2.tasaBrutaCetes= data[data.length - 1].tasaBrutaCetes
+                  $('#result-2').show();
+                  $('#labelReinvertir').show();
+              }
+          });
+
+        }else{
+          $('#result-2').hide();
+          $('#labelReinvertir').hide();
+        }
+
+      }
+    },
+    changeReInvertir: function(){
+      if ($('#check-reinvertir').is(':checked') ) {
+        $('#div-reinvertir').show();
+      }else{
+        $('#div-reinvertir').hide();
+      }
     }
   }
 })
@@ -76,4 +137,14 @@ function validaCampos() {
     $('#errorPlazo').hide();
   }
   return true;
+}
+
+
+//slider
+var slider = document.getElementById("myRange");
+var output = document.getElementById("dias-inversion");
+output.innerHTML = slider.value;
+
+slider.oninput = function() {
+  output.innerHTML = this.value;
 }

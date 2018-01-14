@@ -3,12 +3,16 @@ package com.cetes.directo.calculadoras.business;
 import com.cetes.directo.calculadoras.beans.Cetes;
 import com.cetes.directo.calculadoras.dto.CetesDto;
 import com.cetes.directo.calculadoras.util.CommonsUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CetesDelegate {
+
+    public static final Logger logger = LoggerFactory.getLogger(CetesDelegate.class);
 
     @Value("${calc.cetes.precio}")
     private Double valorCete;
@@ -38,6 +42,10 @@ public class CetesDelegate {
      * Calcular cetes
      * */
     public CetesDto calcCetes(double monto, int plazo){
+        logger.info("Service calcular cetes...");
+        logger.info(("monto: " + monto));
+        logger.info(("plazo: " + plazo));
+
         double tasaCetes=0;
         if (plazo==28) tasaCetes= tasa28;
         if (plazo==91) tasaCetes= tasa91;
