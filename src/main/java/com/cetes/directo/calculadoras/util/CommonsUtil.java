@@ -3,16 +3,19 @@ package com.cetes.directo.calculadoras.util;
 import org.springframework.stereotype.Component;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 @Component
 public class CommonsUtil {
-    private static final String PATTERN = "###,###.###";
+    private static final String PATTERN = "###,###.##";
 
     /**
      * Formatea double a String
      */
     public static String doubleToFormatString(double valDouble) {
-        DecimalFormat myFormatter = new DecimalFormat(PATTERN);
+        DecimalFormatSymbols simbolos = DecimalFormatSymbols.getInstance(Locale.ENGLISH);
+        DecimalFormat myFormatter = new DecimalFormat(PATTERN, simbolos);
         return myFormatter.format(valDouble);
     }
 

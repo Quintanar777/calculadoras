@@ -76,6 +76,14 @@ body{
   margin-left: 25%;
 }
 
+.tableCetes{
+  font-size: 11px;
+}
+
+.tableCetes th{
+  padding: 0.5rem;
+}
+
 .chart{
   height: 250px;
 }

@@ -6,13 +6,25 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class BondesDto {
-    private String noTitulosCetes;
-    private String tasaBrutaCetes;
-    private String inversionCetes;
-    private String noTitulosBondes;
-    private String tasaBrutaBondes;
-    private String inversionBondes;
-    private String interesBruto;
+    private String inversion;
+    private String tasaCetes;
+    private String plazo;
+    private String rendimiento;
     private String isr;
-    private String montoTotal;
+    private String total;
+    private String montoBondes;
+    private String tituloBondes;
+    private String corteCupon;
+    private String impuestoCorteCupon;
+    private String remanenteCetes;
+    private String montoCetes;
+    private String titulosCetes;
+    private String rendimientoCetes;
+    private String impuestoCetes;
+    private String remanenteBonddia;
+    private String montoBonddia;
+    private String rendimientoBonddia;
+    private String remanentes;
+    private String totalUltimo;
+    private String interesBruto;
 }
