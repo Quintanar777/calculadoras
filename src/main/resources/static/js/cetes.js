@@ -1,4 +1,5 @@
 var dataPeridos;
+var showComparar = false;
 
 //Resultado inicial
 var result1 = new Vue({
@@ -137,6 +138,7 @@ var formCetes = new Vue({
       $('#result-4').hide();
       $('#result-6').hide();
       $('#result-8').hide();
+      showComparar = false;
 
       if(validaCampos()){ //true si todos los campos son capturados
         console.log('calculando cetes...');
@@ -210,6 +212,7 @@ var formCetes = new Vue({
       }
     },
     comparar: function(){
+      showComparar = true;
       if(validaCampos()){ //true si todos los campos son capturados
         console.log('comparando cetes...');
         $('#div-graficar').show();
@@ -375,18 +378,28 @@ var divcharts =  new Vue({
       var cat = [];
       var dataSeries = [];
 
-      //Graficar re inversión
-      if($('#check-reinvertir').is(':checked')){
+      //Graficar comparar?
+      if(showComparar){
         var arrayCetes = [];
         var arrayBonddia = [];
+        cat.push('Periodo CETES 28');
+        cat.push('Periodo CETES 91');
+        cat.push('Periodo CETES 182');
+        cat.push('Periodo CETES 360');
 
-        for(var i=0; i<dataPeridos.length;i++){
-          //Se agregan las catagorias de n periodos
-          cat.push('Periodo ' + (i+1));
-          //Se agregan los data series de n periodos
-          arrayCetes.push(parseInt(dataPeridos[i].inversionCetes.replace(',','')));
-          arrayBonddia.push(parseInt(dataPeridos[i].inversionBonddia.replace(',','')));
-        }
+        //Se agregan los data series de n periodos
+        //CETES
+        arrayCetes.push(parseFloat(result1.inversionCetes.replace(',','')));
+        arrayCetes.push(parseFloat(result3.inversionCetes.replace(',','')));
+        arrayCetes.push(parseFloat(result5.inversionCetes.replace(',','')));
+        arrayCetes.push(parseFloat(result7.inversionCetes.replace(',','')));
+
+        //BONDDDIA
+        arrayBonddia.push(parseFloat(result1.inversionBonddia.replace(',','')));
+        arrayBonddia.push(parseFloat(result3.inversionBonddia.replace(',','')));
+        arrayBonddia.push(parseFloat(result5.inversionBonddia.replace(',','')));
+        arrayBonddia.push(parseFloat(result7.inversionBonddia.replace(',','')));
+
         var datCetes = {
           name: 'Inversión Cetes',
           data: arrayCetes
@@ -398,18 +411,43 @@ var divcharts =  new Vue({
         }
         dataSeries.push(datBonddia);
 
-      }else{//graficar solo el resultado inicial
-        cat.push('Periodo 1'); //Categoria
-        var datCetes = {
-          name: 'Inversión Cetes',
-          data: [parseInt(result1.inversionCetes.replace(',',''))]
+      }else{
+        //Graficar re inversión
+        if($('#check-reinvertir').is(':checked')){
+          var arrayCetes = [];
+          var arrayBonddia = [];
+
+          for(var i=0; i<dataPeridos.length;i++){
+            //Se agregan las catagorias de n periodos
+            cat.push('Periodo ' + (i+1));
+            //Se agregan los data series de n periodos
+            arrayCetes.push(parseFloat(dataPeridos[i].inversionCetes.replace(',','')));
+            arrayBonddia.push(parseFloat(dataPeridos[i].inversionBonddia.replace(',','')));
+          }
+          var datCetes = {
+            name: 'Inversión Cetes',
+            data: arrayCetes
+          }
+          dataSeries.push(datCetes);
+          var datBonddia = {
+            name: 'Inversión Bonddia',
+            data: arrayBonddia
+          }
+          dataSeries.push(datBonddia);
+
+        }else{//graficar solo el resultado inicial
+          cat.push('Periodo 1'); //Categoria
+          var datCetes = {
+            name: 'Inversión Cetes',
+            data: [parseFloat(result1.inversionCetes.replace(',',''))]
+          }
+          dataSeries.push(datCetes);
+          var datBonddia = {
+            name: 'Inversión Bonddia',
+            data: [parseFloat(result1.inversionBonddia.replace(',',''))]
+          }
+          dataSeries.push(datBonddia);
         }
-        dataSeries.push(datCetes);
-        var datBonddia = {
-          name: 'Inversión Bonddia',
-          data: [parseInt(result1.inversionBonddia.replace(',',''))]
-        }
-        dataSeries.push(datBonddia);
       }
 
       Highcharts.chart('chart', {
