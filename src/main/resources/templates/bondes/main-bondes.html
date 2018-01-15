@@ -31,7 +31,7 @@
           <form style="margin-top: 20px;" id="form-cetes">
             <div class="spacer-b30">
               <div class="tagline" style="">
-                <span>Cetes</span>
+                <span>Bondes</span>
               </div>
             </div>
             <div class="form-group">
@@ -70,10 +70,10 @@
               <div id="slidecontainer">
                 <div class="row">
                   <div class="col-2"><span class="text">Tiempo</span></div>
-                  <div class="col-9"><input type="range" min="28" max="365" value="1" id="myRange" style="width:100%; padding-left: 20px;" /></div>
+                  <div class="col-9"><input type="range" min="1" max="5" value="1" id="myRange" style="width:100%; padding-left: 20px;" /></div>
                 </div>
               </div>
-              <p class="text"><span id="dias-inversion" class="text-bold"></span> días</p>
+              <p class="text"><span id="meses-inversion" class="text-bold"></span> meses</p>
             </div>
             <div class="row justify-content-center" style="margin-bottom: 3rem; margin-top: 3rem;">
               <input type="button" name="" value="Comparar" class="button btn-primary" v-on:click="comparar"/>
@@ -116,9 +116,9 @@
                 <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaCetes }} %</span></div>
               </div>
               <div class="row row-cetes">
-                <div class="col-4"><span class="label-calc pull-right">Bonddia:</span></div>
-                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosBonddia }}</span></div>
-                <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaBonddia }}%</span></div>
+                <div class="col-4"><span class="label-calc pull-right">Bondes:</span></div>
+                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosBondes }}</span></div>
+                <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaBondes }}%</span></div>
               </div>
               <div class="line"></div>
               <br/>
@@ -130,8 +130,8 @@
               </div>
               <div class="row row-cetes">
                 <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Al no alcanzar para otro titulo en cetes, el remanente se invierte en el fondo diario Bonddia y genera intereses"/> </div>
-                <div class="col-6"><span class="label-calc pull-right">Inversion Bonddia:</span></div>
-                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionBonddia }}</span></div>
+                <div class="col-6"><span class="label-calc pull-right">Inversion Bondes:</span></div>
+                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionBondes }}</span></div>
               </div>
               <div class="row row-cetes">
                 <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Intereses ganados antes de impuestos"/> </div>
@@ -165,9 +165,9 @@
                 <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaCetes }} %</span></div>
               </div>
               <div class="row row-cetes">
-                <div class="col-4"><span class="label-calc pull-right">Bonddia:</span></div>
-                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosBonddia }}</span></div>
-                <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaBonddia }}%</span></div>
+                <div class="col-4"><span class="label-calc pull-right">Bondes:</span></div>
+                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosBondes }}</span></div>
+                <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaBondes }}%</span></div>
               </div>
               <div class="line"></div>
               <br/>
@@ -179,8 +179,8 @@
               </div>
               <div class="row row-cetes">
                 <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Al no alcanzar para otro titulo en cetes, el remanente se invierte en el fondo diario Bonddia y genera intereses"/> </div>
-                <div class="col-6"><span class="label-calc pull-right">Inversion Bonddia:</span></div>
-                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionBonddia }}</span></div>
+                <div class="col-6"><span class="label-calc pull-right">Inversion Bondes:</span></div>
+                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionBondes }}</span></div>
               </div>
               <div class="row row-cetes">
                 <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Intereses ganados antes de impuestos"/> </div>
@@ -214,9 +214,9 @@
                 <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaCetes }} %</span></div>
               </div>
               <div class="row row-cetes">
-                <div class="col-4"><span class="label-calc pull-right">Bonddia:</span></div>
-                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosBonddia }}</span></div>
-                <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaBonddia }}%</span></div>
+                <div class="col-4"><span class="label-calc pull-right">Bondes:</span></div>
+                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosBondes }}</span></div>
+                <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaBondes }}%</span></div>
               </div>
               <div class="line"></div>
               <br/>
@@ -228,8 +228,8 @@
               </div>
               <div class="row row-cetes">
                 <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Al no alcanzar para otro titulo en cetes, el remanente se invierte en el fondo diario Bonddia y genera intereses"/> </div>
-                <div class="col-6"><span class="label-calc pull-right">Inversion Bonddia:</span></div>
-                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionBonddia }}</span></div>
+                <div class="col-6"><span class="label-calc pull-right">Inversion Bondes:</span></div>
+                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionBondes }}</span></div>
               </div>
               <div class="row row-cetes">
                 <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Intereses ganados antes de impuestos"/> </div>
@@ -263,9 +263,9 @@
                 <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaCetes }} %</span></div>
               </div>
               <div class="row row-cetes">
-                <div class="col-4"><span class="label-calc pull-right">Bonddia:</span></div>
-                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosBonddia }}</span></div>
-                <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaBonddia }}%</span></div>
+                <div class="col-4"><span class="label-calc pull-right">Bondes:</span></div>
+                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosBondes }}</span></div>
+                <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaBondes }}%</span></div>
               </div>
               <div class="line"></div>
               <br/>
@@ -277,8 +277,8 @@
               </div>
               <div class="row row-cetes">
                 <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Al no alcanzar para otro titulo en cetes, el remanente se invierte en el fondo diario Bonddia y genera intereses"/> </div>
-                <div class="col-6"><span class="label-calc pull-right">Inversion Bonddia:</span></div>
-                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionBonddia }}</span></div>
+                <div class="col-6"><span class="label-calc pull-right">Inversion Bondes:</span></div>
+                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionBondes }}</span></div>
               </div>
               <div class="row row-cetes">
                 <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Intereses ganados antes de impuestos"/> </div>
@@ -317,30 +317,30 @@
                 <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaCetes }} %</span></div>
               </div>
               <div class="row row-cetes">
-                <div class="col-4"><span class="label-calc pull-right">Bonddia:</span></div>
-                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosBonddia }}</span></div>
-                <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaBonddia }}%</span></div>
+                <div class="col-4"><span class="label-calc pull-right">Bondes:</span></div>
+                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosBondes }}</span></div>
+                <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaBondes }}%</span></div>
               </div>
               <div class="line"></div>
               <br/>
 
               <div class="row row-cetes">
-                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Capital con el que se realiza la inversión inicial en cetes"/> </div>
                 <div class="col-6"><span class="label-calc pull-right">Inversion Cetes:</span></div>
                 <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionCetes }}</span></div>
               </div>
               <div class="row row-cetes">
-                <div class="col-1"><img src="images/question.png" alt="" /> </div>
-                <div class="col-6"><span class="label-calc pull-right">Inversion Bonddia:</span></div>
-                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionBonddia }}</span></div>
+                <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Al no alcanzar para otro titulo en cetes, el remanente se invierte en el fondo diario Bonddia y genera intereses"/> </div>
+                <div class="col-6"><span class="label-calc pull-right">Inversion Bondes:</span></div>
+                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionBondes }}</span></div>
               </div>
               <div class="row row-cetes">
-                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Intereses ganados antes de impuestos"/> </div>
                 <div class="col-6"><span class="label-calc pull-right">Interes Bruto:</span></div>
                 <div class="col-4 col-result"><span class="label-resultado">$ {{ interesBruto }}</span></div>
               </div>
               <div class="row row-cetes">
-                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Impuesto a retener redondeado a dos decimales"/> </div>
                 <div class="col-6"><span class="label-calc pull-right">ISR:</span></div>
                 <div class="col-4 col-result"><span class="label-calc-bold">$ {{ isr }}</span></div>
               </div>
@@ -348,7 +348,7 @@
               <br/>
 
               <div class="row row-cetes">
-                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Es el capital final que incluye los intereses ganados y el remanente de la inversón menos el ISR"/> </div>
                 <div class="col-6"><span class="label-calc pull-right">Monto total:</span></div>
                 <div class="col-4 col-result"><span class="label-resultado">$ {{ montoTotal }}</span></div>
               </div>
@@ -366,30 +366,30 @@
                 <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaCetes }} %</span></div>
               </div>
               <div class="row row-cetes">
-                <div class="col-4"><span class="label-calc pull-right">Bonddia:</span></div>
-                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosBonddia }}</span></div>
-                <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaBonddia }}%</span></div>
+                <div class="col-4"><span class="label-calc pull-right">Bondes:</span></div>
+                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosBondes }}</span></div>
+                <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaBondes }}%</span></div>
               </div>
               <div class="line"></div>
               <br/>
 
               <div class="row row-cetes">
-                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Capital con el que se realiza la inversión inicial en cetes"/> </div>
                 <div class="col-6"><span class="label-calc pull-right">Inversion Cetes:</span></div>
                 <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionCetes }}</span></div>
               </div>
               <div class="row row-cetes">
-                <div class="col-1"><img src="images/question.png" alt="" /> </div>
-                <div class="col-6"><span class="label-calc pull-right">Inversion Bonddia:</span></div>
-                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionBonddia }}</span></div>
+                <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Al no alcanzar para otro titulo en cetes, el remanente se invierte en el fondo diario Bonddia y genera intereses"/> </div>
+                <div class="col-6"><span class="label-calc pull-right">Inversion Bondes:</span></div>
+                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionBondes }}</span></div>
               </div>
               <div class="row row-cetes">
-                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Intereses ganados antes de impuestos"/> </div>
                 <div class="col-6"><span class="label-calc pull-right">Interes Bruto:</span></div>
                 <div class="col-4 col-result"><span class="label-resultado">$ {{ interesBruto }}</span></div>
               </div>
               <div class="row row-cetes">
-                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Impuesto a retener redondeado a dos decimales"/> </div>
                 <div class="col-6"><span class="label-calc pull-right">ISR:</span></div>
                 <div class="col-4 col-result"><span class="label-calc-bold">$ {{ isr }}</span></div>
               </div>
@@ -397,7 +397,7 @@
               <br/>
 
               <div class="row row-cetes">
-                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Es el capital final que incluye los intereses ganados y el remanente de la inversón menos el ISR"/> </div>
                 <div class="col-6"><span class="label-calc pull-right">Monto total:</span></div>
                 <div class="col-4 col-result"><span class="label-resultado">$ {{ montoTotal }}</span></div>
               </div>
@@ -415,30 +415,30 @@
                 <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaCetes }} %</span></div>
               </div>
               <div class="row row-cetes">
-                <div class="col-4"><span class="label-calc pull-right">Bonddia:</span></div>
-                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosBonddia }}</span></div>
-                <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaBonddia }}%</span></div>
+                <div class="col-4"><span class="label-calc pull-right">Bondes:</span></div>
+                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosBondes }}</span></div>
+                <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaBondes }}%</span></div>
               </div>
               <div class="line"></div>
               <br/>
 
               <div class="row row-cetes">
-                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Capital con el que se realiza la inversión inicial en cetes"/> </div>
                 <div class="col-6"><span class="label-calc pull-right">Inversion Cetes:</span></div>
                 <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionCetes }}</span></div>
               </div>
               <div class="row row-cetes">
-                <div class="col-1"><img src="images/question.png" alt="" /> </div>
-                <div class="col-6"><span class="label-calc pull-right">Inversion Bonddia:</span></div>
-                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionBonddia }}</span></div>
+                <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Al no alcanzar para otro titulo en cetes, el remanente se invierte en el fondo diario Bonddia y genera intereses"/> </div>
+                <div class="col-6"><span class="label-calc pull-right">Inversion Bondes:</span></div>
+                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionBondes }}</span></div>
               </div>
               <div class="row row-cetes">
-                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Intereses ganados antes de impuestos"/> </div>
                 <div class="col-6"><span class="label-calc pull-right">Interes Bruto:</span></div>
                 <div class="col-4 col-result"><span class="label-resultado">$ {{ interesBruto }}</span></div>
               </div>
               <div class="row row-cetes">
-                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Impuesto a retener redondeado a dos decimales"/> </div>
                 <div class="col-6"><span class="label-calc pull-right">ISR:</span></div>
                 <div class="col-4 col-result"><span class="label-calc-bold">$ {{ isr }}</span></div>
               </div>
@@ -446,7 +446,7 @@
               <br/>
 
               <div class="row row-cetes">
-                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Es el capital final que incluye los intereses ganados y el remanente de la inversón menos el ISR"/> </div>
                 <div class="col-6"><span class="label-calc pull-right">Monto total:</span></div>
                 <div class="col-4 col-result"><span class="label-resultado">$ {{ montoTotal }}</span></div>
               </div>
@@ -464,30 +464,30 @@
                 <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaCetes }} %</span></div>
               </div>
               <div class="row row-cetes">
-                <div class="col-4"><span class="label-calc pull-right">Bonddia:</span></div>
-                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosBonddia }}</span></div>
-                <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaBonddia }}%</span></div>
+                <div class="col-4"><span class="label-calc pull-right">Bondes:</span></div>
+                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosBondes }}</span></div>
+                <div class="col-5 col-result"><span class="label-resultado">{{ tasaBrutaBondes }}%</span></div>
               </div>
               <div class="line"></div>
               <br/>
 
               <div class="row row-cetes">
-                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Capital con el que se realiza la inversión inicial en cetes"/> </div>
                 <div class="col-6"><span class="label-calc pull-right">Inversion Cetes:</span></div>
                 <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionCetes }}</span></div>
               </div>
               <div class="row row-cetes">
-                <div class="col-1"><img src="images/question.png" alt="" /> </div>
-                <div class="col-6"><span class="label-calc pull-right">Inversion Bonddia:</span></div>
-                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionBonddia }}</span></div>
+                <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Al no alcanzar para otro titulo en cetes, el remanente se invierte en el fondo diario Bonddia y genera intereses"/> </div>
+                <div class="col-6"><span class="label-calc pull-right">Inversion Bondes:</span></div>
+                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionBondes }}</span></div>
               </div>
               <div class="row row-cetes">
-                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Intereses ganados antes de impuestos"/> </div>
                 <div class="col-6"><span class="label-calc pull-right">Interes Bruto:</span></div>
                 <div class="col-4 col-result"><span class="label-resultado">$ {{ interesBruto }}</span></div>
               </div>
               <div class="row row-cetes">
-                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Impuesto a retener redondeado a dos decimales"/> </div>
                 <div class="col-6"><span class="label-calc pull-right">ISR:</span></div>
                 <div class="col-4 col-result"><span class="label-calc-bold">$ {{ isr }}</span></div>
               </div>
@@ -495,7 +495,7 @@
               <br/>
 
               <div class="row row-cetes">
-                <div class="col-1"><img src="images/question.png" alt="" /> </div>
+                <div class="col-1"><img src="images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Es el capital final que incluye los intereses ganados y el remanente de la inversón menos el ISR"/> </div>
                 <div class="col-6"><span class="label-calc pull-right">Monto total:</span></div>
                 <div class="col-4 col-result"><span class="label-resultado">$ {{ montoTotal }}</span></div>
               </div>
@@ -537,5 +537,5 @@
   <script src="/js/util.js" charset="utf-8"></script>
   <script src="/js/vue.js" charset="utf-8"></script>
   <script src="/js/highcharts.js" charset="utf-8"></script>
-  <script src="/js/cetes.js" charset="utf-8"></script>
+  <script src="/js/bondes.js" charset="utf-8"></script>
 </html>

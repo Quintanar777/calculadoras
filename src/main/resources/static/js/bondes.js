@@ -1,0 +1,536 @@
+var dataPeridos;
+var showComparar = false;
+
+//Resultado inicial
+var result1 = new Vue({
+  el: '#result-1',
+  data: {
+    interesBruto: "0.0",
+    inversionBondes: "0.0",
+    inversionCetes: "0.0",
+    isr: "0.0",
+    montoTotal: "0.0",
+    noTitulosBondes: "0.0",
+    noTitulosCetes: "0.0",
+    tasaBrutaBondes: "0.0",
+    tasaBrutaCetes: "0.0"
+  }
+})
+
+//Resultado de primer re inversion
+var result2 = new Vue({
+  el: '#result-2',
+  data: {
+    interesBruto: "0.0",
+    inversionBondes: "0.0",
+    inversionCetes: "0.0",
+    isr: "0.0",
+    montoTotal: "0.0",
+    noTitulosBondes: "0.0",
+    noTitulosCetes: "0.0",
+    tasaBrutaBondes: "0.0",
+    tasaBrutaCetes: "0.0"
+  }
+})
+
+//Resultado de comparar sin re inversion
+var result3 = new Vue({
+  el: '#result-3',
+  data: {
+    interesBruto: "0.0",
+    inversionBondes: "0.0",
+    inversionCetes: "0.0",
+    isr: "0.0",
+    montoTotal: "0.0",
+    noTitulosBondes: "0.0",
+    noTitulosCetes: "0.0",
+    tasaBrutaBondes: "0.0",
+    tasaBrutaCetes: "0.0"
+  }
+})
+var result5 = new Vue({
+  el: '#result-5',
+  data: {
+    interesBruto: "0.0",
+    inversionBondes: "0.0",
+    inversionCetes: "0.0",
+    isr: "0.0",
+    montoTotal: "0.0",
+    noTitulosBondes: "0.0",
+    noTitulosCetes: "0.0",
+    tasaBrutaBondes: "0.0",
+    tasaBrutaCetes: "0.0"
+  }
+})
+var result7 = new Vue({
+  el: '#result-7',
+  data: {
+    interesBruto: "0.0",
+    inversionBondes: "0.0",
+    inversionCetes: "0.0",
+    isr: "0.0",
+    montoTotal: "0.0",
+    noTitulosBondes: "0.0",
+    noTitulosCetes: "0.0",
+    tasaBrutaBondes: "0.0",
+    tasaBrutaCetes: "0.0"
+  }
+})
+
+//Resultados re invertir comparar
+var result4 = new Vue({
+  el: '#result-4',
+  data: {
+    interesBruto: "0.0",
+    inversionBondes: "0.0",
+    inversionCetes: "0.0",
+    isr: "0.0",
+    montoTotal: "0.0",
+    noTitulosBondes: "0.0",
+    noTitulosCetes: "0.0",
+    tasaBrutaBondes: "0.0",
+    tasaBrutaCetes: "0.0"
+  }
+})
+var result6 = new Vue({
+  el: '#result-6',
+  data: {
+    interesBruto: "0.0",
+    inversionBondes: "0.0",
+    inversionCetes: "0.0",
+    isr: "0.0",
+    montoTotal: "0.0",
+    noTitulosBondes: "0.0",
+    noTitulosCetes: "0.0",
+    tasaBrutaBondes: "0.0",
+    tasaBrutaCetes: "0.0"
+  }
+})
+var result8 = new Vue({
+  el: '#result-8',
+  data: {
+    interesBruto: "0.0",
+    inversionBondes: "0.0",
+    inversionCetes: "0.0",
+    isr: "0.0",
+    montoTotal: "0.0",
+    noTitulosBondes: "0.0",
+    noTitulosCetes: "0.0",
+    tasaBrutaBondes: "0.0",
+    tasaBrutaCetes: "0.0"
+  }
+})
+
+//se crea el objeto del div de los campos de captura de Cetes
+
+var formCetes = new Vue({
+  el: '#form-cetes',
+  data: {
+  },
+  methods: {
+    //evento click boton calcular
+    calcular: function(){
+      $('#titulosComparar').hide();
+      $('#result-3').hide();
+      $('#result-5').hide();
+      $('#result-7').hide();
+
+      $('#result-4').hide();
+      $('#result-6').hide();
+      $('#result-8').hide();
+      showComparar = false;
+
+      if(validaCampos()){ //true si todos los campos son capturados
+        console.log('calculando cetes...');
+        $('#div-graficar').show();
+
+        var data = {}
+        data["monto"] = $('#monto').val();
+        data["plazo"] = $('#plazo').val();
+        //TODO quitar despues de corregir la peticion ajax
+        $('#result-1').show();
+
+        // $.ajax({
+        //     type: "POST",
+		    //     contentType: "application/json",
+		    //     url: "calc/cetes",
+		    //     data: JSON.stringify(data),
+		    //     dataType: 'json',
+        //     success: function (data) {
+        //         console.log(data);
+        //         result1.interesBruto= data.interesBruto
+        //         result1.inversionBondes= data.inversionBonddia
+        //         result1.inversionCetes= data.inversionCetes
+        //         result1.isr= data.isr
+        //         result1.montoTotal= data.montoTotal
+        //         result1.noTitulosBondes= data.noTitulosBonddia
+        //         result1.noTitulosCetes= data.noTitulosCetes
+        //         result1.tasaBrutaBondes= data.tasaBrutaBonddia
+        //         result1.tasaBrutaCetes= data.tasaBrutaCetes
+        //
+        //         $('#result-1').show();
+        //     }
+        // });
+
+        //validar si sera con re inversión
+        if ($('#check-reinvertir').is(':checked') ) {
+          var data = {}
+          data["monto"] = $('#monto').val();
+          data["plazo"] = $('#plazo').val();
+
+          //obtener los periodos
+          var periodos = $('#myRange').val() / 28;
+          console.log('periodos : ' + parseInt(periodos));
+          data["periodos"] = parseInt(periodos);
+
+          //TODO quitar despues de corregir la peticion ajax
+          $('#result-2').show();
+          $('#labelReinvertir').show();
+
+          // $.ajax({
+          //     type: "POST",
+  		    //     contentType: "application/json",
+  		    //     url: "calc/cetes/reinvertir",
+  		    //     data: JSON.stringify(data),
+  		    //     dataType: 'json',
+          //     success: function (data) {
+          //         console.log(data);
+          //         dataPeridos = data;
+          //         result2.interesBruto= data[data.length - 1].interesBruto
+          //         result2.inversionBondes= data[data.length - 1].inversionBonddia
+          //         result2.inversionCetes= data[data.length - 1].inversionCetes
+          //         result2.isr= data[data.length - 1].isr
+          //         result2.montoTotal= data[data.length - 1].montoTotal
+          //         result2.noTitulosBondes= data[data.length - 1].noTitulosBonddia
+          //         result2.noTitulosCetes= data[data.length - 1].noTitulosCetes
+          //         result2.tasaBrutaBondes= data[data.length - 1].tasaBrutaBonddia
+          //         result2.tasaBrutaCetes= data[data.length - 1].tasaBrutaCetes
+          //         $('#result-2').show();
+          //         $('#labelReinvertir').show();
+          //     }
+          // });
+
+        }else{
+          $('#result-2').hide();
+          $('#labelReinvertir').hide();
+        }
+
+      }
+    },
+    comparar: function(){
+      showComparar = true;
+      if(validaCampos()){ //true si todos los campos son capturados
+        console.log('comparando cetes...');
+        $('#div-graficar').show();
+
+        var data = {}
+        data["monto"] = $('#monto').val();
+        data["plazo"] = $('#plazo').val();
+
+        //TODO quitar despues de corregir peticion ajax
+        $('#result-1').show();
+        $('#result-3').show();
+        $('#result-5').show();
+        $('#result-7').show();
+        $('#titulosComparar').show();
+
+        // $.ajax({
+        //     type: "POST",
+		    //     contentType: "application/json",
+		    //     url: "calc/cetes/comparar",
+		    //     data: JSON.stringify(data),
+		    //     dataType: 'json',
+        //     success: function (data) {
+        //         console.log(data);
+        //         //Resultado para plazo 28
+        //         result1.interesBruto= data.comp28.interesBruto
+        //         result1.inversionBonddia= data.comp28.inversionBonddia
+        //         result1.inversionCetes= data.comp28.inversionCetes
+        //         result1.isr= data.comp28.isr
+        //         result1.montoTotal= data.comp28.montoTotal
+        //         result1.noTitulosBonddia= data.comp28.noTitulosBonddia
+        //         result1.noTitulosCetes= data.comp28.noTitulosCetes
+        //         result1.tasaBrutaBonddia= data.comp28.tasaBrutaBonddia
+        //         result1.tasaBrutaCetes= data.comp28.tasaBrutaCetes
+        //
+        //         //Resultado para plazo 91
+        //         result3.interesBruto= data.comp91.interesBruto
+        //         result3.inversionBonddia= data.comp91.inversionBonddia
+        //         result3.inversionCetes= data.comp91.inversionCetes
+        //         result3.isr= data.comp91.isr
+        //         result3.montoTotal= data.comp91.montoTotal
+        //         result3.noTitulosBonddia= data.comp91.noTitulosBonddia
+        //         result3.noTitulosCetes= data.comp91.noTitulosCetes
+        //         result3.tasaBrutaBonddia= data.comp91.tasaBrutaBonddia
+        //         result3.tasaBrutaCetes= data.comp91.tasaBrutaCetes
+        //
+        //         //Resultado para plazo 182
+        //         result5.interesBruto= data.comp182.interesBruto
+        //         result5.inversionBonddia= data.comp182.inversionBonddia
+        //         result5.inversionCetes= data.comp182.inversionCetes
+        //         result5.isr= data.comp182.isr
+        //         result5.montoTotal= data.comp182.montoTotal
+        //         result5.noTitulosBonddia= data.comp182.noTitulosBonddia
+        //         result5.noTitulosCetes= data.comp182.noTitulosCetes
+        //         result5.tasaBrutaBonddia= data.comp182.tasaBrutaBonddia
+        //         result5.tasaBrutaCetes= data.comp182.tasaBrutaCetes
+        //
+        //         //Resultado para plazo 360
+        //         result7.interesBruto= data.comp360.interesBruto
+        //         result7.inversionBonddia= data.comp360.inversionBonddia
+        //         result7.inversionCetes= data.comp360.inversionCetes
+        //         result7.isr= data.comp360.isr
+        //         result7.montoTotal= data.comp360.montoTotal
+        //         result7.noTitulosBonddia= data.comp360.noTitulosBonddia
+        //         result7.noTitulosCetes= data.comp360.noTitulosCetes
+        //         result7.tasaBrutaBonddia= data.comp360.tasaBrutaBonddia
+        //         result7.tasaBrutaCetes= data.comp360.tasaBrutaCetes
+        //
+        //         $('#result-1').show();
+        //         $('#result-3').show();
+        //         $('#result-5').show();
+        //         $('#result-7').show();
+        //         $('#titulosComparar').show();
+        //     }
+        // });
+
+        //validar si sera con re inversión
+        if ($('#check-reinvertir').is(':checked') ) {
+          var data = {}
+          data["monto"] = $('#monto').val();
+          data["plazo"] = $('#plazo').val();
+
+          //obtener los periodos
+          var periodos = $('#myRange').val() / 28;
+          console.log('periodos : ' + parseInt(periodos));
+          data["periodos"] = parseInt(periodos);
+
+          //TODO quitar despues de corregir peticion ajax
+          $('#result-2').show();
+          $('#result-4').show();
+          $('#result-6').show();
+          $('#result-8').show();
+
+          // $.ajax({
+          //     type: "POST",
+  		    //     contentType: "application/json",
+  		    //     url: "calc/cetes/comparar/reinvertir",
+  		    //     data: JSON.stringify(data),
+  		    //     dataType: 'json',
+          //     success: function (data) {
+          //         console.log(data);
+          //         //Resultado para plazo 28
+          //         result2.interesBruto= data.responseCetes28[data.responseCetes28.length - 1].interesBruto
+          //         result2.inversionBonddia= data.responseCetes28[data.responseCetes28.length - 1].inversionBonddia
+          //         result2.inversionCetes= data.responseCetes28[data.responseCetes28.length - 1].inversionCetes
+          //         result2.isr= data.responseCetes28[data.responseCetes28.length - 1].isr
+          //         result2.montoTotal= data.responseCetes28[data.responseCetes28.length - 1].montoTotal
+          //         result2.noTitulosBonddia= data.responseCetes28[data.responseCetes28.length - 1].noTitulosBonddia
+          //         result2.noTitulosCetes= data.responseCetes28[data.responseCetes28.length - 1].noTitulosCetes
+          //         result2.tasaBrutaBonddia= data.responseCetes28[data.responseCetes28.length - 1].tasaBrutaBonddia
+          //         result2.tasaBrutaCetes= data.responseCetes28[data.responseCetes28.length - 1].tasaBrutaCetes
+          //
+          //         //Resultado para plazo 91
+          //         result4.interesBruto= data.responseCetes91[data.responseCetes91.length - 1].interesBruto
+          //         result4.inversionBonddia= data.responseCetes91[data.responseCetes91.length - 1].inversionBonddia
+          //         result4.inversionCetes= data.responseCetes91[data.responseCetes91.length - 1].inversionCetes
+          //         result4.isr= data.responseCetes91[data.responseCetes91.length - 1].isr
+          //         result4.montoTotal= data.responseCetes91[data.responseCetes91.length - 1].montoTotal
+          //         result4.noTitulosBonddia= data.responseCetes91[data.responseCetes91.length - 1].noTitulosBonddia
+          //         result4.noTitulosCetes= data.responseCetes91[data.responseCetes91.length - 1].noTitulosCetes
+          //         result4.tasaBrutaBonddia= data.responseCetes91[data.responseCetes91.length - 1].tasaBrutaBonddia
+          //         result4.tasaBrutaCetes= data.responseCetes91[data.responseCetes91.length - 1].tasaBrutaCetes
+          //
+          //         //Resultado para plazo 182
+          //         result6.interesBruto= data.responseCetes182[data.responseCetes182.length - 1].interesBruto
+          //         result6.inversionBonddia= data.responseCetes182[data.responseCetes182.length - 1].inversionBonddia
+          //         result6.inversionCetes= data.responseCetes182[data.responseCetes182.length - 1].inversionCetes
+          //         result6.isr= data.responseCetes182[data.responseCetes182.length - 1].isr
+          //         result6.montoTotal= data.responseCetes182[data.responseCetes182.length - 1].montoTotal
+          //         result6.noTitulosBonddia= data.responseCetes182[data.responseCetes182.length - 1].noTitulosBonddia
+          //         result6.noTitulosCetes= data.responseCetes182[data.responseCetes182.length - 1].noTitulosCetes
+          //         result6.tasaBrutaBonddia= data.responseCetes182[data.responseCetes182.length - 1].tasaBrutaBonddia
+          //         result6.tasaBrutaCetes= data.responseCetes182[data.responseCetes182.length - 1].tasaBrutaCetes
+          //
+          //         //Resultado para plazo 360
+          //         result8.interesBruto= data.responseCetes360[data.responseCetes360.length - 1].interesBruto
+          //         result8.inversionBonddia= data.responseCetes360[data.responseCetes360.length - 1].inversionBonddia
+          //         result8.inversionCetes= data.responseCetes360[data.responseCetes360.length - 1].inversionCetes
+          //         result8.isr= data.responseCetes360[data.responseCetes360.length - 1].isr
+          //         result8.montoTotal= data.responseCetes360[data.responseCetes360.length - 1].montoTotal
+          //         result8.noTitulosBonddia= data.responseCetes360[data.responseCetes360.length - 1].noTitulosBonddia
+          //         result8.noTitulosCetes= data.responseCetes360[data.responseCetes360.length - 1].noTitulosCetes
+          //         result8.tasaBrutaBonddia= data.responseCetes360[data.responseCetes360.length - 1].tasaBrutaBonddia
+          //         result8.tasaBrutaCetes= data.responseCetes360[data.responseCetes360.length - 1].tasaBrutaCetes
+          //
+          //         $('#result-2').show();
+          //         $('#result-4').show();
+          //         $('#result-6').show();
+          //         $('#result-8').show();
+          //     }
+          // });
+        }else{
+          $('#result-2').hide();
+          $('#result-4').hide();
+          $('#result-6').hide();
+          $('#result-8').hide();
+        }
+
+      }
+    },
+    changeReInvertir: function(){
+      if ($('#check-reinvertir').is(':checked') ) {
+        $('#div-reinvertir').show();
+      }else{
+        $('#div-reinvertir').hide();
+      }
+    }
+  }
+})
+
+//Div graficar
+var divcharts =  new Vue({
+  el: '#div-graficar',
+  methods:{
+    graficar: function(){
+      $('#modalGrafica').modal()
+      var cat = [];
+      var dataSeries = [];
+
+      //Graficar comparar?
+      if(showComparar){
+        var arrayCetes = [];
+        var arrayBonddia = [];
+        cat.push('Periodo CETES 28');
+        cat.push('Periodo CETES 91');
+        cat.push('Periodo CETES 182');
+        cat.push('Periodo CETES 360');
+
+        //Se agregan los data series de n periodos
+        //CETES
+        arrayCetes.push(parseFloat(result1.inversionCetes.replace(',','')));
+        arrayCetes.push(parseFloat(result3.inversionCetes.replace(',','')));
+        arrayCetes.push(parseFloat(result5.inversionCetes.replace(',','')));
+        arrayCetes.push(parseFloat(result7.inversionCetes.replace(',','')));
+
+        //BONDDDIA
+        arrayBonddia.push(parseFloat(result1.inversionBonddia.replace(',','')));
+        arrayBonddia.push(parseFloat(result3.inversionBonddia.replace(',','')));
+        arrayBonddia.push(parseFloat(result5.inversionBonddia.replace(',','')));
+        arrayBonddia.push(parseFloat(result7.inversionBonddia.replace(',','')));
+
+        var datCetes = {
+          name: 'Inversión Cetes',
+          data: arrayCetes
+        }
+        dataSeries.push(datCetes);
+        var datBonddia = {
+          name: 'Inversión Bonddia',
+          data: arrayBonddia
+        }
+        dataSeries.push(datBonddia);
+
+      }else{
+        //Graficar re inversión
+        if($('#check-reinvertir').is(':checked')){
+          var arrayCetes = [];
+          var arrayBonddia = [];
+
+          for(var i=0; i<dataPeridos.length;i++){
+            //Se agregan las catagorias de n periodos
+            cat.push('Periodo ' + (i+1));
+            //Se agregan los data series de n periodos
+            arrayCetes.push(parseFloat(dataPeridos[i].inversionCetes.replace(',','')));
+            arrayBonddia.push(parseFloat(dataPeridos[i].inversionBonddia.replace(',','')));
+          }
+          var datCetes = {
+            name: 'Inversión Cetes',
+            data: arrayCetes
+          }
+          dataSeries.push(datCetes);
+          var datBonddia = {
+            name: 'Inversión Bonddia',
+            data: arrayBonddia
+          }
+          dataSeries.push(datBonddia);
+
+        }else{//graficar solo el resultado inicial
+          cat.push('Periodo 1'); //Categoria
+          var datCetes = {
+            name: 'Inversión Cetes',
+            data: [parseFloat(result1.inversionCetes.replace(',',''))]
+          }
+          dataSeries.push(datCetes);
+          var datBonddia = {
+            name: 'Inversión Bonddia',
+            data: [parseFloat(result1.inversionBonddia.replace(',',''))]
+          }
+          dataSeries.push(datBonddia);
+        }
+      }
+
+      Highcharts.chart('chart', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Inversión Cetes/ Bonddia'
+        },
+        xAxis: {
+            categories: cat
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Inversión'
+            }
+        },
+        tooltip: {
+            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>',
+            shared: true
+        },
+        plotOptions: {
+            column: {
+                stacking: 'percent'
+            }
+        },
+        series:dataSeries
+    });
+    }
+  }
+})
+
+//funcion para validar campos obligatorios
+function validaCampos() {
+  var monto = $('#monto').val();
+  var plazo = $('#plazo').val();
+  if(isEmpty(monto)){
+    $('#errorMonto').show();
+    return false;
+  }else{
+    if(monto > 1 && monto <=10000000){ //debe ser entre 1 y 10 millones
+      $('#errorRangoMonto').hide();
+    }else{
+      $('#errorRangoMonto').show();
+      return false;
+    }
+    $('#errorMonto').hide();
+  }
+  if(isEmpty(plazo)){
+    $('#errorPlazo').show();
+    return false;
+  }
+  else{
+    $('#errorPlazo').hide();
+  }
+  return true;
+}
+
+//slider
+var slider = document.getElementById("myRange");
+var output = document.getElementById("meses-inversion");
+output.innerHTML = slider.value * 12;
+
+slider.oninput = function() {
+  output.innerHTML = this.value * 12;
+}
