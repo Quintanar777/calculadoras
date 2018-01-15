@@ -76,6 +76,10 @@ body{
   margin-left: 25%;
 }
 
+.chart{
+  height: 250px;
+}
+
 input[type="range"]::-moz-range-progress {
   background-color: #1C83C6;
 }

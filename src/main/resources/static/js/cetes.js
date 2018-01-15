@@ -1,3 +1,5 @@
+var dataPeridos;
+
 //Resultado inicial
 var result1 = new Vue({
   el: '#result-1',
@@ -132,8 +134,13 @@ var formCetes = new Vue({
       $('#result-5').hide();
       $('#result-7').hide();
 
+      $('#result-4').hide();
+      $('#result-6').hide();
+      $('#result-8').hide();
+
       if(validaCampos()){ //true si todos los campos son capturados
         console.log('calculando cetes...');
+        $('#div-graficar').show();
 
         var data = {}
         data["monto"] = $('#monto').val();
@@ -180,6 +187,7 @@ var formCetes = new Vue({
   		        dataType: 'json',
               success: function (data) {
                   console.log(data);
+                  dataPeridos = data;
                   result2.interesBruto= data[data.length - 1].interesBruto
                   result2.inversionBonddia= data[data.length - 1].inversionBonddia
                   result2.inversionCetes= data[data.length - 1].inversionCetes
@@ -204,6 +212,7 @@ var formCetes = new Vue({
     comparar: function(){
       if(validaCampos()){ //true si todos los campos son capturados
         console.log('comparando cetes...');
+        $('#div-graficar').show();
 
         var data = {}
         data["monto"] = $('#monto').val();
@@ -357,6 +366,83 @@ var formCetes = new Vue({
   }
 })
 
+//Div graficar
+var divcharts =  new Vue({
+  el: '#div-graficar',
+  methods:{
+    graficar: function(){
+      $('#modalGrafica').modal()
+      var cat = [];
+      var dataSeries = [];
+
+      //Graficar re inversión
+      if($('#check-reinvertir').is(':checked')){
+        var arrayCetes = [];
+        var arrayBonddia = [];
+
+        for(var i=0; i<dataPeridos.length;i++){
+          //Se agregan las catagorias de n periodos
+          cat.push('Periodo ' + (i+1));
+          //Se agregan los data series de n periodos
+          arrayCetes.push(parseInt(dataPeridos[i].inversionCetes.replace(',','')));
+          arrayBonddia.push(parseInt(dataPeridos[i].inversionBonddia.replace(',','')));
+        }
+        var datCetes = {
+          name: 'Inversión Cetes',
+          data: arrayCetes
+        }
+        dataSeries.push(datCetes);
+        var datBonddia = {
+          name: 'Inversión Bonddia',
+          data: arrayBonddia
+        }
+        dataSeries.push(datBonddia);
+
+      }else{//graficar solo el resultado inicial
+        cat.push('Periodo 1'); //Categoria
+        var datCetes = {
+          name: 'Inversión Cetes',
+          data: [parseInt(result1.inversionCetes.replace(',',''))]
+        }
+        dataSeries.push(datCetes);
+        var datBonddia = {
+          name: 'Inversión Bonddia',
+          data: [parseInt(result1.inversionBonddia.replace(',',''))]
+        }
+        dataSeries.push(datBonddia);
+      }
+
+      Highcharts.chart('chart', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Inversión Cetes/ Bonddia'
+        },
+        xAxis: {
+            categories: cat
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Inversión'
+            }
+        },
+        tooltip: {
+            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>',
+            shared: true
+        },
+        plotOptions: {
+            column: {
+                stacking: 'percent'
+            }
+        },
+        series:dataSeries
+    });
+    }
+  }
+})
+
 //funcion para validar campos obligatorios
 function validaCampos() {
   var monto = $('#monto').val();
@@ -382,7 +468,6 @@ function validaCampos() {
   }
   return true;
 }
-
 
 //slider
 var slider = document.getElementById("myRange");
