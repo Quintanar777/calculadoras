@@ -1,7 +1,7 @@
 //var globales
 var dataBondes;
 
-var formCetes = new Vue({
+var formBondes = new Vue({
   el: '#form-bondes',
   data: {
   },
@@ -173,8 +173,6 @@ var graficar = new Vue({
     }
   }
 })
-
-
 
 //funcion para validar campos obligatorios
 function validaCampos() {
