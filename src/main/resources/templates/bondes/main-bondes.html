@@ -65,7 +65,29 @@
           </form>
         </div>
         <div class="col seccion">
-          <div id="tableResult"></div>
+          <div id="tableResult" style="margin-top: 25px; margin-bottom: 25px;"></div>
+          <input id="buttonGraficar" style="display: none;" type="button" name="" value="Graficar" class="button btn-primary" v-on:click="graficar"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modalGrafica" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Grafica CETES</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id="chart" class="chart">
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
         </div>
       </div>
     </div>

@@ -475,6 +475,9 @@ var divcharts =  new Vue({
                 stacking: 'percent'
             }
         },
+        credits: {
+          enabled: false
+        },
         series:dataSeries
     });
     }
