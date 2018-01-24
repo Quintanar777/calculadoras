@@ -402,12 +402,25 @@ var divcharts =  new Vue({
 
         var datCetes = {
           name: 'Inversión Cetes',
-          data: arrayCetes
+          data: arrayCetes,
+          color: '#ed7d31',
+          tooltip: {
+            valuePrefix: '$',
+          },
+          pointPadding: 0.3,
+          pointPlacement: 0.2
         }
         dataSeries.push(datCetes);
         var datBonddia = {
           name: 'Rendimiento',
-          data: arrayBonddia
+          data: arrayBonddia,
+          color: '#4472c4',
+          tooltip: {
+            valuePrefix: '$',
+          },
+          pointPadding: 0.4,
+          pointPlacement: 0.2,
+          yAxis: 1
         }
         dataSeries.push(datBonddia);
 
@@ -425,27 +438,52 @@ var divcharts =  new Vue({
             arrayBonddia.push(parseFloat(dataPeridos[i].interesBruto.replace(',','')));
           }
           var datCetes = {
-            name: 'Inversión Cetes',
-            data: arrayCetes
+            name: 'Inversion',
+            data: arrayCetes,
+            color: '#ed7d31',
+            tooltip: {
+              valuePrefix: '$',
+            },
+            pointPadding: 0.3,
+            pointPlacement: 0.2
           }
           dataSeries.push(datCetes);
           var datBonddia = {
             name: 'Rendimiento',
-            data: arrayBonddia
+            data: arrayBonddia,
+            color: '#4472c4',
+            tooltip: {
+              valuePrefix: '$',
+            },
+            pointPadding: 0.4,
+            pointPlacement: 0.2,
+            yAxis: 1
           }
           dataSeries.push(datBonddia);
 
         }else{//graficar solo el resultado inicial
           cat.push('Periodo 1'); //Categoria
           var datCetes = {
-            name: 'Inversión Cetes',
-            data: [parseFloat(result1.inversionCetes.replace(/[^\d\.\-]/g,''))]
-          
+            name: 'Inversion',
+            data: [parseFloat(result1.inversionCetes.replace(/[^\d\.\-]/g,''))],
+            color: '#ed7d31',
+            tooltip: {
+              valuePrefix: '$',
+            },
+            pointPadding: 0.3,
+            pointPlacement: 0.2
            }
           dataSeries.push(datCetes);
           var datBonddia = {
             name: 'Rendimiento',
-            data: [parseFloat(result1.interesBruto.replace(',',''))]
+            data: [parseFloat(result1.interesBruto.replace(',',''))],
+            color: '#4472c4',
+            tooltip: {
+              valuePrefix: '$',
+            },
+            pointPadding: 0.4,
+            pointPlacement: 0.2,
+            yAxis: 1
           }
           dataSeries.push(datBonddia);
         }
@@ -461,20 +499,30 @@ var divcharts =  new Vue({
         xAxis: {
             categories: cat
         },
-        yAxis: {
+        yAxis: [{
             min: 0,
             title: {
-                text: 'Inversión'
+                text: 'Inversion'
             }
         },
+        {
+          title: {
+            text: 'Rendimiento'
+          },
+            opposite: true
+        }],
+        legend: {
+          shadow: false
+        },
         tooltip: {
-            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>',
             shared: true
         },
         plotOptions: {
-            column: {
-                stacking: 'normal'
-            }
+          column: {
+            grouping: false,
+            shadow: false,
+            borderWidth: 0
+          }
         },
         credits: {
           enabled: false
