@@ -389,16 +389,16 @@ var divcharts =  new Vue({
 
         //Se agregan los data series de n periodos
         //CETES
-        arrayCetes.push(parseFloat(result1.inversionCetes.replace(',','')));
-        arrayCetes.push(parseFloat(result3.inversionCetes.replace(',','')));
-        arrayCetes.push(parseFloat(result5.inversionCetes.replace(',','')));
-        arrayCetes.push(parseFloat(result7.inversionCetes.replace(',','')));
+        arrayCetes.push(parseFloat(result1.inversionCetes.replace(/[^\d\.\-]/g,'')));
+        arrayCetes.push(parseFloat(result3.inversionCetes.replace(/[^\d\.\-]/g,'')));
+        arrayCetes.push(parseFloat(result5.inversionCetes.replace(/[^\d\.\-]/g,'')));
+        arrayCetes.push(parseFloat(result7.inversionCetes.replace(/[^\d\.\-]/g,'')));
 
         //BONDDDIA
-        arrayBonddia.push(parseFloat(result1.inversionBonddia.replace(',','')));
-        arrayBonddia.push(parseFloat(result3.inversionBonddia.replace(',','')));
-        arrayBonddia.push(parseFloat(result5.inversionBonddia.replace(',','')));
-        arrayBonddia.push(parseFloat(result7.inversionBonddia.replace(',','')));
+        arrayBonddia.push(parseFloat(result1.interesBruto.replace(',','')));
+        arrayBonddia.push(parseFloat(result3.interesBruto.replace(',','')));
+        arrayBonddia.push(parseFloat(result5.interesBruto.replace(',','')));
+        arrayBonddia.push(parseFloat(result7.interesBruto.replace(',','')));
 
         var datCetes = {
           name: 'Inversión Cetes',
@@ -406,7 +406,7 @@ var divcharts =  new Vue({
         }
         dataSeries.push(datCetes);
         var datBonddia = {
-          name: 'Inversión Bonddia',
+          name: 'Rendimiento',
           data: arrayBonddia
         }
         dataSeries.push(datBonddia);
@@ -421,8 +421,8 @@ var divcharts =  new Vue({
             //Se agregan las catagorias de n periodos
             cat.push('Periodo ' + (i+1));
             //Se agregan los data series de n periodos
-            arrayCetes.push(parseFloat(dataPeridos[i].inversionCetes.replace(',','')));
-            arrayBonddia.push(parseFloat(dataPeridos[i].inversionBonddia.replace(',','')));
+            arrayCetes.push(parseFloat(dataPeridos[i].inversionCetes.replace(/[^\d\.\-]/g,'')));
+            arrayBonddia.push(parseFloat(dataPeridos[i].interesBruto.replace(',','')));
           }
           var datCetes = {
             name: 'Inversión Cetes',
@@ -430,7 +430,7 @@ var divcharts =  new Vue({
           }
           dataSeries.push(datCetes);
           var datBonddia = {
-            name: 'Inversión Bonddia',
+            name: 'Rendimiento',
             data: arrayBonddia
           }
           dataSeries.push(datBonddia);
@@ -439,12 +439,13 @@ var divcharts =  new Vue({
           cat.push('Periodo 1'); //Categoria
           var datCetes = {
             name: 'Inversión Cetes',
-            data: [parseFloat(result1.inversionCetes.replace(',',''))]
-          }
+            data: [parseFloat(result1.inversionCetes.replace(/[^\d\.\-]/g,''))]
+          
+           }
           dataSeries.push(datCetes);
           var datBonddia = {
-            name: 'Inversión Bonddia',
-            data: [parseFloat(result1.inversionBonddia.replace(',',''))]
+            name: 'Rendimiento',
+            data: [parseFloat(result1.interesBruto.replace(',',''))]
           }
           dataSeries.push(datBonddia);
         }
@@ -455,7 +456,7 @@ var divcharts =  new Vue({
             type: 'column'
         },
         title: {
-            text: 'Inversión Cetes/ Bonddia'
+            text: 'Inversión Cetes'
         },
         xAxis: {
             categories: cat
@@ -472,7 +473,7 @@ var divcharts =  new Vue({
         },
         plotOptions: {
             column: {
-                stacking: 'percent'
+                stacking: 'normal'
             }
         },
         credits: {
@@ -492,7 +493,7 @@ function validaCampos() {
     $('#errorMonto').show();
     return false;
   }else{
-    if(monto > 1 && monto <=10000000){ //debe ser entre 1 y 10 millones
+    if(monto >= 100 && monto <=10000000){ //debe ser entre 100 y 10 millones
       $('#errorRangoMonto').hide();
     }else{
       $('#errorRangoMonto').show();

@@ -182,7 +182,7 @@ function validaCampos() {
     $('#errorMonto').show();
     return false;
   }else{
-    if(monto > 1 && monto <=10000000){ //debe ser entre 1 y 10 millones
+    if(monto >= 100 && monto <=10000000){ //debe ser entre 100 y 10 millones
       $('#errorRangoMonto').hide();
     }else{
       $('#errorRangoMonto').show();

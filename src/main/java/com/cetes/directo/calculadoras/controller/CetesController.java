@@ -46,7 +46,7 @@ public class CetesController {
         logger.debug("monto: " + request.getMonto());
         logger.debug("plazo: " + request.getPlazo());
 
-        CetesDto cetes = cetesDelegate.calcCetes(request.getMonto(), request.getPlazo());
+        CetesDto cetes = cetesDelegate.calcCetes(1,request.getMonto(), request.getPlazo());
         return new ResponseEntity<CetesDto>(cetes, HttpStatus.OK);
     }
 
@@ -64,11 +64,11 @@ public class CetesController {
 
         for(int i=1; i<=request.getPeriodos(); i++){
             if(i==1){
-                CetesDto cetes = cetesDelegate.calcCetes(request.getMonto(), request.getPlazo());
+                CetesDto cetes = cetesDelegate.calcCetes(1,request.getMonto(), request.getPlazo());
                 montoReinvertir = Double.parseDouble(cetes.getMontoTotal().replace(",", ""));
                 requestCetes.add(cetes);
             }else{
-                CetesDto cetes = cetesDelegate.calcCetes(montoReinvertir, Constantes.PLAZO_28);
+                CetesDto cetes = cetesDelegate.calcCetes(i,montoReinvertir, Constantes.PLAZO_28);
                 montoReinvertir = Double.parseDouble(cetes.getMontoTotal().replace(",", ""));
                 requestCetes.add(cetes);
             }
@@ -87,10 +87,10 @@ public class CetesController {
         logger.debug("monto: " + request.getMonto());
 
         Map<String, Object> reponse = new HashMap<>();
-        reponse.put("comp28",cetesDelegate.calcCetes(request.getMonto(), Constantes.PLAZO_28));
-        reponse.put("comp91",cetesDelegate.calcCetes(request.getMonto(), Constantes.PLAZO_91));
-        reponse.put("comp182",cetesDelegate.calcCetes(request.getMonto(), Constantes.PLAZO_182));
-        reponse.put("comp360",cetesDelegate.calcCetes(request.getMonto(), Constantes.PLAZO_360));
+        reponse.put("comp28",cetesDelegate.calcCetes(1,request.getMonto(), Constantes.PLAZO_28));
+        reponse.put("comp91",cetesDelegate.calcCetes(1,request.getMonto(), Constantes.PLAZO_91));
+        reponse.put("comp182",cetesDelegate.calcCetes(1,request.getMonto(), Constantes.PLAZO_182));
+        reponse.put("comp360",cetesDelegate.calcCetes(1,request.getMonto(), Constantes.PLAZO_360));
 
         return new ResponseEntity<Map>(reponse, HttpStatus.OK);
     }
@@ -115,11 +115,11 @@ public class CetesController {
         //Reeinvertir a 28
         for(int i=1; i<=request.getPeriodos(); i++){
             if(i==1){
-                CetesDto cetes = cetesDelegate.calcCetes(request.getMonto(), Constantes.PLAZO_28);
+                CetesDto cetes = cetesDelegate.calcCetes(1,request.getMonto(), Constantes.PLAZO_28);
                 montoReinvertir = Double.parseDouble(cetes.getMontoTotal().replace(",", ""));
                 responseCetes28.add(cetes);
             }else{
-                CetesDto cetes = cetesDelegate.calcCetes(montoReinvertir, Constantes.PLAZO_28);
+                CetesDto cetes = cetesDelegate.calcCetes(i,montoReinvertir, Constantes.PLAZO_28);
                 montoReinvertir = Double.parseDouble(cetes.getMontoTotal().replace(",", ""));
                 responseCetes28.add(cetes);
             }
@@ -130,11 +130,11 @@ public class CetesController {
         //Reeinvertir a 91
         for(int i=1; i<=request.getPeriodos(); i++){
             if(i==1){
-                CetesDto cetes = cetesDelegate.calcCetes(request.getMonto(), Constantes.PLAZO_91);
+                CetesDto cetes = cetesDelegate.calcCetes(1,request.getMonto(), Constantes.PLAZO_91);
                 montoReinvertir = Double.parseDouble(cetes.getMontoTotal().replace(",", ""));
                 responseCetes91.add(cetes);
             }else{
-                CetesDto cetes = cetesDelegate.calcCetes(montoReinvertir, Constantes.PLAZO_28);
+                CetesDto cetes = cetesDelegate.calcCetes(i,montoReinvertir, Constantes.PLAZO_28);
                 montoReinvertir = Double.parseDouble(cetes.getMontoTotal().replace(",", ""));
                 responseCetes91.add(cetes);
             }
@@ -145,11 +145,11 @@ public class CetesController {
         //Reeinvertir a 182
         for(int i=1; i<=request.getPeriodos(); i++){
             if(i==1){
-                CetesDto cetes = cetesDelegate.calcCetes(request.getMonto(), Constantes.PLAZO_182);
+                CetesDto cetes = cetesDelegate.calcCetes(1,request.getMonto(), Constantes.PLAZO_182);
                 montoReinvertir = Double.parseDouble(cetes.getMontoTotal().replace(",", ""));
                 responseCetes182.add(cetes);
             }else{
-                CetesDto cetes = cetesDelegate.calcCetes(montoReinvertir, Constantes.PLAZO_28);
+                CetesDto cetes = cetesDelegate.calcCetes(i,montoReinvertir, Constantes.PLAZO_28);
                 montoReinvertir = Double.parseDouble(cetes.getMontoTotal().replace(",", ""));
                 responseCetes182.add(cetes);
             }
@@ -160,11 +160,11 @@ public class CetesController {
         //Reeinvertir a 360
         for(int i=1; i<=request.getPeriodos(); i++){
             if(i==1){
-                CetesDto cetes = cetesDelegate.calcCetes(request.getMonto(), Constantes.PLAZO_360);
+                CetesDto cetes = cetesDelegate.calcCetes(1,request.getMonto(), Constantes.PLAZO_360);
                 montoReinvertir = Double.parseDouble(cetes.getMontoTotal().replace(",", ""));
                 responseCetes360.add(cetes);
             }else{
-                CetesDto cetes = cetesDelegate.calcCetes(montoReinvertir, Constantes.PLAZO_28);
+                CetesDto cetes = cetesDelegate.calcCetes(i,montoReinvertir, Constantes.PLAZO_28);
                 montoReinvertir = Double.parseDouble(cetes.getMontoTotal().replace(",", ""));
                 responseCetes360.add(cetes);
             }
