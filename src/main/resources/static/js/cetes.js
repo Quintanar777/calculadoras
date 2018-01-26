@@ -143,9 +143,14 @@ var formCetes = new Vue({
       if(validaCampos()){ //true si todos los campos son capturados
         console.log('calculando cetes...');
         $('#div-graficar').show();
+        
+        var monto1 = $('#monto').val();
+        var monto = parseFloat(monto1.replace(/[^\d]/g, ''));
+
 
         var data = {}
-        data["monto"] = $('#monto').val();
+  //      data["monto"] = $('#monto').val();
+        data["monto"] = monto;
         data["plazo"] = $('#plazo').val();
 
         $.ajax({
@@ -172,8 +177,13 @@ var formCetes = new Vue({
 
         //validar si sera con re inversión
         if ($('#check-reinvertir').is(':checked') ) {
+        	
+            var monto1 = $('#monto').val();
+            var monto = parseFloat(monto1.replace(/[^\d]/g, ''));
+
           var data = {}
-          data["monto"] = $('#monto').val();
+    //      data["monto"] = $('#monto').val();
+          data["monto"] = monto;
           data["plazo"] = $('#plazo').val();
 
           //obtener los periodos
@@ -216,9 +226,13 @@ var formCetes = new Vue({
       if(validaCampos()){ //true si todos los campos son capturados
         console.log('comparando cetes...');
         $('#div-graficar').show();
+        
+        var monto1 = $('#monto').val();
+        var monto = parseFloat(monto1.replace(/[^\d]/g, ''));
+
 
         var data = {}
-        data["monto"] = $('#monto').val();
+        data["monto"] = monto;
         data["plazo"] = $('#plazo').val();
 
         $.ajax({
@@ -283,8 +297,13 @@ var formCetes = new Vue({
 
         //validar si sera con re inversión
         if ($('#check-reinvertir').is(':checked') ) {
+        	
+            var monto1 = $('#monto').val();
+            var monto = parseFloat(monto1.replace(/[^\d]/g, ''));
+
+        	
           var data = {}
-          data["monto"] = $('#monto').val();
+          data["monto"] = monto;
           data["plazo"] = $('#plazo').val();
 
           //obtener los periodos
@@ -347,7 +366,7 @@ var formCetes = new Vue({
                   $('#result-2').show();
                   $('#result-4').show();
                   $('#result-6').show();
-                  $('#result-8').show();
+          //	        $('#result-8').show();
               }
           });
         }else{
@@ -535,7 +554,9 @@ var divcharts =  new Vue({
 
 //funcion para validar campos obligatorios
 function validaCampos() {
-  var monto = $('#monto').val();
+  var monto1 = $('#monto').val();
+  var monto = parseFloat(monto1.replace(/[^\d]/g, ''));
+  	
   var plazo = $('#plazo').val();
   if(isEmpty(monto)){
     $('#errorMonto').show();

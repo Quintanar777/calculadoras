@@ -16,6 +16,7 @@ public class CommonsUtil {
     public static String doubleToFormatString(double valDouble) {
         DecimalFormatSymbols simbolos = DecimalFormatSymbols.getInstance(Locale.ENGLISH);
         DecimalFormat myFormatter = new DecimalFormat(PATTERN, simbolos);
+        myFormatter.setMinimumFractionDigits(2);
         return myFormatter.format(valDouble);
     }
 
