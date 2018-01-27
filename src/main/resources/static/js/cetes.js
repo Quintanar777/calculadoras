@@ -143,7 +143,7 @@ var formCetes = new Vue({
       if(validaCampos()){ //true si todos los campos son capturados
         console.log('calculando cetes...');
         $('#div-graficar').show();
-        
+
         var monto1 = $('#monto').val();
         var monto = parseFloat(monto1.replace(/[^\d]/g, ''));
 
@@ -177,7 +177,7 @@ var formCetes = new Vue({
 
         //validar si sera con re inversión
         if ($('#check-reinvertir').is(':checked') ) {
-        	
+
             var monto1 = $('#monto').val();
             var monto = parseFloat(monto1.replace(/[^\d]/g, ''));
 
@@ -187,7 +187,7 @@ var formCetes = new Vue({
           data["plazo"] = $('#plazo').val();
 
           //obtener los periodos
-          var periodos = $('#myRange').val() / 28;
+          var periodos = $('#myRange').val();
           console.log('periodos : ' + parseInt(periodos));
           data["periodos"] = parseInt(periodos);
 
@@ -226,7 +226,7 @@ var formCetes = new Vue({
       if(validaCampos()){ //true si todos los campos son capturados
         console.log('comparando cetes...');
         $('#div-graficar').show();
-        
+
         var monto1 = $('#monto').val();
         var monto = parseFloat(monto1.replace(/[^\d]/g, ''));
 
@@ -297,17 +297,17 @@ var formCetes = new Vue({
 
         //validar si sera con re inversión
         if ($('#check-reinvertir').is(':checked') ) {
-        	
+
             var monto1 = $('#monto').val();
             var monto = parseFloat(monto1.replace(/[^\d]/g, ''));
 
-        	
+
           var data = {}
           data["monto"] = monto;
           data["plazo"] = $('#plazo').val();
 
           //obtener los periodos
-          var periodos = $('#myRange').val() / 28;
+          var periodos = $('#myRange').val() * 28;
           console.log('periodos : ' + parseInt(periodos));
           data["periodos"] = parseInt(periodos);
 
@@ -363,10 +363,22 @@ var formCetes = new Vue({
                   result8.tasaBrutaBonddia= data.responseCetes360[data.responseCetes360.length - 1].tasaBrutaBonddia
                   result8.tasaBrutaCetes= data.responseCetes360[data.responseCetes360.length - 1].tasaBrutaCetes
 
-                  $('#result-2').show();
-                  $('#result-4').show();
-                  $('#result-6').show();
-          //	        $('#result-8').show();
+                  console.log('mostrar re inversio - comparar: ' );
+                  if($('#plazo').val() == '28'){
+                    $('#result-2').show();
+                    $('#result-4').hide();
+                    $('#result-6').hide();
+                  }
+                  if($('#plazo').val() == '91'){
+                    $('#result-2').show();
+                    $('#result-4').show();
+                    $('#result-6').hide();
+                  }
+                  if($('#plazo').val() == '182' || $('#plazo').val() == '360'){
+                    $('#result-2').show();
+                    $('#result-4').show();
+                    $('#result-6').show();
+                  }
               }
           });
         }else{
@@ -556,7 +568,7 @@ var divcharts =  new Vue({
 function validaCampos() {
   var monto1 = $('#monto').val();
   var monto = parseFloat(monto1.replace(/[^\d]/g, ''));
-  	
+
   var plazo = $('#plazo').val();
   if(isEmpty(monto)){
     $('#errorMonto').show();
@@ -583,8 +595,8 @@ function validaCampos() {
 //slider
 var slider = document.getElementById("myRange");
 var output = document.getElementById("dias-inversion");
-output.innerHTML = slider.value;
+output.innerHTML = slider.value * 28;
 
 slider.oninput = function() {
-  output.innerHTML = this.value;
+  output.innerHTML = this.value * 28;
 }
