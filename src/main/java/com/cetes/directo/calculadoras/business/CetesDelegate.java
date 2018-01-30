@@ -55,7 +55,7 @@ public class CetesDelegate {
         
  
         
-		double arreglo[] = new double [13];
+		double arreglo[] = new double [14];
 		
 		double precioXcete = CommonsUtil.round(valorCete*(1-(tasaDecuento/36000*plazo)),7);
 		double tasaCetes = ((valorCete/precioXcete)-1)/plazo*360;
@@ -76,6 +76,8 @@ public class CetesDelegate {
 		double titulosBondia = montoRealBonddia/valorBonddia;
 		double total = montoRealCetes+intBrutosCetes+montoRealBonddia+intBrutosBonddia+remanente-impuestoCetes;
 
+		double intBrutosTotal = intBrutosCetes + intBrutosBonddia;
+		
 		tasaCetes = CommonsUtil.round(tasaCetes*100,2);
 	    tasaBonddia = CommonsUtil.round(tasaBonddia*100,2);
 	    
@@ -92,6 +94,7 @@ public class CetesDelegate {
 		arreglo[10] = titulosBondia;
 		arreglo[11] = total;
 		arreglo[12] = remanente;
+		arreglo[13] = intBrutosTotal;
 		
         cetes.setNoTitulosCetes(arreglo[5]);
         cetes.setTasaBruta(arreglo[4]);
@@ -100,7 +103,7 @@ public class CetesDelegate {
         cetes.setTasaBrutaBonddia(arreglo[8]);
         
         cetes.setInversionBonddia(arreglo[6]);
-        cetes.setInteresBruto(arreglo[2]);
+        cetes.setInteresBruto(arreglo[13]);
         cetes.setIsr(arreglo[3]);
         cetes.setMontoTotal(arreglo[11]);
 

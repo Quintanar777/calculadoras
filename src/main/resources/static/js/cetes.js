@@ -178,8 +178,11 @@ var formCetes = new Vue({
         //validar si sera con re inversión
         if ($('#check-reinvertir').is(':checked') ) {
 
-            var monto1 = $('#monto').val();
-            var monto = parseFloat(monto1.replace(/[^\d]/g, ''));
+     //       var monto1 = $('#monto').val();
+        	
+        	var monto = result1.montoTotal;
+        	
+            //var monto = parseFloat(monto1.replace(/[^\d]/g, ''));
 
           var data = {}
     //      data["monto"] = $('#monto').val();
@@ -226,6 +229,7 @@ var formCetes = new Vue({
       if(validaCampos()){ //true si todos los campos son capturados
         console.log('comparando cetes...');
         $('#div-graficar').show();
+        
 
         var monto1 = $('#monto').val();
         var monto = parseFloat(monto1.replace(/[^\d]/g, ''));
@@ -307,7 +311,7 @@ var formCetes = new Vue({
           data["plazo"] = $('#plazo').val();
 
           //obtener los periodos
-          var periodos = $('#myRange').val() * 28;
+          var periodos = parseInt($('#myRange').val()) + 1;
           console.log('periodos : ' + parseInt(periodos));
           data["periodos"] = parseInt(periodos);
 
