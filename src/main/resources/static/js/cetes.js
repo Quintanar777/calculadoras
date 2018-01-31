@@ -172,56 +172,52 @@ var formCetes = new Vue({
                 result1.tasaBrutaCetes= data.tasaBrutaCetes
 
                 $('#result-1').show();
+
+                //validar si sera con re inversión
+                if ($('#check-reinvertir').is(':checked') ) {
+
+                  var monto1 = $('#monto').val();
+                  var monto = parseFloat(monto1.replace(/[^\d]/g, ''));
+
+                  var data = {}
+
+                  data["monto"] = monto;
+                  data["plazo"] = $('#plazo').val();
+
+                  //obtener los periodos
+                  var periodos =  parseInt($('#myRange').val()) + 1;
+                  console.log('periodos : ' + parseInt(periodos));
+                  data["periodos"] = parseInt(periodos);
+
+                  $.ajax({
+                      type: "POST",
+                      contentType: "application/json",
+                      url: "calc/cetes/reinvertir",
+                      data: JSON.stringify(data),
+                      dataType: 'json',
+                      success: function (data) {
+                          console.log(data);
+                          dataPeridos = data;
+                          result2.interesBruto= data[data.length - 1].interesBruto
+                          result2.inversionBonddia= data[data.length - 1].inversionBonddia
+                          result2.inversionCetes= data[data.length - 1].inversionCetes
+                          result2.isr= data[data.length - 1].isr
+                          result2.montoTotal= data[data.length - 1].montoTotal
+                          result2.noTitulosBonddia= data[data.length - 1].noTitulosBonddia
+                          result2.noTitulosCetes= data[data.length - 1].noTitulosCetes
+                          result2.tasaBrutaBonddia= data[data.length - 1].tasaBrutaBonddia
+                          result2.tasaBrutaCetes= data[data.length - 1].tasaBrutaCetes
+                          $('#result-2').show();
+                          $('#labelReinvertir').show();
+                      }
+                  });
+
+                }else{
+                  $('#result-2').hide();
+                  $('#labelReinvertir').hide();
+                }
             }
         });
-
-        //validar si sera con re inversión
-        if ($('#check-reinvertir').is(':checked') ) {
-
-     //       var monto1 = $('#monto').val();
-        	
-        	var monto = result1.montoTotal;
-        	
-            //var monto = parseFloat(monto1.replace(/[^\d]/g, ''));
-
-          var data = {}
-    //      data["monto"] = $('#monto').val();
-          data["monto"] = monto;
-          data["plazo"] = $('#plazo').val();
-
-          //obtener los periodos
-          var periodos = $('#myRange').val();
-          console.log('periodos : ' + parseInt(periodos));
-          data["periodos"] = parseInt(periodos);
-
-          $.ajax({
-              type: "POST",
-  		        contentType: "application/json",
-  		        url: "calc/cetes/reinvertir",
-  		        data: JSON.stringify(data),
-  		        dataType: 'json',
-              success: function (data) {
-                  console.log(data);
-                  dataPeridos = data;
-                  result2.interesBruto= data[data.length - 1].interesBruto
-                  result2.inversionBonddia= data[data.length - 1].inversionBonddia
-                  result2.inversionCetes= data[data.length - 1].inversionCetes
-                  result2.isr= data[data.length - 1].isr
-                  result2.montoTotal= data[data.length - 1].montoTotal
-                  result2.noTitulosBonddia= data[data.length - 1].noTitulosBonddia
-                  result2.noTitulosCetes= data[data.length - 1].noTitulosCetes
-                  result2.tasaBrutaBonddia= data[data.length - 1].tasaBrutaBonddia
-                  result2.tasaBrutaCetes= data[data.length - 1].tasaBrutaCetes
-                  $('#result-2').show();
-                  $('#labelReinvertir').show();
-              }
-          });
-
-        }else{
-          $('#result-2').hide();
-          $('#labelReinvertir').hide();
-        }
-
       }
     },
     comparar: function(){
@@ -229,7 +225,6 @@ var formCetes = new Vue({
       if(validaCampos()){ //true si todos los campos son capturados
         console.log('comparando cetes...');
         $('#div-graficar').show();
-        
 
         var monto1 = $('#monto').val();
         var monto = parseFloat(monto1.replace(/[^\d]/g, ''));
@@ -296,101 +291,105 @@ var formCetes = new Vue({
                 $('#result-5').show();
                 $('#result-7').show();
                 $('#titulosComparar').show();
+
+                //validar si sera con re inversión
+                if ($('#check-reinvertir').is(':checked') ) {
+
+                  var monto1 = $('#monto').val();
+                  var monto = parseFloat(monto1.replace(/[^\d]/g, ''));
+
+
+                  var data = {}
+                  data["monto"] = monto;
+                  data["plazo"] = $('#plazo').val();
+
+                  //obtener los periodos
+                  var periodos =parseInt($('#myRange').val()) + 1;
+                  console.log('periodos : ' + parseInt(periodos));
+                  data["periodos"] = parseInt(periodos);
+
+                  $.ajax({
+                      type: "POST",
+          		        contentType: "application/json",
+          		        url: "calc/cetes/comparar/reinvertir",
+          		        data: JSON.stringify(data),
+          		        dataType: 'json',
+                      success: function (data) {
+                          console.log(data);
+                          //Resultado para plazo 28
+                          result2.interesBruto= data.responseCetes28[data.responseCetes28.length - 1].interesBruto
+                          result2.inversionBonddia= data.responseCetes28[data.responseCetes28.length - 1].inversionBonddia
+                          result2.inversionCetes= data.responseCetes28[data.responseCetes28.length - 1].inversionCetes
+                          result2.isr= data.responseCetes28[data.responseCetes28.length - 1].isr
+                          result2.montoTotal= data.responseCetes28[data.responseCetes28.length - 1].montoTotal
+                          result2.noTitulosBonddia= data.responseCetes28[data.responseCetes28.length - 1].noTitulosBonddia
+                          result2.noTitulosCetes= data.responseCetes28[data.responseCetes28.length - 1].noTitulosCetes
+                          result2.tasaBrutaBonddia= data.responseCetes28[data.responseCetes28.length - 1].tasaBrutaBonddia
+                          result2.tasaBrutaCetes= data.responseCetes28[data.responseCetes28.length - 1].tasaBrutaCetes
+
+                          //Resultado para plazo 91
+                          result4.interesBruto= data.responseCetes91[data.responseCetes91.length - 1].interesBruto
+                          result4.inversionBonddia= data.responseCetes91[data.responseCetes91.length - 1].inversionBonddia
+                          result4.inversionCetes= data.responseCetes91[data.responseCetes91.length - 1].inversionCetes
+                          result4.isr= data.responseCetes91[data.responseCetes91.length - 1].isr
+                          result4.montoTotal= data.responseCetes91[data.responseCetes91.length - 1].montoTotal
+                          result4.noTitulosBonddia= data.responseCetes91[data.responseCetes91.length - 1].noTitulosBonddia
+                          result4.noTitulosCetes= data.responseCetes91[data.responseCetes91.length - 1].noTitulosCetes
+                          result4.tasaBrutaBonddia= data.responseCetes91[data.responseCetes91.length - 1].tasaBrutaBonddia
+                          result4.tasaBrutaCetes= data.responseCetes91[data.responseCetes91.length - 1].tasaBrutaCetes
+
+                          //Resultado para plazo 182
+                          result6.interesBruto= data.responseCetes182[data.responseCetes182.length - 1].interesBruto
+                          result6.inversionBonddia= data.responseCetes182[data.responseCetes182.length - 1].inversionBonddia
+                          result6.inversionCetes= data.responseCetes182[data.responseCetes182.length - 1].inversionCetes
+                          result6.isr= data.responseCetes182[data.responseCetes182.length - 1].isr
+                          result6.montoTotal= data.responseCetes182[data.responseCetes182.length - 1].montoTotal
+                          result6.noTitulosBonddia= data.responseCetes182[data.responseCetes182.length - 1].noTitulosBonddia
+                          result6.noTitulosCetes= data.responseCetes182[data.responseCetes182.length - 1].noTitulosCetes
+                          result6.tasaBrutaBonddia= data.responseCetes182[data.responseCetes182.length - 1].tasaBrutaBonddia
+                          result6.tasaBrutaCetes= data.responseCetes182[data.responseCetes182.length - 1].tasaBrutaCetes
+
+                          //Resultado para plazo 360
+                          result8.interesBruto= data.responseCetes360[data.responseCetes360.length - 1].interesBruto
+                          result8.inversionBonddia= data.responseCetes360[data.responseCetes360.length - 1].inversionBonddia
+                          result8.inversionCetes= data.responseCetes360[data.responseCetes360.length - 1].inversionCetes
+                          result8.isr= data.responseCetes360[data.responseCetes360.length - 1].isr
+                          result8.montoTotal= data.responseCetes360[data.responseCetes360.length - 1].montoTotal
+                          result8.noTitulosBonddia= data.responseCetes360[data.responseCetes360.length - 1].noTitulosBonddia
+                          result8.noTitulosCetes= data.responseCetes360[data.responseCetes360.length - 1].noTitulosCetes
+                          result8.tasaBrutaBonddia= data.responseCetes360[data.responseCetes360.length - 1].tasaBrutaBonddia
+                          result8.tasaBrutaCetes= data.responseCetes360[data.responseCetes360.length - 1].tasaBrutaCetes
+
+                          console.log('mostrar re inversio - comparar: ' );
+                          if($('#plazo').val() == '28'){
+                            $('#result-2').show();
+                            $('#result-4').hide();
+                            $('#result-6').hide();
+                          }
+                          if($('#plazo').val() == '91'){
+                            $('#result-2').show();
+                            $('#result-4').show();
+                            $('#result-6').hide();
+                          }
+                          if($('#plazo').val() == '182' || $('#plazo').val() == '360'){
+                            $('#result-2').show();
+                            $('#result-4').show();
+                            $('#result-6').show();
+                          }
+                      }
+                  });
+                }else{
+                  $('#result-2').hide();
+                  $('#result-4').hide();
+                  $('#result-6').hide();
+                  $('#result-8').hide();
+                }
+
+
             }
         });
 
-        //validar si sera con re inversión
-        if ($('#check-reinvertir').is(':checked') ) {
 
-            var monto1 = $('#monto').val();
-            var monto = parseFloat(monto1.replace(/[^\d]/g, ''));
-
-
-          var data = {}
-          data["monto"] = monto;
-          data["plazo"] = $('#plazo').val();
-
-          //obtener los periodos
-          var periodos = parseInt($('#myRange').val()) + 1;
-          console.log('periodos : ' + parseInt(periodos));
-          data["periodos"] = parseInt(periodos);
-
-          $.ajax({
-              type: "POST",
-  		        contentType: "application/json",
-  		        url: "calc/cetes/comparar/reinvertir",
-  		        data: JSON.stringify(data),
-  		        dataType: 'json',
-              success: function (data) {
-                  console.log(data);
-                  //Resultado para plazo 28
-                  result2.interesBruto= data.responseCetes28[data.responseCetes28.length - 1].interesBruto
-                  result2.inversionBonddia= data.responseCetes28[data.responseCetes28.length - 1].inversionBonddia
-                  result2.inversionCetes= data.responseCetes28[data.responseCetes28.length - 1].inversionCetes
-                  result2.isr= data.responseCetes28[data.responseCetes28.length - 1].isr
-                  result2.montoTotal= data.responseCetes28[data.responseCetes28.length - 1].montoTotal
-                  result2.noTitulosBonddia= data.responseCetes28[data.responseCetes28.length - 1].noTitulosBonddia
-                  result2.noTitulosCetes= data.responseCetes28[data.responseCetes28.length - 1].noTitulosCetes
-                  result2.tasaBrutaBonddia= data.responseCetes28[data.responseCetes28.length - 1].tasaBrutaBonddia
-                  result2.tasaBrutaCetes= data.responseCetes28[data.responseCetes28.length - 1].tasaBrutaCetes
-
-                  //Resultado para plazo 91
-                  result4.interesBruto= data.responseCetes91[data.responseCetes91.length - 1].interesBruto
-                  result4.inversionBonddia= data.responseCetes91[data.responseCetes91.length - 1].inversionBonddia
-                  result4.inversionCetes= data.responseCetes91[data.responseCetes91.length - 1].inversionCetes
-                  result4.isr= data.responseCetes91[data.responseCetes91.length - 1].isr
-                  result4.montoTotal= data.responseCetes91[data.responseCetes91.length - 1].montoTotal
-                  result4.noTitulosBonddia= data.responseCetes91[data.responseCetes91.length - 1].noTitulosBonddia
-                  result4.noTitulosCetes= data.responseCetes91[data.responseCetes91.length - 1].noTitulosCetes
-                  result4.tasaBrutaBonddia= data.responseCetes91[data.responseCetes91.length - 1].tasaBrutaBonddia
-                  result4.tasaBrutaCetes= data.responseCetes91[data.responseCetes91.length - 1].tasaBrutaCetes
-
-                  //Resultado para plazo 182
-                  result6.interesBruto= data.responseCetes182[data.responseCetes182.length - 1].interesBruto
-                  result6.inversionBonddia= data.responseCetes182[data.responseCetes182.length - 1].inversionBonddia
-                  result6.inversionCetes= data.responseCetes182[data.responseCetes182.length - 1].inversionCetes
-                  result6.isr= data.responseCetes182[data.responseCetes182.length - 1].isr
-                  result6.montoTotal= data.responseCetes182[data.responseCetes182.length - 1].montoTotal
-                  result6.noTitulosBonddia= data.responseCetes182[data.responseCetes182.length - 1].noTitulosBonddia
-                  result6.noTitulosCetes= data.responseCetes182[data.responseCetes182.length - 1].noTitulosCetes
-                  result6.tasaBrutaBonddia= data.responseCetes182[data.responseCetes182.length - 1].tasaBrutaBonddia
-                  result6.tasaBrutaCetes= data.responseCetes182[data.responseCetes182.length - 1].tasaBrutaCetes
-
-                  //Resultado para plazo 360
-                  result8.interesBruto= data.responseCetes360[data.responseCetes360.length - 1].interesBruto
-                  result8.inversionBonddia= data.responseCetes360[data.responseCetes360.length - 1].inversionBonddia
-                  result8.inversionCetes= data.responseCetes360[data.responseCetes360.length - 1].inversionCetes
-                  result8.isr= data.responseCetes360[data.responseCetes360.length - 1].isr
-                  result8.montoTotal= data.responseCetes360[data.responseCetes360.length - 1].montoTotal
-                  result8.noTitulosBonddia= data.responseCetes360[data.responseCetes360.length - 1].noTitulosBonddia
-                  result8.noTitulosCetes= data.responseCetes360[data.responseCetes360.length - 1].noTitulosCetes
-                  result8.tasaBrutaBonddia= data.responseCetes360[data.responseCetes360.length - 1].tasaBrutaBonddia
-                  result8.tasaBrutaCetes= data.responseCetes360[data.responseCetes360.length - 1].tasaBrutaCetes
-
-                  console.log('mostrar re inversio - comparar: ' );
-                  if($('#plazo').val() == '28'){
-                    $('#result-2').show();
-                    $('#result-4').hide();
-                    $('#result-6').hide();
-                  }
-                  if($('#plazo').val() == '91'){
-                    $('#result-2').show();
-                    $('#result-4').show();
-                    $('#result-6').hide();
-                  }
-                  if($('#plazo').val() == '182' || $('#plazo').val() == '360'){
-                    $('#result-2').show();
-                    $('#result-4').show();
-                    $('#result-6').show();
-                  }
-              }
-          });
-        }else{
-          $('#result-2').hide();
-          $('#result-4').hide();
-          $('#result-6').hide();
-          $('#result-8').hide();
-        }
 
       }
     },
@@ -599,8 +598,8 @@ function validaCampos() {
 //slider
 var slider = document.getElementById("myRange");
 var output = document.getElementById("dias-inversion");
-output.innerHTML = slider.value * 28;
+output.innerHTML = slider.value;
 
 slider.oninput = function() {
-  output.innerHTML = this.value * 28;
+  output.innerHTML = this.value;
 }

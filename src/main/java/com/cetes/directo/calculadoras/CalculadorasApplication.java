@@ -7,9 +7,10 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.web.WebApplicationInitializer;
 
 @SpringBootApplication
-public class CalculadorasApplication extends SpringBootServletInitializer {
+public class CalculadorasApplication extends SpringBootServletInitializer implements WebApplicationInitializer {
 
     @Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -23,7 +24,7 @@ public class CalculadorasApplication extends SpringBootServletInitializer {
 	@Bean
 	public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
 		PropertySourcesPlaceholderConfigurer properties = new PropertySourcesPlaceholderConfigurer();
-		properties.setLocation(new FileSystemResource("/opt/calculadoras/config.properties"));
+		properties.setLocation(new FileSystemResource("/oracle2/svd/calculadoras/config.properties"));
 		properties.setIgnoreResourceNotFound(false);
 
 		return properties;
