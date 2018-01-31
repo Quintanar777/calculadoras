@@ -12,9 +12,14 @@ import org.springframework.web.WebApplicationInitializer;
 @SpringBootApplication
 public class CalculadorasApplication extends SpringBootServletInitializer implements WebApplicationInitializer {
 
-    @Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(CalculadorasApplication.class);
+//    @Override
+//	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+//		return application.sources(CalculadorasApplication.class);
+//	}
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		return builder.sources(CalculadorasApplication.class);
 	}
 
 	public static void main(String[] args) {
