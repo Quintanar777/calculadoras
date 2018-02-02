@@ -175,9 +175,9 @@ public class BondesController {
             tabla.append("<tr>");
             tabla.append("<th></th>");
             //obtener el numero de semestres
-            int numSem = request.getPlazo() /6;
+            int numSem = request.getPlazo() /12;
             for(int i=1; i<= numSem; i++){
-                tabla.append("<th>Semestre ").append(i).append("</th>");
+                tabla.append("<th>Año ").append(i).append("</th>");
             }
 
             tabla.append("</tr>");
@@ -185,62 +185,25 @@ public class BondesController {
 
             tabla.append("<tbody>");
 
-            //Se crea el contenido
+            //Se crea el
             tabla.append("<tr>");
-            tabla.append("<td>Monto Bondes</td>");
-            int auxIndex = 5;
+            tabla.append("<td>Inversion</td>");
+            int auxIndex = 11;
             while(auxIndex<= calcBondesResponse.size()){
                 BondesDto bondes = calcBondesResponse.get(auxIndex);
-                auxIndex += 6;
+                auxIndex += 12;
                 tabla.append("<td>");
-                tabla.append(bondes.getMontoBondes());
+                tabla.append(bondes.getInversion());
                 tabla.append("</td>");
             }
             tabla.append("</tr>");
 
             tabla.append("<tr>");
-            tabla.append("<td>Monto Cetes</td>");
-            auxIndex = 5;
+            tabla.append("<td>Rendimiento</td>");
+            auxIndex = 11;
             while(auxIndex<= calcBondesResponse.size()){
                 BondesDto bondes = calcBondesResponse.get(auxIndex);
-                auxIndex += 6;
-                tabla.append("<td>");
-                tabla.append(bondes.getMontoCetes());
-                tabla.append("</td>");
-            }
-            tabla.append("</tr>");
-
-            tabla.append("<tr>");
-            tabla.append("<td>Monto Bonddia</td>");
-            auxIndex = 5;
-            while(auxIndex<= calcBondesResponse.size()){
-                BondesDto bondes = calcBondesResponse.get(auxIndex);
-                auxIndex += 6;
-                tabla.append("<td>");
-                tabla.append(bondes.getMontoBonddia());
-                tabla.append("</td>");
-            }
-            tabla.append("</tr>");
-
-            tabla.append("<tr>");
-            tabla.append("<td>Corte cupon</td>");
-            auxIndex = 5;
-            while(auxIndex<= calcBondesResponse.size()){
-                BondesDto bondes = calcBondesResponse.get(auxIndex);
-                auxIndex += 6;
-                tabla.append("<td>");
-                tabla.append(bondes.getCorteCupon());
-                tabla.append("</td>");
-            }
-            tabla.append("</tr>");
-
-
-            tabla.append("<tr>");
-            tabla.append("<td>Rendimiento Bondes</td>");
-            auxIndex = 5;
-            while(auxIndex<= calcBondesResponse.size()){
-                BondesDto bondes = calcBondesResponse.get(auxIndex);
-                auxIndex += 6;
+                auxIndex += 12;
                 tabla.append("<td>");
                 tabla.append(bondes.getRendimiento());
                 tabla.append("</td>");
@@ -248,11 +211,59 @@ public class BondesController {
             tabla.append("</tr>");
 
             tabla.append("<tr>");
-            tabla.append("<td>Rendimiento Cetes</td>");
-            auxIndex = 5;
+            tabla.append("<td>ISR</td>");
+            auxIndex = 11;
             while(auxIndex<= calcBondesResponse.size()){
                 BondesDto bondes = calcBondesResponse.get(auxIndex);
-                auxIndex += 6;
+                auxIndex += 12;
+                tabla.append("<td>");
+                tabla.append(bondes.getIsr());
+                tabla.append("</td>");
+            }
+            tabla.append("</tr>");
+
+            tabla.append("<tr>");
+            tabla.append("<td>Total</td>");
+            auxIndex = 11;
+            while(auxIndex<= calcBondesResponse.size()){
+                BondesDto bondes = calcBondesResponse.get(auxIndex);
+                auxIndex += 12;
+                tabla.append("<td>");
+                tabla.append(bondes.getTotal());
+                tabla.append("</td>");
+            }
+            tabla.append("</tr>");
+
+            tabla.append("<tr>");
+            tabla.append("<td>Remanente p/Cetes</td>");
+            auxIndex = 11;
+            while(auxIndex<= calcBondesResponse.size()){
+                BondesDto bondes = calcBondesResponse.get(auxIndex);
+                auxIndex += 12;
+                tabla.append("<td>");
+                tabla.append(bondes.getRemanenteCetes());
+                tabla.append("</td>");
+            }
+            tabla.append("</tr>");
+
+            tabla.append("<tr>");
+            tabla.append("<td>Monto p/Cetes</td>");
+            auxIndex = 11;
+            while(auxIndex<= calcBondesResponse.size()){
+                BondesDto bondes = calcBondesResponse.get(auxIndex);
+                auxIndex += 12;
+                tabla.append("<td>");
+                tabla.append(bondes.getMontoCetes());
+                tabla.append("</td>");
+            }
+            tabla.append("</tr>");
+
+            tabla.append("<tr>");
+            tabla.append("<td>Rendimiento Cetes</td>");
+            auxIndex = 11;
+            while(auxIndex<= calcBondesResponse.size()){
+                BondesDto bondes = calcBondesResponse.get(auxIndex);
+                auxIndex += 12;
                 tabla.append("<td>");
                 tabla.append(bondes.getRendimientoCetes());
                 tabla.append("</td>");
@@ -260,11 +271,59 @@ public class BondesController {
             tabla.append("</tr>");
 
             tabla.append("<tr>");
-            tabla.append("<td>Rendimiento Bonddia</td>");
-            auxIndex = 5;
+            tabla.append("<td>Impuesto Cetes</td>");
+            auxIndex = 11;
             while(auxIndex<= calcBondesResponse.size()){
                 BondesDto bondes = calcBondesResponse.get(auxIndex);
-                auxIndex += 6;
+                auxIndex += 12;
+                tabla.append("<td>");
+                tabla.append(bondes.getImpuestoCetes());
+                tabla.append("</td>");
+            }
+            tabla.append("</tr>");
+
+            tabla.append("<tr>");
+            tabla.append("<td>Remanentes p/Bonddia</td>");
+            auxIndex = 11;
+            while(auxIndex<= calcBondesResponse.size()){
+                BondesDto bondes = calcBondesResponse.get(auxIndex);
+                auxIndex += 12;
+                tabla.append("<td>");
+                tabla.append(bondes.getRemanenteBonddia());
+                tabla.append("</td>");
+            }
+            tabla.append("</tr>");
+
+            tabla.append("<tr>");
+            tabla.append("<td>Monto p/Bonddia</td>");
+            auxIndex = 11;
+            while(auxIndex<= calcBondesResponse.size()){
+                BondesDto bondes = calcBondesResponse.get(auxIndex);
+                auxIndex += 12;
+                tabla.append("<td>");
+                tabla.append(bondes.getMontoBonddia());
+                tabla.append("</td>");
+            }
+            tabla.append("</tr>");
+
+            tabla.append("<tr>");
+            tabla.append("<td>Rendimiento Bonddia</td>");
+            auxIndex = 11;
+            while(auxIndex<= calcBondesResponse.size()){
+                BondesDto bondes = calcBondesResponse.get(auxIndex);
+                auxIndex += 12;
+                tabla.append("<td>");
+                tabla.append(bondes.getRendimientoBonddia());
+                tabla.append("</td>");
+            }
+            tabla.append("</tr>");
+
+            tabla.append("<tr>");
+            tabla.append("<td>Rendimiento Bonddia</td>");
+            auxIndex = 11;
+            while(auxIndex<= calcBondesResponse.size()){
+                BondesDto bondes = calcBondesResponse.get(auxIndex);
+                auxIndex += 12;
                 tabla.append("<td>");
                 tabla.append(bondes.getRendimientoBonddia());
                 tabla.append("</td>");
@@ -273,10 +332,10 @@ public class BondesController {
 
             tabla.append("<tr>");
             tabla.append("<td>Remanentes</td>");
-            auxIndex = 5;
+            auxIndex = 11;
             while(auxIndex<= calcBondesResponse.size()){
                 BondesDto bondes = calcBondesResponse.get(auxIndex);
-                auxIndex += 6;
+                auxIndex += 12;
                 tabla.append("<td>");
                 tabla.append(bondes.getRemanentes());
                 tabla.append("</td>");

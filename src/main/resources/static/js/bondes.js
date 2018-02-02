@@ -81,96 +81,48 @@ var graficar = new Vue({
         }
         dataSeries.push(rendimiento);
 
-
-        // var arrayMontoBondes = [];
-        // for(var i=0; i<dataBondes.result.length;i++){
-        //   arrayMontoBondes.push(parseFloat(dataBondes.result[i].montoBondes.replace(',','')));
-        // }
-        // var datMontoBondes = {
-        //   name: 'Monto Bondes',
-        //   data: arrayMontoBondes
-        // }
-        //
-        // var arrayMontoCetes = [];
-        // for(var i=0; i<dataBondes.result.length;i++){
-        //   arrayMontoCetes.push(parseFloat(dataBondes.result[i].montoCetes.replace(',','')));
-        // }
-        // var datMontoCetes = {
-        //   name: 'Monto Cetes',
-        //   data: arrayMontoCetes
-        // }
-        //
-        // var arrayMontoBonddia = [];
-        // for(var i=0; i<dataBondes.result.length;i++){
-        //   arrayMontoBonddia.push(parseFloat(dataBondes.result[i].montoBonddia.replace(',','')));
-        // }
-        // var datMontoBonddia = {
-        //   name: 'Monto Bonddia',
-        //   data: arrayMontoBonddia
-        // }
-        //
-        // var arrayCorteCupon = [];
-        // for(var i=0; i<dataBondes.result.length;i++){
-        //   arrayCorteCupon.push(parseFloat(dataBondes.result[i].corteCupon.replace(',','')));
-        // }
-        // var datCorteCupon = {
-        //   name: 'Corte cupon',
-        //   data: arrayCorteCupon
-        // }
-        // dataSeries.push(datMontoBondes);
-        // dataSeries.push(datMontoCetes);
-        // dataSeries.push(datMontoBonddia);
-        // dataSeries.push(datCorteCupon);
-
       }else{
         cat = [];
         dataSeries = [];
         //crear categorias
-        var  numCat = $('#plazo').val()/6
+        var  numCat = $('#plazo').val()/12
         for(var i=1; i<=numCat; i++){
-          cat.push('Semestre ' + i);
+          cat.push('Año ' + i);
         }
 
         //Crear series
-        var arrayMontoBondes = [];
-        for(var i=5; i<dataBondes.result.length;i+=6){
-          arrayMontoBondes.push(parseFloat(dataBondes.result[i].montoBondes.replace(',','')));
+        var arrayInversion = [];
+        for(var i=11; i<dataBondes.result.length;i+=12){
+          arrayInversion.push(parseFloat(dataBondes.result[i].inversion.replace(/[^\d\.\-]/g,'')));
         }
-        var datMontoBondes = {
-          name: 'Monto Bondes',
-          data: arrayMontoBondes
-        }
+        var inversion = {
+          name: 'Inversion',
+          data: arrayInversion,
+          color: '#ed7d31',
+          tooltip: {
+            valuePrefix: '$',
+          },
+          pointPadding: 0.3,
+          pointPlacement: 0.2
+         }
+        dataSeries.push(inversion);
 
-        var arrayMontoCetes = [];
-        for(var i=5; i<dataBondes.result.length;i+=6){
-          arrayMontoCetes.push(parseFloat(dataBondes.result[i].montoCetes.replace(',','')));
+        var arrayRendimiento = [];
+        for(var i=11; i<dataBondes.result.length;i+=12){
+          arrayRendimiento.push(parseFloat(dataBondes.result[i].rendimiento.replace(/[^\d\.\-]/g,'')));
         }
-        var datMontoCetes = {
-          name: 'Monto Cetes',
-          data: arrayMontoCetes
+        var rendimiento = {
+          name: 'Rendimiento',
+          data: arrayRendimiento,
+          color: '#4472c4',
+          tooltip: {
+            valuePrefix: '$',
+          },
+          pointPadding: 0.4,
+          pointPlacement: 0.2,
+          yAxis: 1
         }
-
-        var arrayMontoBonddia = [];
-        for(var i=5; i<dataBondes.result.length;i+=6){
-          arrayMontoBonddia.push(parseFloat(dataBondes.result[i].montoBonddia.replace(',','')));
-        }
-        var datMontoBonddia = {
-          name: 'Monto Bonddia',
-          data: arrayMontoBonddia
-        }
-
-        var arrayCorteCupon = [];
-        for(var i=5; i<dataBondes.result.length;i+=6){
-          arrayCorteCupon.push(parseFloat(dataBondes.result[i].corteCupon.replace(',','')));
-        }
-        var datCorteCupon = {
-          name: 'Corte cupon',
-          data: arrayCorteCupon
-        }
-        dataSeries.push(datMontoBondes);
-        dataSeries.push(datMontoCetes);
-        dataSeries.push(datMontoBonddia);
-        dataSeries.push(datCorteCupon);
+        dataSeries.push(rendimiento);
       }
 
       Highcharts.chart('chart', {
