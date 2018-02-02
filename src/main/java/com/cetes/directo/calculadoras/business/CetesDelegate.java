@@ -17,8 +17,8 @@ public class CetesDelegate {
     @Value("${calc.cetes.precio}")
     private Double valorCete;
     
-    @Value("${calc.cetes.tasa.descuento}")
-    private Double tasaDecuento;
+//    @Value("${calc.cetes.tasa.descuento}")
+//    private Double tasaDecuento;
     
     @Value("${calc.cetes.factor.isr}")
 	private Double factorISR;
@@ -58,6 +58,12 @@ public class CetesDelegate {
 		double arreglo[] = new double [14];
 		
 	//	double precioXcete = CommonsUtil.round(valorCete*(1-(tasaDecuento/36000*plazo)),7);
+        double tasaDecuento = 0.0;
+        if(plazo == 28) tasaDecuento = tasa28;
+        if(plazo == 91) tasaDecuento = tasa91;
+        if(plazo == 182) tasaDecuento = tasa182;
+        if(plazo == 360) tasaDecuento = tasa360;
+
 		double precioXcete = valorCete*(1-(tasaDecuento/36000*plazo));
 		
 		double tasaCetes = ((valorCete/precioXcete)-1)/plazo*360;
