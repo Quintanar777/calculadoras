@@ -598,8 +598,15 @@ function validaCampos() {
 //slider
 var slider = document.getElementById("myRange");
 var output = document.getElementById("dias-inversion");
-output.innerHTML = slider.value;
+output.innerHTML = slider.value + " mes";
+
 
 slider.oninput = function() {
   output.innerHTML = this.value;
+  if (this.value==1) {
+	  output.innerHTML = this.value + " mes";
+  } else {
+	  output.innerHTML = this.value + " meses";
+  }
+
 }

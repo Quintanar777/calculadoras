@@ -19,6 +19,15 @@ public class CommonsUtil {
         myFormatter.setMinimumFractionDigits(2);
         return myFormatter.format(valDouble);
     }
+    
+    /**
+     * Formatea double a String sin decimales
+     */
+    public static String doubleToFormatString_NoDecimals(double valDouble) {
+        DecimalFormatSymbols simbolos = DecimalFormatSymbols.getInstance(Locale.ENGLISH);
+        DecimalFormat myFormatter = new DecimalFormat(PATTERN, simbolos);
+       return myFormatter.format(valDouble);
+    }
 
     public static double round(double val, int places) {
         double factor = Math.pow(10.0D, places);

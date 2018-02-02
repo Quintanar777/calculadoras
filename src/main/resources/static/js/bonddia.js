@@ -4,7 +4,8 @@ var result = new Vue({
   data: {
     inversionInicial: "0.00",
     inversionFinal: "0.00",
-    remanente: "0.00"
+    remanente: "0.00",
+    tasa: "0.00"	
   },
   methods: {
     graficar: function(){
@@ -81,6 +82,7 @@ var formBondes = new Vue({
               result.inversionInicial = data.inversionInicial
               result.inversionFinal = data.inversionFinal
               result.remanente = data.remanente
+              result.tasa = data.tasa
               $('#result-1').show()
             }
         });

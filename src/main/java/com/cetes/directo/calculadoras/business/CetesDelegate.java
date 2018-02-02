@@ -57,20 +57,27 @@ public class CetesDelegate {
         
 		double arreglo[] = new double [14];
 		
-		double precioXcete = CommonsUtil.round(valorCete*(1-(tasaDecuento/36000*plazo)),7);
+	//	double precioXcete = CommonsUtil.round(valorCete*(1-(tasaDecuento/36000*plazo)),7);
+		double precioXcete = valorCete*(1-(tasaDecuento/36000*plazo));
+		
 		double tasaCetes = ((valorCete/precioXcete)-1)/plazo*360;
 		tasaCetes = CommonsUtil.round(tasaCetes,4);
 		 
-		tasaBonddia = CommonsUtil.round(tasaBonddia/100,7);
+	//	tasaBonddia = CommonsUtil.round(tasaBonddia/100,7);
+		tasaBonddia = tasaBonddia/100;
 		
 	    double montoRealCetes = monto -(monto%precioXcete);
 	    
-		double intBrutosCetes = CommonsUtil.round(((montoRealCetes*tasaCetes)/360)*plazo,2); 
+	//	double intBrutosCetes = CommonsUtil.round(((montoRealCetes*tasaCetes)/360)*plazo,7); 
+		double intBrutosCetes = ((montoRealCetes*tasaCetes)/360)*plazo;
 
 		double impuestoCetes = (montoRealCetes*factorISR)/36500*plazo;
 		double remanenteBonddia = monto-montoRealCetes;
 		double montoRealBonddia = remanenteBonddia -(remanenteBonddia%valorBonddia);
-		double intBrutosBonddia = CommonsUtil.round(((montoRealBonddia*tasaBonddia)/360)*plazo,2);  
+		
+	//	double intBrutosBonddia = CommonsUtil.round(((montoRealBonddia*tasaBonddia)/360)*plazo,7);  
+		double intBrutosBonddia = ((montoRealBonddia*tasaBonddia)/360)*plazo;
+		
 		double remanente = monto-montoRealCetes-montoRealBonddia;
 		double titulos = montoRealCetes/precioXcete;
 		double titulosBondia = montoRealBonddia/valorBonddia;
@@ -78,8 +85,11 @@ public class CetesDelegate {
 
 		double intBrutosTotal = intBrutosCetes + intBrutosBonddia;
 		
-		tasaCetes = CommonsUtil.round(tasaCetes*100,2);
-	    tasaBonddia = CommonsUtil.round(tasaBonddia*100,2);
+	//	tasaCetes = CommonsUtil.round(tasaCetes*100,7);
+	//    tasaBonddia = CommonsUtil.round(tasaBonddia*100,7);
+	    
+	    tasaCetes = tasaCetes*100;
+	    tasaBonddia = tasaBonddia*100;
 	    
         arreglo[0] = monto;
         arreglo[1] = montoRealCetes;
@@ -115,10 +125,10 @@ public class CetesDelegate {
      * */
     private CetesDto formatCetes(Cetes cetes){
         CetesDto cetesDto = new CetesDto();
-        cetesDto.setNoTitulosCetes(CommonsUtil.doubleToFormatString(cetes.getNoTitulosCetes()));
+        cetesDto.setNoTitulosCetes(CommonsUtil.doubleToFormatString_NoDecimals(cetes.getNoTitulosCetes()));
         cetesDto.setTasaBrutaCetes(CommonsUtil.doubleToFormatString(cetes.getTasaBruta()));
         cetesDto.setInversionCetes(CommonsUtil.doubleToFormatString(cetes.getInversion()));
-        cetesDto.setNoTitulosBonddia(CommonsUtil.doubleToFormatString(cetes.getNoTitulosBonddia()));
+        cetesDto.setNoTitulosBonddia(CommonsUtil.doubleToFormatString_NoDecimals(cetes.getNoTitulosBonddia()));
         cetesDto.setTasaBrutaBonddia(CommonsUtil.doubleToFormatString(cetes.getTasaBrutaBonddia()));
         cetesDto.setInversionBonddia(CommonsUtil.doubleToFormatString(cetes.getInversionBonddia()));
         cetesDto.setInteresBruto(CommonsUtil.doubleToFormatString(cetes.getInteresBruto()));

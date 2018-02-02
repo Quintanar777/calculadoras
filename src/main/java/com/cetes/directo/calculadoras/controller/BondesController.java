@@ -63,59 +63,97 @@ public class BondesController {
             tabla.append("<th>Diciembre</th>");
             tabla.append("</tr>");
             tabla.append("</thead>");
+            
+            tabla.append("<tbody>");
+            //Se crea el contenido
+            tabla.append("<tr>");
+            tabla.append("<td>Inversion</td>");
+            for(BondesDto bondes : calcBondesResponse){
+                tabla.append("<td>");
+                tabla.append(bondes.getInversion());
+                tabla.append("</td>");
+            }
+            tabla.append("</tr>");
 
             tabla.append("<tbody>");
             //Se crea el contenido
             tabla.append("<tr>");
-            tabla.append("<td>Monto Bondes</td>");
-            for(BondesDto bondes : calcBondesResponse){
-                tabla.append("<td>");
-                tabla.append(bondes.getMontoBondes());
-                tabla.append("</td>");
-            }
-            tabla.append("</tr>");
-
-            tabla.append("<tr>");
-            tabla.append("<td>Monto Cetes</td>");
-            for(BondesDto bondes : calcBondesResponse){
-                tabla.append("<td>");
-                tabla.append(bondes.getMontoCetes());
-                tabla.append("</td>");
-            }
-            tabla.append("</tr>");
-
-            tabla.append("<tr>");
-            tabla.append("<td>Monto Bonddia</td>");
-            for(BondesDto bondes : calcBondesResponse){
-                tabla.append("<td>");
-                tabla.append(bondes.getMontoBonddia());
-                tabla.append("</td>");
-            }
-            tabla.append("</tr>");
-
-            tabla.append("<tr>");
-            tabla.append("<td>Corte cupon</td>");
-            for(BondesDto bondes : calcBondesResponse){
-                tabla.append("<td>");
-                tabla.append(bondes.getCorteCupon());
-                tabla.append("</td>");
-            }
-            tabla.append("</tr>");
-
-            tabla.append("<tr>");
-            tabla.append("<td>Rendimiento Bondes</td>");
+            tabla.append("<td>Rendimiento</td>");
             for(BondesDto bondes : calcBondesResponse){
                 tabla.append("<td>");
                 tabla.append(bondes.getRendimiento());
                 tabla.append("</td>");
             }
             tabla.append("</tr>");
-
+            
+            tabla.append("<tr>");
+            tabla.append("<td>ISR</td>");
+            for(BondesDto bondes : calcBondesResponse){
+                tabla.append("<td>");
+                tabla.append(bondes.getIsr());
+                tabla.append("</td>");
+            }
+            tabla.append("</tr>");
+            
+            tabla.append("<tr>");
+            tabla.append("<td>Total</td>");
+            for(BondesDto bondes : calcBondesResponse){
+                tabla.append("<td>");
+                tabla.append(bondes.getTotal());
+                tabla.append("</td>");
+            }
+            tabla.append("</tr>");
+            
+            tabla.append("<tr>");
+            tabla.append("<td>Remanente p/Cetes</td>");
+            for(BondesDto bondes : calcBondesResponse){
+                tabla.append("<td>");
+                tabla.append(bondes.getRemanenteCetes());
+                tabla.append("</td>");
+            }
+            tabla.append("</tr>");
+            
+            tabla.append("<tr>");
+            tabla.append("<td>Monto p/Cetes</td>");
+            for(BondesDto bondes : calcBondesResponse){
+                tabla.append("<td>");
+                tabla.append(bondes.getMontoCetes());
+                tabla.append("</td>");
+            }
+            tabla.append("</tr>");
+            
             tabla.append("<tr>");
             tabla.append("<td>Rendimiento Cetes</td>");
             for(BondesDto bondes : calcBondesResponse){
                 tabla.append("<td>");
                 tabla.append(bondes.getRendimientoCetes());
+                tabla.append("</td>");
+            }
+            tabla.append("</tr>");
+            
+            tabla.append("<tr>");
+            tabla.append("<td>Impuesto Cetes</td>");
+            for(BondesDto bondes : calcBondesResponse){
+                tabla.append("<td>");
+                tabla.append(bondes.getImpuestoCetes());
+                tabla.append("</td>");
+            }
+            tabla.append("</tr>");
+            
+            tabla.append("<tr>");
+            tabla.append("<td>Remanentes p/Bonddia</td>");
+            for(BondesDto bondes : calcBondesResponse){
+                tabla.append("<td>");
+                tabla.append(bondes.getRemanenteBonddia());
+                tabla.append("</td>");
+            }
+            tabla.append("</tr>");
+
+            tabla.append("<tr>");
+            tabla.append("<td>Monto p/Bonddia</td>");
+            for(BondesDto bondes : calcBondesResponse){
+                tabla.append("<td>");
+                tabla.append(bondes.getMontoBonddia());
                 tabla.append("</td>");
             }
             tabla.append("</tr>");
@@ -129,15 +167,7 @@ public class BondesController {
             }
             tabla.append("</tr>");
 
-            tabla.append("<tr>");
-            tabla.append("<td>Remanentes</td>");
-            for(BondesDto bondes : calcBondesResponse){
-                tabla.append("<td>");
-                tabla.append(bondes.getRemanentes());
-                tabla.append("</td>");
-            }
-            tabla.append("</tr>");
-
+  
 
         }else{//mostrar semestres
             //Se crea encabezado
