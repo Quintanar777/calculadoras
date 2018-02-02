@@ -48,45 +48,79 @@ var graficar = new Vue({
         cat.push('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
 
         //crear series
-        var arrayMontoBondes = [];
+        var arrayInversion = [];
         for(var i=0; i<dataBondes.result.length;i++){
-          arrayMontoBondes.push(parseFloat(dataBondes.result[i].montoBondes.replace(',','')));
+          arrayInversion.push(parseFloat(dataBondes.result[i].inversion.replace(/[^\d\.\-]/g,'')));
         }
-        var datMontoBondes = {
-          name: 'Monto Bondes',
-          data: arrayMontoBondes
-        }
+        var inversion = {
+          name: 'Inversion',
+          data: arrayInversion,
+          color: '#ed7d31',
+          tooltip: {
+            valuePrefix: '$',
+          },
+          pointPadding: 0.3,
+          pointPlacement: 0.2
+         }
+        dataSeries.push(inversion);
 
-        var arrayMontoCetes = [];
+        var arrayRendimiento = [];
         for(var i=0; i<dataBondes.result.length;i++){
-          arrayMontoCetes.push(parseFloat(dataBondes.result[i].montoCetes.replace(',','')));
+          arrayRendimiento.push(parseFloat(dataBondes.result[i].rendimiento.replace(/[^\d\.\-]/g,'')));
         }
-        var datMontoCetes = {
-          name: 'Monto Cetes',
-          data: arrayMontoCetes
+        var rendimiento = {
+          name: 'Rendimiento',
+          data: arrayRendimiento,
+          color: '#4472c4',
+          tooltip: {
+            valuePrefix: '$',
+          },
+          pointPadding: 0.4,
+          pointPlacement: 0.2,
+          yAxis: 1
         }
+        dataSeries.push(rendimiento);
 
-        var arrayMontoBonddia = [];
-        for(var i=0; i<dataBondes.result.length;i++){
-          arrayMontoBonddia.push(parseFloat(dataBondes.result[i].montoBonddia.replace(',','')));
-        }
-        var datMontoBonddia = {
-          name: 'Monto Bonddia',
-          data: arrayMontoBonddia
-        }
 
-        var arrayCorteCupon = [];
-        for(var i=0; i<dataBondes.result.length;i++){
-          arrayCorteCupon.push(parseFloat(dataBondes.result[i].corteCupon.replace(',','')));
-        }
-        var datCorteCupon = {
-          name: 'Corte cupon',
-          data: arrayCorteCupon
-        }
-        dataSeries.push(datMontoBondes);
-        dataSeries.push(datMontoCetes);
-        dataSeries.push(datMontoBonddia);
-        dataSeries.push(datCorteCupon);
+        // var arrayMontoBondes = [];
+        // for(var i=0; i<dataBondes.result.length;i++){
+        //   arrayMontoBondes.push(parseFloat(dataBondes.result[i].montoBondes.replace(',','')));
+        // }
+        // var datMontoBondes = {
+        //   name: 'Monto Bondes',
+        //   data: arrayMontoBondes
+        // }
+        //
+        // var arrayMontoCetes = [];
+        // for(var i=0; i<dataBondes.result.length;i++){
+        //   arrayMontoCetes.push(parseFloat(dataBondes.result[i].montoCetes.replace(',','')));
+        // }
+        // var datMontoCetes = {
+        //   name: 'Monto Cetes',
+        //   data: arrayMontoCetes
+        // }
+        //
+        // var arrayMontoBonddia = [];
+        // for(var i=0; i<dataBondes.result.length;i++){
+        //   arrayMontoBonddia.push(parseFloat(dataBondes.result[i].montoBonddia.replace(',','')));
+        // }
+        // var datMontoBonddia = {
+        //   name: 'Monto Bonddia',
+        //   data: arrayMontoBonddia
+        // }
+        //
+        // var arrayCorteCupon = [];
+        // for(var i=0; i<dataBondes.result.length;i++){
+        //   arrayCorteCupon.push(parseFloat(dataBondes.result[i].corteCupon.replace(',','')));
+        // }
+        // var datCorteCupon = {
+        //   name: 'Corte cupon',
+        //   data: arrayCorteCupon
+        // }
+        // dataSeries.push(datMontoBondes);
+        // dataSeries.push(datMontoCetes);
+        // dataSeries.push(datMontoBonddia);
+        // dataSeries.push(datCorteCupon);
 
       }else{
         cat = [];
@@ -140,35 +174,45 @@ var graficar = new Vue({
       }
 
       Highcharts.chart('chart', {
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'Inversión Bondes'
-        },
-        xAxis: {
-            categories: cat
-        },
-        yAxis: {
-            min: 0,
+          chart: {
+              type: 'column'
+          },
+          title: {
+              text: 'Inversión Cetes'
+          },
+          xAxis: {
+              categories: cat
+          },
+          yAxis: [{
+              min: 0,
+              title: {
+                  text: 'Inversion'
+              }
+          },
+          {
             title: {
-                text: 'Inversión'
-            }
-        },
-        tooltip: {
-            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>',
-            shared: true
-        },
-        plotOptions: {
+              text: 'Rendimiento'
+            },
+              opposite: true
+          }],
+          legend: {
+            shadow: false
+          },
+          tooltip: {
+              shared: true
+          },
+          plotOptions: {
             column: {
-                stacking: 'percent'
+              grouping: false,
+              shadow: false,
+              borderWidth: 0
             }
-        },
-        credits: {
-          enabled: false
-        },
-        series:dataSeries
-    });
+          },
+          credits: {
+            enabled: false
+          },
+          series:dataSeries
+      });
 
     }
   }
