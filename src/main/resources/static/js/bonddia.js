@@ -5,7 +5,8 @@ var result = new Vue({
     inversionInicial: "0.00",
     inversionFinal: "0.00",
     remanente: "0.00",
-    tasa: "0.00"	
+    tasa: "0.00",	
+    titulosbonddia: "0.00"
   },
   methods: {
     graficar: function(){
@@ -69,7 +70,7 @@ var formBondes = new Vue({
         console.log('calculando bondes...');
 
         var data = {}
-        data["monto"] = $('#monto').val();
+        data["monto"] = $('#monto').val().replace(/[^\d]/g, '');
         data["plazo"] = $('#plazo').val();
 
         $.ajax({
@@ -83,6 +84,7 @@ var formBondes = new Vue({
               result.inversionFinal = data.inversionFinal
               result.remanente = data.remanente
               result.tasa = data.tasa
+              result.titulosbonddia = data.titulosbonddia
               $('#result-1').show()
             }
         });
@@ -94,7 +96,13 @@ var formBondes = new Vue({
 
 //funcion para validar campos obligatorios
 function validaCampos() {
-  var monto = $('#monto').val();
+	
+	
+	 var monto1 = $('#monto').val();
+     var monto = parseFloat(monto1.replace(/[^\d]/g, ''));	
+     
+	
+  // var monto = $('#monto').val();
   var plazo = $('#plazo').val();
   if(isEmpty(monto)){
     $('#errorMonto').show();

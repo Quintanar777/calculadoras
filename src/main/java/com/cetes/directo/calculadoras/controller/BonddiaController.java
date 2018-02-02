@@ -49,10 +49,13 @@ public class BonddiaController {
         double remanente = request.getMonto() - inversionInicial;
         double inversionFinal = inversionInicial + ((inversionInicial * tasaBonddia)/36000) * request.getPlazo();
 
+        double titulosBonddia = inversionInicial/precioBonddia;
+        
         response.put("inversionInicial", CommonsUtil.doubleToFormatString(inversionInicial));
         response.put("remanente", CommonsUtil.doubleToFormatString(remanente));
         response.put("inversionFinal", CommonsUtil.doubleToFormatString(inversionFinal));
         response.put("tasa", CommonsUtil.doubleToFormatString(tasaBonddia));
+        response.put("titulosbonddia", CommonsUtil.doubleToFormatString_NoDecimals(titulosBonddia));
 
 
         return new ResponseEntity<Map>(response, HttpStatus.OK);

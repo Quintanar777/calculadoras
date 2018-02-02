@@ -40,7 +40,7 @@
             </div>
             <div class="form-group">
               <label class="field prepend-icon">
-                <input id="monto" class="gui-input" name="monto" placeholder="Monto" type="number" />
+                <input id="monto" class="gui-input" name="monto" placeholder="Monto" type="text" />
                 <small id="errorMonto" class="form-text text-red" style="display: none;">El monto es un campo requerido.</small>
                 <small id="errorRangoMonto" class="form-text text-red" style="display: none;">El monto debe ser entre 100 y 10,000,000.</small>
                 <span class="field-icon">
@@ -69,21 +69,32 @@
         <div class="col seccion">
           <div style="display:none;" id="result-1" class="col-3 resultado-calc-div">
             <div class="row row-cetes">
-              <div class="col-6"><span class="label-calc pull-right">Tasa:</span></div>
-              <div class="col-3 col-result"><span class="label-resultado">{{ tasa }}</span></div>
+                <div class="col-4"></div>
+                <div class="col-3"><span class="label-calc">Titulos</span></div>
+                <div class="col-5"><span class="label-calc">Tasa bruta</span></div>
             </div>
-            <div class="row row-cetes">
-              <div class="col-6"><span class="label-calc pull-right">Inversion inicial:</span></div>
-              <div class="col-3 col-result"><span class="label-resultado">{{ inversionInicial }}</span></div>
-            </div>
-            <div class="row row-cetes">
-              <div class="col-6"><span class="label-calc pull-right">Inversion final:</span></div>
-              <div class="col-3 col-result"><span class="label-resultado">{{ inversionFinal }}</span></div>
-            </div>
-            <div class="row row-cetes">
-              <div class="col-6"><span class="label-calc pull-right">Remanente:</span></div>
-              <div class="col-3 col-result"><span class="label-resultado">{{ remanente }}</span></div>
-            </div>
+              <div class="row row-cetes">
+                <div class="col-4"><span class="label-calc pull-right">Bonddia:</span></div>
+                <div class="col-3 col-result"><span class="label-resultado">{{ titulosbonddia }}</span></div>
+                <div class="col-3 col-result"><span class="label-resultado pull-right">{{ tasa }}%</span></div>
+              </div>
+              <div class="line"></div>
+              <br/>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="/calculadoras/images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Al no alcanzar para otro titulo en cetes, el remanente se invierte en el fondo diario Bonddia y genera intereses"/> </div>
+                <div class="col-6"><span class="label-calc pull-right">Inversion Bonddia:</span></div>
+                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionInicial }}</span></div>
+              </div>
+              <div class="line"></div>
+              <br/>
+              
+              <div class="row row-cetes">
+                <div class="col-1"><img src="/calculadoras/images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Es el capital final que incluye los intereses ganados y el remanente de la inversón menos el ISR"/> </div>
+                <div class="col-6"><span class="label-calc pull-right">Monto total:</span></div>
+                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionFinal }}</span></div>
+              </div>
+              
+ 
             <input id="buttonGraficar" type="button" style="margin-top: 20px;" name="" value="Graficar" class="button btn-primary" v-on:click="graficar"/>
           </div>
         </div>
@@ -94,7 +105,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Grafica BONOS</h5>
+            <h5 class="modal-title" id="exampleModalLongTitle">BONDDIA</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -117,4 +128,48 @@
   <script src="/calculadoras/js/vue.js" charset="utf-8"></script>
   <script src="/calculadoras/js/highcharts.js" charset="utf-8"></script>
   <script src="/calculadoras/js/bonddia.js" charset="utf-8"></script>
+  <script >
+    (function($, undefined) {
+
+	"use strict";
+
+	// When ready.
+	$(function() {
+
+		var $form = $( "#form-bonddia" );
+		var $input = $form.find( "input" );
+
+		$input.on( "keyup", function( event ) {
+
+
+			// When user select text in the document, also abort.
+			var selection = window.getSelection().toString();
+			if ( selection !== '' ) {
+				return;
+			}
+
+			// When the arrow keys are pressed, abort.
+			if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
+				return;
+			}
+
+
+			var $this = $( this );
+
+			// Get the value.
+			var input = $this.val();
+
+			var input = input.replace(/[\D\s\._\-]+/g, "");
+					input = input ? parseInt( input, 10 ) : 0;
+
+					$this.val( function() {
+						return ( input === 0 ) ? "" : input.toLocaleString( "en-US" );
+					} );
+		} );
+
+
+
+	});
+})(jQuery);
+   </script>
 </html>
