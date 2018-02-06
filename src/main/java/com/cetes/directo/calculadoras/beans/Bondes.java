@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 public class Bondes {
     private double inversion;
     private double tasaCetes;
+    private double tasaBondes;
     private double plazo;
     private double rendimiento;
     private double isr;

@@ -68,6 +68,7 @@ public class BondesDelegate {
         BondesDto dto = new BondesDto();
         dto.setInversion(CommonsUtil.doubleToFormatString(bondes.getInversion()));
         dto.setTasaCetes(CommonsUtil.doubleToFormatString(bondes.getTasaCetes()));
+        dto.setTasaBondes(CommonsUtil.doubleToFormatString(bondes.getTasaBondes()));
         dto.setPlazo(CommonsUtil.doubleToFormatString(bondes.getPlazo()));
         dto.setRendimiento(CommonsUtil.doubleToFormatString(bondes.getRendimiento()));
         dto.setIsr(CommonsUtil.doubleToFormatString(bondes.getIsr()));
@@ -192,9 +193,10 @@ public class BondesDelegate {
         //Genera arreglo
         bondes.setInversion(montoInvertir);
         bondes.setTasaCetes(tasaCetes);
+        bondes.setTasaBondes(tasaBondes);
         bondes.setPlazo(dias);
-        bondes.setRendimiento(rendimiento);
-        bondes.setIsr(isr);
+        bondes.setRendimiento(rendimiento + rendimiento_cetes);
+        bondes.setIsr(isr + impuesto_cetes);
         bondes.setTotal(total);
         bondes.setMontoBondes(monto_para_bonos);
         bondes.setTituloBondes(titulos_bondes);

@@ -113,11 +113,20 @@ public class CetesDelegate {
 		arreglo[13] = intBrutosTotal;
 		
         cetes.setNoTitulosCetes(arreglo[5]);
-        cetes.setTasaBruta(arreglo[4]);
+
+        //depende del plazo, es la tasa que se envia
+        if(momento == 1){ //depende del plazo
+            if(plazo == 28) cetes.setTasaBruta(tasa28);
+            if(plazo == 91) cetes.setTasaBruta(tasa91);
+            if(plazo == 182) cetes.setTasaBruta(tasa182);
+            if(plazo == 360) cetes.setTasaBruta(tasa360);
+
+        }else{ //de lo contrario siempre es a 28
+            cetes.setTasaBruta(tasa28);
+        }
+        cetes.setTasaBrutaBonddia(tasaBonddia);
         cetes.setInversion(arreglo[1]);
         cetes.setNoTitulosBonddia(arreglo[10]);
-        cetes.setTasaBrutaBonddia(arreglo[8]);
-        
         cetes.setInversionBonddia(arreglo[6]);
         cetes.setInteresBruto(arreglo[13]);
         cetes.setIsr(arreglo[3]);

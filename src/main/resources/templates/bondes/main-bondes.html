@@ -65,8 +65,81 @@
           </form>
         </div>
         <div class="col seccion">
-          <div id="tableResult" style="margin-top: 25px; margin-bottom: 25px;"></div>
-          <input id="buttonGraficar" style="display: none; margin-bottom: 15px;" type="button" name="" value="Graficar" class="button btn-primary" v-on:click="graficar"/>
+          <!-- <div id="tableResult" style="margin-top: 25px; margin-bottom: 25px;"></div> -->
+          <div class="row">
+            <div style="display:none;" id="result-1" class="col-3 resultado-calc-div">
+              <div class="row row-cetes">
+                <div class="col-4"></div>
+                <div class="col-3"><span class="label-calc">Titulos</span></div>
+                <div class="col-5"><span class="label-calc">Tasa bruta</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-4"><span class="label-calc pull-right">Cetes:</span></div>
+                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosCetes }}</span></div>
+                <div class="col-3 col-result"><span class="label-resultado pull-right">{{ tasaBrutaCetes }} %</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-4"><span class="label-calc pull-right">Bondes:</span></div>
+                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosBondes }}</span></div>
+                <div class="col-3 col-result"><span class="label-resultado pull-right">{{ tasaBrutaBondes }}%</span></div>
+              </div>
+              <div class="line"></div>
+              <br/>
+
+              <div class="row row-cetes">
+                <div class="col-1"><img src="/calculadoras/images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Capital con el que se realiza la inversión inicial en cetes"/> </div>
+                <div class="col-6"><span class="label-calc pull-right">Inversion Cetes:</span></div>
+                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionCetes }}</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="/calculadoras/images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Al no alcanzar para otro titulo en cetes, el remanente se invierte en el fondo diario Bonddia y genera intereses"/> </div>
+                <div class="col-6"><span class="label-calc pull-right">Inversion Bondes:</span></div>
+                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionBondes }}</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="/calculadoras/images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Intereses ganados antes de impuestos"/> </div>
+                <div class="col-6"><span class="label-calc pull-right">Interes Bruto:</span></div>
+                <div class="col-4 col-result"><span class="label-resultado">$ {{ interesBruto }}</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="/calculadoras/images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Impuesto a retener redondeado a dos decimales"/> </div>
+                <div class="col-6"><span class="label-calc pull-right">ISR:</span></div>
+                <div class="col-4 col-result"><span class="label-calc-bold">$ {{ isr }}</span></div>
+              </div>
+              <div class="line"></div>
+              <br/>
+
+              <div class="row row-cetes">
+                <div class="col-1"></div>
+                <div class="col-6"><span class="label-calc pull-right">Corte cupón:</span></div>
+                <div class="col-4 col-result"><span class="label-resultado">$ {{ corteCupon }}</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"></div>
+                <div class="col-6"><span class="label-calc pull-right">Impuesto CC:</span></div>
+                <div class="col-4 col-result"><span class="label-calc-bold">$ {{ impuesteCorteCupon }}</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"></div>
+                <div class="col-6"><span class="label-calc pull-right">Monto Bonddia:</span></div>
+                <div class="col-4 col-result"><span class="label-resultado">$ {{ montoBonddia }}</span></div>
+              </div>
+              <div class="row row-cetes">
+                <div class="col-1"></div>
+                <div class="col-6"><span class="label-calc pull-right">Remanentes:</span></div>
+                <div class="col-4 col-result"><span class="label-resultado">$ {{ remanentes }}</span></div>
+              </div>
+
+              <div class="line"></div>
+              <br/>
+              <div class="row row-cetes">
+                <div class="col-1"><img src="/calculadoras/images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Es el capital final que incluye los intereses ganados y el remanente de la inversón menos el ISR"/> </div>
+                <div class="col-6"><span class="label-calc pull-right">Monto total:</span></div>
+                <div class="col-4 col-result"><span class="label-resultado">$ {{ montoTotal }}</span></div>
+              </div>
+            </div>
+          </div>
+          <input id="buttonGraficar" style="display: none; margin-bottom: 15px; margin-top: 15px;" type="button" name="" value="Graficar" class="button btn-primary" v-on:click="graficar"/>
         </div>
       </div>
     </div>

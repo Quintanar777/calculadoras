@@ -198,15 +198,36 @@ var formCetes = new Vue({
                       success: function (data) {
                           console.log(data);
                           dataPeridos = data;
-                          result2.interesBruto= data[data.length - 1].interesBruto
-                          result2.inversionBonddia= data[data.length - 1].inversionBonddia
-                          result2.inversionCetes= data[data.length - 1].inversionCetes
-                          result2.isr= data[data.length - 1].isr
+
+
+                          result2.inversionCetes= data[1].inversionCetes
+
                           result2.montoTotal= data[data.length - 1].montoTotal
                           result2.noTitulosBonddia= data[data.length - 1].noTitulosBonddia
                           result2.noTitulosCetes= data[data.length - 1].noTitulosCetes
                           result2.tasaBrutaBonddia= data[data.length - 1].tasaBrutaBonddia
                           result2.tasaBrutaCetes= data[data.length - 1].tasaBrutaCetes
+
+                          if(periodos > 1){
+                            var inversionBonddia = 0.0;
+                            var interesBruto = 0.0;
+                            var isr = 0.0;
+
+                            for(var i=1; i<data.length; i++){
+                              inversionBonddia = inversionBonddia + parseFloat( data[i].inversionBonddia )
+                              interesBruto = interesBruto + parseFloat( data[i].interesBruto )
+                              isr = isr + parseFloat(data[i].isr)
+                            }
+                            result2.inversionBonddia= inversionBonddia
+                            result2.interesBruto= interesBruto
+                            result2.isr= isr
+
+                          }else{
+                            result2.inversionBonddia= data[data.length - 1].inversionBonddia
+                            result2.interesBruto= data[data.length - 1].interesBruto
+                            result2.isr= data[data.length - 1].isr
+                          }
+
                           $('#result-2').show();
                           $('#labelReinvertir').show();
                       }

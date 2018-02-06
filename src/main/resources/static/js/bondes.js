@@ -1,6 +1,26 @@
 //var globales
 var dataBondes;
 
+//Resultado inicial
+var result1 = new Vue({
+  el: '#result-1',
+  data: {
+    interesBruto: "0.0",
+    inversionBondes: "0.0",
+    inversionCetes: "0.0",
+    isr: "0.0",
+    montoTotal: "0.0",
+    noTitulosBondes: "0.0",
+    noTitulosCetes: "0.0",
+    tasaBrutaBondes: "0.0",
+    tasaBrutaCetes: "0.0",
+    corteCupon: "0.0",
+    impuesteCorteCupon: "0.0",
+    montoBonddia: "0.0",
+    remanentes: "0.0"
+  }
+})
+
 var formBondes = new Vue({
   el: '#form-bondes',
   data: {
@@ -24,7 +44,23 @@ var formBondes = new Vue({
 		        dataType: 'json',
             success: function (data) {
                 dataBondes = data;
-                $('#tableResult').html(data.tabla);
+                result1.noTitulosCetes = data.result[data.result.length-1].titulosCetes
+                result1.tasaBrutaCetes = data.result[data.result.length-1].tasaCetes
+                result1.noTitulosBondes = data.result[data.result.length-1].tituloBondes
+                result1.tasaBrutaBondes = data.result[data.result.length-1].tasaBondes
+                result1.inversionCetes =  data.result[data.result.length-1].montoCetes
+                result1.inversionBondes =  data.result[data.result.length-1].montoBondes
+                result1.interesBruto = data.result[data.result.length-1].rendimiento
+                result1.isr = data.result[data.result.length-1].isr
+                result1.montoTotal = data.result[data.result.length-1].totalUltimo
+
+                result1.corteCupon = data.result[data.result.length-1].corteCupon
+                result1.impuesteCorteCupon = data.result[data.result.length-1].impuestoCorteCupon
+                result1.montoBonddia = data.result[data.result.length-1].montoBonddia
+                result1.remanentes = data.result[data.result.length-1].remanentes
+
+                // $('#tableResult').html(data.tabla);
+                $('#result-1').show();
                 $('#buttonGraficar').show();
             }
         });
@@ -130,7 +166,7 @@ var graficar = new Vue({
               type: 'column'
           },
           title: {
-              text: 'Inversión Cetes'
+              text: 'Inversión Bondes'
           },
           xAxis: {
               categories: cat
