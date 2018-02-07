@@ -34,8 +34,6 @@ public class UdiBonosDelegate {
     private double diasCupon;
     @Value("${calc.bonos_excel.valornominalbono}")
     private double valorNominalBono;
-    @Autowired
-    private Bonos bonos;
 
 
     /**
@@ -109,6 +107,7 @@ public class UdiBonosDelegate {
      * reinversionCC:
      */
     public Bonos getDatosBONOS(int momento, int dias, double montoInvertirInicial, double montoInvertir, double reinversionCC) {
+        Bonos bonos = new Bonos();
         //Calculos
 
         double rendimiento = CommonsUtil.round((montoInvertir * (tasaCetes / 100)) / 360 * dias, 2);

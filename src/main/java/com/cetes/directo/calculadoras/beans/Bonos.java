@@ -6,10 +6,10 @@ import org.springframework.stereotype.Component;
 
 @Data
 @NoArgsConstructor
-@Component
 public class Bonos {
     private double inversion;
     private double tasaCetes;
+    private double tasaBonos;
     private double plazo;
     private double rendimiento;
     private double isr;
@@ -30,4 +30,5 @@ public class Bonos {
     private double totalUltimo;
     private double interesBruto;
     private double reinversionCC;
+    private double reinversionIntersemestral;
 }

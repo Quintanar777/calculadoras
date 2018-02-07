@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 public class BonosDto {
     private String inversion;
     private String tasaCetes;
+    private String tasaBonos;
     private String plazo;
     private String rendimiento;
     private String isr;

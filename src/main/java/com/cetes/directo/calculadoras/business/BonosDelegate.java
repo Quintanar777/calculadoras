@@ -34,36 +34,49 @@ public class BonosDelegate {
     private double diasCupon;
     @Value("${calc.bonos_excel.valornominalbono}")
     private double valorNominalBono;
-    @Autowired
-    private Bonos bonos;
-
+    @Value("${calc.bonos_excel.dias}")
+    private double dias;
 
     /**
      * Realizar calculo de BONOS
      */
     public List<BonosDto> calcBonos(double monto, int plazo) {
+
         logger.info("Service calcular cetes...");
         logger.info(("monto: " + monto));
         logger.info(("plazo: " + plazo));
 
         List<BonosDto> requestBonos = new ArrayList<>();
+        List<Bonos> responseBonos = new ArrayList<>();
+
         //Realizar calculo primer mes
-        Bonos bonosMesUno = getDatosBONOS(1, Constantes.PLAZO_28, monto, monto, 0);
+        Bonos bonosMesUno = getDatosBONOS(1, monto, 0);
         requestBonos.add(formatBonos(bonosMesUno));
+        responseBonos.add(bonosMesUno);//arreglo de calculos sin formato
 
-        double montoEnviado = bonosMesUno.getTotal();
         double montoCalculado = bonosMesUno.getTotalUltimo();
-        double reinversion_cc = bonosMesUno.getReinversionCC();
+        double reinversionIntersemestral = bonosMesUno.getReinversionIntersemestral();
+        int semestre = 0;
 
-        for (int i = 2; i <= plazo; i++) {
-            Bonos calculoBonosInicial = getDatosBONOS(i, Constantes.PLAZO_28, monto, montoEnviado, reinversion_cc);
+        for (int i = 2; i <= plazo; i++) { //desde el mes 2
+            logger.info("Mes " + i);
+            logger.info("|--- semestre: " + semestre + " montoCalculador: " + montoCalculado + " reinversionIntersemestral: " + reinversionIntersemestral);
+
+            Bonos calculoBonosInicial = getDatosBONOS(semestre, montoCalculado, reinversionIntersemestral);
             requestBonos.add(formatBonos(calculoBonosInicial));
+            responseBonos.add(calculoBonosInicial);
 
-            montoEnviado = calculoBonosInicial.getTotal();
-            montoCalculado = calculoBonosInicial.getTotalUltimo();
-            reinversion_cc = calculoBonosInicial.getReinversionCC();
+            if(i % 6 == 0){
+                logger.info("Semestre-----");
+                //se debe enviar el montoCalculado del semestre anterior y ultima reinversion
+                montoCalculado = responseBonos.get(i-6).getTotalUltimo();
+                semestre = 1;
+            }else{
+                montoCalculado = calculoBonosInicial.getTotalUltimo();
+                semestre = 0;
+            }
 
-            if (i%6==0) monto= montoCalculado+reinversion_cc;
+            reinversionIntersemestral = calculoBonosInicial.getReinversionIntersemestral();
 
         }
 
@@ -77,6 +90,7 @@ public class BonosDelegate {
         BonosDto dto = new BonosDto();
         dto.setInversion(CommonsUtil.doubleToFormatString(bondes.getInversion()));
         dto.setTasaCetes(CommonsUtil.doubleToFormatString(bondes.getTasaCetes()));
+        dto.setTasaBonos(CommonsUtil.doubleToFormatString(bondes.getTasaBonos()));
         dto.setPlazo(CommonsUtil.doubleToFormatString(bondes.getPlazo()));
         dto.setRendimiento(CommonsUtil.doubleToFormatString(bondes.getRendimiento()));
         dto.setIsr(CommonsUtil.doubleToFormatString(bondes.getIsr()));
@@ -108,16 +122,10 @@ public class BonosDelegate {
      * montoInvertir: monto calculado de la primera vez y anterior
      * reinversionCC:
      */
-    public Bonos getDatosBONOS(int momento, int dias, double montoInvertirInicial, double montoInvertir, double reinversionCC) {
-        //Calculos
-
-        double rendimiento = CommonsUtil.round((montoInvertir * (tasaCetes / 100)) / 360 * dias, 2);
-        double isr = CommonsUtil.round((montoInvertir * .58) / 36500 * dias, 2);
-        double total = CommonsUtil.round(montoInvertir + rendimiento - isr, 2);
-
-        // Multiplo inferior monto para bondes
-
-        double monto_para_bonos = CommonsUtil.round((montoInvertirInicial - (montoInvertirInicial % precioBonos)), 2);
+    public Bonos getDatosBONOS(int momento, double montoInvertir, double reinversionCC) {
+        Bonos bonos = new Bonos();
+        double valorInvertir = montoInvertir + reinversionCC;
+        double monto_para_bonos = CommonsUtil.round((valorInvertir - (valorInvertir % precioBonos)), 2);
 
         double division_titulos_bondes = monto_para_bonos / precioBonos;
         int titulos_bondes = (int) division_titulos_bondes;
@@ -125,58 +133,67 @@ public class BonosDelegate {
         double corte_cupon = ((((tasaBonos / 100) * diasCupon) / 360) * valorNominalBono) * titulos_bondes;
         corte_cupon = CommonsUtil.round(corte_cupon, 2);
 
-        double impuesto_corte_cupon = (titulos_bondes * precioBonos * .58) / 36500 * diasCupon;
+        double impuesto_corte_cupon = 0;
+        if (momento == 1) {
+            impuesto_corte_cupon = (titulos_bondes * valorNominalBono * .58) / 36500 * diasCupon;
+        } else {
+            impuesto_corte_cupon = (monto_para_bonos * .58) / 36500 * diasCupon;
+
+        }
         impuesto_corte_cupon = CommonsUtil.round(impuesto_corte_cupon, 2);
+
+        double rendimiento = CommonsUtil.round((montoInvertir * (tasaCetes / 100)) / 360 * dias, 2);
+        double isr = CommonsUtil.round((montoInvertir * .58) / 36500 * dias, 2);
+        double total = CommonsUtil.round(montoInvertir + rendimiento - isr, 2);
 
         double remanente_para_cetes = 0;
         if (momento == 1) {
-            remanente_para_cetes = CommonsUtil.round(montoInvertirInicial - monto_para_bonos, 2);
+            remanente_para_cetes = CommonsUtil.round(montoInvertir - monto_para_bonos + reinversionCC, 2);
         } else {
-            if (momento % 7 == 0) {
-                remanente_para_cetes = CommonsUtil.round(montoInvertir - monto_para_bonos + reinversionCC, 2);
-            } else {
-                remanente_para_cetes = CommonsUtil.round(reinversionCC - (reinversionCC % precioCetes), 2);
-            }
+            remanente_para_cetes = CommonsUtil.round(reinversionCC - (reinversionCC % precioCetes), 2);
         }
 
-        // Multiplo inferior monto para cetes
 
         double monto_para_cetes = CommonsUtil.round(remanente_para_cetes - (remanente_para_cetes % precioCetes), 2);
-
 
         double division_titulos_cetes = monto_para_cetes / precioCetes;
         int titulos_cetes = (int) division_titulos_cetes;
 
         double rendimiento_cetes = CommonsUtil.round(((monto_para_cetes * (tasaCetes / 100)) / 360) * dias, 2);
         double impuesto_cetes = CommonsUtil.round((titulos_cetes * 10 * .58) / 36500 * dias, 2);
+
         double remanente_para_bonddia = 0;
         if (momento == 1) {
-            remanente_para_bonddia = CommonsUtil.round(montoInvertir - monto_para_bonos - monto_para_cetes, 2);
+            remanente_para_bonddia = CommonsUtil.round(montoInvertir + reinversionCC - monto_para_bonos - monto_para_cetes, 2);
         } else {
             remanente_para_bonddia = CommonsUtil.round(reinversionCC - (reinversionCC - (reinversionCC % precioCetes)), 2);
         }
 
-        // Multiplo inferior monto para bonddia
         double monto_para_bonddia = CommonsUtil.round(remanente_para_bonddia - (remanente_para_bonddia % precioBonddia), 2);
 
         double rendimiento_bonddia = CommonsUtil.round((monto_para_bonddia * (tasaBonddia / 100)) / 360 * dias, 2);
 
         double remanentes = CommonsUtil.round(remanente_para_bonddia - monto_para_bonddia, 2);
 
-
-        double total_total = monto_para_cetes + rendimiento_cetes + monto_para_bonddia + rendimiento_bonddia;
-        total_total += remanentes + monto_para_bonos + corte_cupon - impuesto_corte_cupon - impuesto_cetes;
-
+        double total_total = 0;
+        if (momento == 1) {
+            total_total = monto_para_cetes + rendimiento_cetes + monto_para_bonddia + rendimiento_bonddia;
+            total_total += remanentes + monto_para_bonos + corte_cupon - impuesto_corte_cupon - impuesto_cetes;
+        } else {
+            total_total = monto_para_cetes + rendimiento_cetes + monto_para_bonddia + rendimiento_bonddia;
+            total_total += remanentes - impuesto_cetes;
+        }
         total_total = CommonsUtil.round(total_total, 2);
 
-        double reinversion_cc = monto_para_cetes + rendimiento_cetes + monto_para_bonddia + rendimiento_bonddia;
-        reinversion_cc += remanentes - impuesto_cetes;
+        double reinversion_cp_intersemestral = monto_para_cetes + rendimiento_cetes - impuesto_cetes;
+        reinversion_cp_intersemestral += monto_para_bonddia + rendimiento_bonddia + remanentes;
 
-        reinversion_cc = CommonsUtil.round(reinversion_cc, 2);
+        reinversion_cp_intersemestral = CommonsUtil.round(reinversion_cp_intersemestral, 2);
 
         //Genera arreglo
         bonos.setInversion(montoInvertir);
         bonos.setTasaCetes(tasaCetes);
+        bonos.setTasaBonos(tasaBonos);
         bonos.setPlazo(dias);
         bonos.setRendimiento(rendimiento);
         bonos.setIsr(isr);
@@ -195,7 +212,8 @@ public class BonosDelegate {
         bonos.setRendimientoBonddia(rendimiento_bonddia);
         bonos.setRemanentes(remanentes);
         bonos.setTotalUltimo(total_total);
-        bonos.setReinversionCC(reinversion_cc);
+        bonos.setReinversionIntersemestral(reinversion_cp_intersemestral);
+
 
         return bonos;
     }
