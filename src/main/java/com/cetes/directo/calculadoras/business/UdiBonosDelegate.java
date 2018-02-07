@@ -18,22 +18,26 @@ public class UdiBonosDelegate {
 
     public static final Logger logger = LoggerFactory.getLogger(BonosDelegate.class);
 
+    @Value("${calc.cetes.tasa.28}")
+    private double tasaCetes;
+    @Value("${calc.bonddia.tasa}")
+    private double tasaBonddia;
+    @Value("${calc.bonddia.precio}")
+    private double precioBonddia;
+
     @Value("${calc.udibonos_excel.tasaudibonos}")
     private double tasaBonos;
     @Value("${calc.udibonos_excel.precioudibonos}")
     private double precioBonos;
-    @Value("${calc.bonos_excel.tasacetes}")
-    private double tasaCetes;
     @Value("${calc.bonos_excel.preciocetes}")
     private double precioCetes;
-    @Value("${calc.bonos_excel.tasabonddia}")
-    private double tasaBonddia;
-    @Value("${calc.bonos_excel.preciobonddia}")
-    private double precioBonddia;
     @Value("${calc.bonos_excel.diasCupon}")
     private double diasCupon;
     @Value("${calc.bonos_excel.valornominalbono}")
     private double valorNominalBono;
+
+    @Value("${calc.cetes.factor.isr}")
+    private Double factorISR;
 
 
     /**
@@ -112,7 +116,7 @@ public class UdiBonosDelegate {
         //Calculos
 
         double rendimiento = CommonsUtil.round((montoInvertir * (tasaCetes / 100)) / 360 * dias, 2);
-        double isr = CommonsUtil.round((montoInvertir * .58) / 36500 * dias, 2);
+        double isr = CommonsUtil.round((montoInvertir * factorISR) / 36500 * dias, 2);
         double total = CommonsUtil.round(montoInvertir + rendimiento - isr, 2);
 
         // Multiplo inferior monto para bondes
@@ -125,7 +129,7 @@ public class UdiBonosDelegate {
         double corte_cupon = ((((tasaBonos / 100) * diasCupon) / 360) * valorNominalBono) * titulos_bondes;
         corte_cupon = CommonsUtil.round(corte_cupon, 2);
 
-        double impuesto_corte_cupon = (titulos_bondes * precioBonos * .58) / 36500 * diasCupon;
+        double impuesto_corte_cupon = (titulos_bondes * precioBonos * factorISR) / 36500 * diasCupon;
         impuesto_corte_cupon = CommonsUtil.round(impuesto_corte_cupon, 2);
 
         double remanente_para_cetes = 0;
@@ -148,7 +152,7 @@ public class UdiBonosDelegate {
         int titulos_cetes = (int) division_titulos_cetes;
 
         double rendimiento_cetes = CommonsUtil.round(((monto_para_cetes * (tasaCetes / 100)) / 360) * dias, 2);
-        double impuesto_cetes = CommonsUtil.round((titulos_cetes * 10 * .58) / 36500 * dias, 2);
+        double impuesto_cetes = CommonsUtil.round((titulos_cetes * 10 * factorISR) / 36500 * dias, 2);
         double remanente_para_bonddia = 0;
         if (momento == 1) {
             remanente_para_bonddia = CommonsUtil.round(montoInvertir - monto_para_bonos - monto_para_cetes, 2);

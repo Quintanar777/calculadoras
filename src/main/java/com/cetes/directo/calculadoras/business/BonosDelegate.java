@@ -36,6 +36,8 @@ public class BonosDelegate {
     private double valorNominalBono;
     @Value("${calc.bonos_excel.dias}")
     private double dias;
+    @Value("${calc.cetes.factor.isr}")
+    private Double factorISR;
 
     /**
      * Realizar calculo de BONOS
@@ -135,15 +137,15 @@ public class BonosDelegate {
 
         double impuesto_corte_cupon = 0;
         if (momento == 1) {
-            impuesto_corte_cupon = (titulos_bondes * valorNominalBono * .58) / 36500 * diasCupon;
+            impuesto_corte_cupon = (titulos_bondes * valorNominalBono * factorISR) / 36500 * diasCupon;
         } else {
-            impuesto_corte_cupon = (monto_para_bonos * .58) / 36500 * diasCupon;
+            impuesto_corte_cupon = (monto_para_bonos * factorISR) / 36500 * diasCupon;
 
         }
         impuesto_corte_cupon = CommonsUtil.round(impuesto_corte_cupon, 2);
 
         double rendimiento = CommonsUtil.round((montoInvertir * (tasaCetes / 100)) / 360 * dias, 2);
-        double isr = CommonsUtil.round((montoInvertir * .58) / 36500 * dias, 2);
+        double isr = CommonsUtil.round((montoInvertir * factorISR) / 36500 * dias, 2);
         double total = CommonsUtil.round(montoInvertir + rendimiento - isr, 2);
 
         double remanente_para_cetes = 0;
@@ -160,7 +162,7 @@ public class BonosDelegate {
         int titulos_cetes = (int) division_titulos_cetes;
 
         double rendimiento_cetes = CommonsUtil.round(((monto_para_cetes * (tasaCetes / 100)) / 360) * dias, 2);
-        double impuesto_cetes = CommonsUtil.round((titulos_cetes * 10 * .58) / 36500 * dias, 2);
+        double impuesto_cetes = CommonsUtil.round((titulos_cetes * 10 * factorISR) / 36500 * dias, 2);
 
         double remanente_para_bonddia = 0;
         if (momento == 1) {

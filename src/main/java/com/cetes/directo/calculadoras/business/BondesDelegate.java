@@ -18,22 +18,27 @@ public class BondesDelegate {
 
     public static final Logger logger = LoggerFactory.getLogger(BondesDelegate.class);
 
+
+    @Value("${calc.cetes.tasa.28}")
+    private double tasaCetes;
+    @Value("${calc.bonddia.tasa}")
+    private double tasaBonddia;
+    @Value("${calc.bonddia.precio}")
+    private double precioBonddia;
+
+    @Value("${calc.bondes_excel.preciocetes}")
+    private double precioCetes;
     @Value("${calc.bondes_excel.tasabondes}")
     private double tasaBondes;
     @Value("${calc.bondes_excel.preciobondes}")
     private double precioBondes;
-    @Value("${calc.bondes_excel.tasacetes}")
-    private double tasaCetes;
-    @Value("${calc.bondes_excel.preciocetes}")
-    private double precioCetes;
-    @Value("${calc.bondes_excel.tasabonddia}")
-    private double tasaBonddia;
-    @Value("${calc.bondes_excel.preciobonddia}")
-    private double precioBonddia;
     @Value("${calc.bondes_excel.diasCupon}")
     private double diasCupon;
     @Value("${calc.bondes_excel.valornominalbono}")
     private double valorNominalBono;
+
+    @Value("${calc.cetes.factor.isr}")
+    private Double factorISR;
 
     @Autowired
     private Bondes bondes;
@@ -115,7 +120,7 @@ public class BondesDelegate {
         double rendimiento = (montoInvertir*(tasaCetes/100))/360*dias;
 	    rendimiento = CommonsUtil.round(rendimiento, 2);
 	    
-	    double isr = (montoInvertir*.58)/36500*dias;
+	    double isr = (montoInvertir*factorISR)/36500*dias;
 	    isr = CommonsUtil.round(isr, 2);
 	    
 	    double total = montoInvertir+rendimiento-isr;
@@ -131,7 +136,7 @@ public class BondesDelegate {
 	    double corte_cupon = (((((tasaBondes/100)/100)*dias)/360)*valorNominalBono)*monto_para_bonos;
 	    corte_cupon = Math.ceil(corte_cupon);
 	    
-	    double impuesto_corte_cupon = (titulos_bondes*.58)/36500*diasCupon;
+	    double impuesto_corte_cupon = (titulos_bondes*factorISR)/36500*diasCupon;
 	    impuesto_corte_cupon = CommonsUtil.round(impuesto_corte_cupon, 2);
         
 	    double remanente_para_cetes = 0;
@@ -152,7 +157,7 @@ public class BondesDelegate {
 	    double rendimiento_cetes = ((monto_para_cetes*(tasaCetes/100))/360)*diasCupon;
 	    rendimiento_cetes = CommonsUtil.round(rendimiento_cetes, 2);
 	    
-	    double impuesto_cetes = (titulos_cetes*.58)/36500*diasCupon;
+	    double impuesto_cetes = (titulos_cetes*factorISR)/36500*diasCupon;
 	    impuesto_cetes = CommonsUtil.round(impuesto_cetes, 3);
         
         
