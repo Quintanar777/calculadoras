@@ -75,6 +75,7 @@ public class UdiBonosDelegate {
         BonosDto dto = new BonosDto();
         dto.setInversion(CommonsUtil.doubleToFormatString(bondes.getInversion()));
         dto.setTasaCetes(CommonsUtil.doubleToFormatString(bondes.getTasaCetes()));
+        dto.setTasaBonos(CommonsUtil.doubleToFormatString(bondes.getTasaBonos()));
         dto.setPlazo(CommonsUtil.doubleToFormatString(bondes.getPlazo()));
         dto.setRendimiento(CommonsUtil.doubleToFormatString(bondes.getRendimiento()));
         dto.setIsr(CommonsUtil.doubleToFormatString(bondes.getIsr()));
@@ -176,6 +177,7 @@ public class UdiBonosDelegate {
         //Genera arreglo
         bonos.setInversion(montoInvertir);
         bonos.setTasaCetes(tasaCetes);
+        bonos.setTasaBonos(tasaBonos);
         bonos.setPlazo(dias);
         bonos.setRendimiento(rendimiento);
         bonos.setIsr(isr);
