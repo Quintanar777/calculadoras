@@ -57,9 +57,17 @@ public class BondesDelegate {
         Bondes bondesMesUno = getDatosBONDES(1, Constantes.PLAZO_28, monto, monto, 0);
         requestBondes.add(formatBondes(bondesMesUno));
 
-        for (int i = 2; i <= plazo; i++) {
-            bondesMesUno = getDatosBONDES(i, Constantes.PLAZO_28, monto, bondesMesUno.getTotal(), bondesMesUno.getTotalUltimo());
-            requestBondes.add(formatBondes(bondesMesUno));
+        for (int i = 2, j=1; i <= plazo; i++, j++) {
+            logger.info("mes: " + i);
+            if(j%12 == 0){
+                bondesMesUno = getDatosBONDES(1, Constantes.PLAZO_28, bondesMesUno.getTotalUltimo(), bondesMesUno.getTotalUltimo(), 0);
+                requestBondes.add(formatBondes(bondesMesUno));
+                monto = bondesMesUno.getTotalUltimo();
+            }else{
+                bondesMesUno = getDatosBONDES(i, Constantes.PLAZO_28, monto, bondesMesUno.getTotal(), bondesMesUno.getTotalUltimo());
+                requestBondes.add(formatBondes(bondesMesUno));
+            }
+
         }
 
         return requestBondes;
@@ -105,7 +113,7 @@ public class BondesDelegate {
      * totalCalculado: calculado de la primera vez y anterior
      */
     public Bondes getDatosBONDES(int primerMes, int dias, double montoInvertirInicial, double montoInvertir, double totalCalculado) {
-        logger.info("primerMes: " + primerMes);
+        logger.info("momento: " + primerMes);
         logger.info("dias: " + dias);
         logger.info("montoInvertirInicial: " + montoInvertirInicial);
         logger.info("montoInvertir: " + montoInvertir);
@@ -122,23 +130,23 @@ public class BondesDelegate {
 	    
 	    double isr = (montoInvertir*factorISR)/36500*dias;
 	    isr = CommonsUtil.round(isr, 2);
-	    
+
 	    double total = montoInvertir+rendimiento-isr;
 	    total = CommonsUtil.round(total, 2);
-	    
+
 	    // Multiplo inferior monto para bondes
 	    double monto_para_bonos = montoInvertirInicial -(montoInvertirInicial%precioBondes);
 //	    monto_para_bonos = CommonsUtil.round(monto_para_bonos);
-	    
+
 	    double division_titulos_bondes = monto_para_bonos/precioBondes;
 	    int titulos_bondes = (int) division_titulos_bondes;
-	    
+
 	    double corte_cupon = (((((tasaBondes/100)/100)*dias)/360)*valorNominalBono)*monto_para_bonos;
 	    corte_cupon = Math.ceil(corte_cupon);
-	    
+
 	    double impuesto_corte_cupon = (titulos_bondes*factorISR)/36500*diasCupon;
 	    impuesto_corte_cupon = CommonsUtil.round(impuesto_corte_cupon, 2);
-        
+
 	    double remanente_para_cetes = 0;
 	    if (primerMes==1)  {
 	    	remanente_para_cetes = montoInvertirInicial - monto_para_bonos;
@@ -153,10 +161,10 @@ public class BondesDelegate {
 
 	    double division_titulos_cetes = monto_para_cetes/precioCetes;
 	    int titulos_cetes = (int) division_titulos_cetes;
-	    
+
 	    double rendimiento_cetes = ((monto_para_cetes*(tasaCetes/100))/360)*diasCupon;
 	    rendimiento_cetes = CommonsUtil.round(rendimiento_cetes, 2);
-	    
+
 	    double impuesto_cetes = (titulos_cetes*factorISR)/36500*diasCupon;
 	    impuesto_cetes = CommonsUtil.round(impuesto_cetes, 3);
         
