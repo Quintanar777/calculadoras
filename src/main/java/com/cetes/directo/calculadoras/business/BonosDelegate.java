@@ -18,18 +18,19 @@ public class BonosDelegate {
 
     public static final Logger logger = LoggerFactory.getLogger(BonosDelegate.class);
 
+    @Value("${calc.cetes.tasa.28}")
+    private double tasaCetes;
+    @Value("${calc.bonddia.tasa}")
+    private double tasaBonddia;
+    @Value("${calc.bonddia.precio}")
+    private double precioBonddia;
+
     @Value("${calc.bonos_excel.tasabonos}")
     private double tasaBonos;
     @Value("${calc.bonos_excel.preciobonos}")
     private double precioBonos;
-    @Value("${calc.bonos_excel.tasacetes}")
-    private double tasaCetes;
     @Value("${calc.bonos_excel.preciocetes}")
     private double precioCetes;
-    @Value("${calc.bonos_excel.tasabonddia}")
-    private double tasaBonddia;
-    @Value("${calc.bonos_excel.preciobonddia}")
-    private double precioBonddia;
     @Value("${calc.bonos_excel.diasCupon}")
     private double diasCupon;
     @Value("${calc.bonos_excel.valornominalbono}")
