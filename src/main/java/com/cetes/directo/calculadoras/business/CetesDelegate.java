@@ -16,10 +16,10 @@ public class CetesDelegate {
 
     @Value("${calc.cetes.precio}")
     private Double valorCete;
-    
+
 //    @Value("${calc.cetes.tasa.descuento}")
 //    private Double tasaDecuento;
-    
+
     @Value("${calc.cetes.factor.isr}")
 	private Double factorISR;
 
@@ -52,11 +52,11 @@ public class CetesDelegate {
         logger.info("Service calcular cetes...");
         logger.info(("monto: " + monto));
         logger.info(("plazo: " + plazo));
-        
- 
-        
+
+
+
 		double arreglo[] = new double [14];
-		
+
 	//	double precioXcete = CommonsUtil.round(valorCete*(1-(tasaDecuento/36000*plazo)),7);
         double tasaDecuento = 0.0;
         if(plazo == 28) tasaDecuento = tasa28;
@@ -64,39 +64,45 @@ public class CetesDelegate {
         if(plazo == 182) tasaDecuento = tasa182;
         if(plazo == 360) tasaDecuento = tasa360;
 
-		double precioXcete = valorCete*(1-(tasaDecuento/36000*plazo));
-		
+		double precioXcete = CommonsUtil.round(valorCete*(1-(tasaDecuento/36000*plazo)),7);
+      logger.info(("precioXcete " + precioXcete));
+
 		double tasaCetes = ((valorCete/precioXcete)-1)/plazo*360;
 		tasaCetes = CommonsUtil.round(tasaCetes,4);
-		 
+
 	//	tasaBonddia = CommonsUtil.round(tasaBonddia/100,7);
 		tasaBonddia = tasaBonddia/100;
-		
+
 	    double montoRealCetes = monto -(monto%precioXcete);
-	    
-	//	double intBrutosCetes = CommonsUtil.round(((montoRealCetes*tasaCetes)/360)*plazo,7); 
+      logger.info(("montoRealCetes: " + montoRealCetes));
+
+	//	double intBrutosCetes = CommonsUtil.round(((montoRealCetes*tasaCetes)/360)*plazo,7);
 		double intBrutosCetes = ((montoRealCetes*tasaCetes)/360)*plazo;
 
 		double impuestoCetes = (montoRealCetes*factorISR)/36500*plazo;
 		double remanenteBonddia = monto-montoRealCetes;
 		double montoRealBonddia = remanenteBonddia -(remanenteBonddia%valorBonddia);
-		
-	//	double intBrutosBonddia = CommonsUtil.round(((montoRealBonddia*tasaBonddia)/360)*plazo,7);  
+
+	//	double intBrutosBonddia = CommonsUtil.round(((montoRealBonddia*tasaBonddia)/360)*plazo,7);
 		double intBrutosBonddia = ((montoRealBonddia*tasaBonddia)/360)*plazo;
-		
+
 		double remanente = monto-montoRealCetes-montoRealBonddia;
 		double titulos = montoRealCetes/precioXcete;
 		double titulosBondia = montoRealBonddia/valorBonddia;
 		double total = montoRealCetes+intBrutosCetes+montoRealBonddia+intBrutosBonddia+remanente-impuestoCetes;
 
+    logger.info(("montoRealBonddia: " + montoRealBonddia));
+    logger.info(("valorBonddia: " + valorBonddia));
+    logger.info(("titulosBondia: " + titulosBondia));
+
 		double intBrutosTotal = intBrutosCetes + intBrutosBonddia;
-		
+
 	//	tasaCetes = CommonsUtil.round(tasaCetes*100,7);
 	//    tasaBonddia = CommonsUtil.round(tasaBonddia*100,7);
-	    
+
 	    tasaCetes = tasaCetes*100;
 	    tasaBonddia = tasaBonddia*100;
-	    
+
         arreglo[0] = monto;
         arreglo[1] = montoRealCetes;
         arreglo[2] = intBrutosCetes;
@@ -111,9 +117,10 @@ public class CetesDelegate {
 		arreglo[11] = total;
 		arreglo[12] = remanente;
 		arreglo[13] = intBrutosTotal;
-		
+
         cetes.setNoTitulosCetes(arreglo[5]);
 
+/*
         //depende del plazo, es la tasa que se envia
         if(momento == 1){ //depende del plazo
             if(plazo == 28) cetes.setTasaBruta(tasa28);
@@ -124,6 +131,9 @@ public class CetesDelegate {
         }else{ //de lo contrario siempre es a 28
             cetes.setTasaBruta(tasa28);
         }
+*/
+        cetes.setTasaBruta(arreglo[4]);
+
         cetes.setTasaBrutaBonddia(tasaBonddia);
         cetes.setInversion(arreglo[1]);
         cetes.setNoTitulosBonddia(arreglo[10]);

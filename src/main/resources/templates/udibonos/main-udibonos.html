@@ -40,7 +40,7 @@
             </div>
             <div class="form-group">
               <label class="field prepend-icon">
-                <input id="monto" class="gui-input" name="monto" placeholder="Monto" type="number" />
+                <input id="monto" class="gui-input" name="monto" placeholder="Monto" type="text" />
                 <small id="errorMonto" class="form-text text-red" style="display: none;">El monto es un campo requerido.</small>
                 <small id="errorRangoMonto" class="form-text text-red" style="display: none;">El monto debe ser entre 1 y 10,000,000.</small>
                 <span class="field-icon">
@@ -88,22 +88,22 @@
               <div class="row row-cetes">
                 <div class="col-1"><img src="/calculadoras/images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Capital con el que se realiza la inversión inicial en cetes"/> </div>
                 <div class="col-6"><span class="label-calc pull-right">Inversion Cetes:</span></div>
-                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionCetes }}</span></div>
+                <div class="col-4 col-result"><span class="label-resultado pull-right">$ {{ inversionCetes }}</span></div>
               </div>
               <div class="row row-cetes">
                 <div class="col-1"><img src="/calculadoras/images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Al no alcanzar para otro titulo en cetes, el remanente se invierte en el fondo diario Bonddia y genera intereses"/> </div>
                 <div class="col-6"><span class="label-calc pull-right">Inversion Bonos:</span></div>
-                <div class="col-4 col-result"><span class="label-resultado">$ {{ inversionBonos }}</span></div>
+                <div class="col-4 col-result"><span class="label-resultado pull-right">$ {{ inversionBonos }}</span></div>
               </div>
               <div class="row row-cetes">
                 <div class="col-1"><img src="/calculadoras/images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Intereses ganados antes de impuestos"/> </div>
                 <div class="col-6"><span class="label-calc pull-right">Interes Bruto:</span></div>
-                <div class="col-4 col-result"><span class="label-resultado">$ {{ interesBruto }}</span></div>
+                <div class="col-4 col-result"><span class="label-resultado pull-right">$ {{ interesBruto }}</span></div>
               </div>
               <div class="row row-cetes">
                 <div class="col-1"><img src="/calculadoras/images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Impuesto a retener redondeado a dos decimales"/> </div>
                 <div class="col-6"><span class="label-calc pull-right">ISR:</span></div>
-                <div class="col-4 col-result"><span class="label-calc-bold">$ {{ isr }}</span></div>
+                <div class="col-4 col-result"><span class="label-calc-bold pull-right">$ {{ isr }}</span></div>
               </div>
               <div class="line"></div>
               <br/>
@@ -111,22 +111,22 @@
               <div class="row row-cetes">
                 <div class="col-1"></div>
                 <div class="col-6"><span class="label-calc pull-right">Corte cupón:</span></div>
-                <div class="col-4 col-result"><span class="label-resultado">$ {{ corteCupon }}</span></div>
+                <div class="col-4 col-result"><span class="label-resultado pull-right">$ {{ corteCupon }}</span></div>
               </div>
               <div class="row row-cetes">
                 <div class="col-1"></div>
                 <div class="col-6"><span class="label-calc pull-right">Impuesto CC:</span></div>
-                <div class="col-4 col-result"><span class="label-calc-bold">$ {{ impuesteCorteCupon }}</span></div>
+                <div class="col-4 col-result"><span class="label-calc-bold pull-right">$ {{ impuesteCorteCupon }}</span></div>
               </div>
               <div class="row row-cetes">
                 <div class="col-1"></div>
                 <div class="col-6"><span class="label-calc pull-right">Monto Bonddia:</span></div>
-                <div class="col-4 col-result"><span class="label-resultado">$ {{ montoBonddia }}</span></div>
+                <div class="col-4 col-result"><span class="label-resultado pull-right">$ {{ montoBonddia }}</span></div>
               </div>
               <div class="row row-cetes">
                 <div class="col-1"></div>
                 <div class="col-6"><span class="label-calc pull-right">Remanentes:</span></div>
-                <div class="col-4 col-result"><span class="label-resultado">$ {{ remanentes }}</span></div>
+                <div class="col-4 col-result"><span class="label-resultado pull-right">$ {{ remanentes }}</span></div>
               </div>
 
               <div class="line"></div>
@@ -134,7 +134,7 @@
               <div class="row row-cetes">
                 <div class="col-1"><img src="/calculadoras/images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Es el capital final que incluye los intereses ganados y el remanente de la inversón menos el ISR"/> </div>
                 <div class="col-6"><span class="label-calc pull-right">Monto total:</span></div>
-                <div class="col-4 col-result"><span class="label-resultado">$ {{ montoTotal }}</span></div>
+                <div class="col-4 col-result"><span class="label-resultado pull-right">$ {{ montoTotal }}</span></div>
               </div>
             </div>
           </div>
@@ -147,7 +147,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Grafica UDIBONOS</h5>
+            <h5 class="modal-title" id="exampleModalLongTitle">UDIBONOS</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -170,4 +170,49 @@
   <script src="/calculadoras/js/vue.js" charset="utf-8"></script>
   <script src="/calculadoras/js/highcharts.js" charset="utf-8"></script>
   <script src="/calculadoras/js/udibonos.js" charset="utf-8"></script>
+  <script >
+      (function($, undefined) {
+
+    "use strict";
+
+    // When ready.
+    $(function() {
+
+      var $form = $( "#form-udibonos" );
+    //	var $input = $form.find( "monto" );
+      var $input = $("input[name=monto]");
+
+      $input.on( "keyup", function( event ) {
+
+
+        // When user select text in the document, also abort.
+        var selection = window.getSelection().toString();
+        if ( selection !== '' ) {
+          return;
+        }
+
+        // When the arrow keys are pressed, abort.
+        if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
+          return;
+        }
+
+
+        var $this = $( this );
+
+        // Get the value.
+        var input = $this.val();
+
+        var input = input.replace(/[\D\s\._\-]+/g, "");
+            input = input ? parseInt( input, 10 ) : 0;
+
+            $this.val( function() {
+              return ( input === 0 ) ? "" : input.toLocaleString( "en-US" );
+            } );
+      } );
+
+
+
+    });
+  })(jQuery);
+     </script>
 </html>

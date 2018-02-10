@@ -30,7 +30,7 @@ var formBonos = new Vue({
         console.log('calculando bonos...');
 
         var data = {}
-        data["monto"] = $('#monto').val();
+        data["monto"] = $('#monto').val().replace(/[^\d]/g, '');
         data["plazo"] = $('#plazo').val();
 
         $.ajax({
@@ -164,7 +164,7 @@ var graficar = new Vue({
 
 //funcion para validar campos obligatorios
 function validaCampos() {
-  var monto = $('#monto').val();
+  var monto = $('#monto').val().replace(/[^\d]/g, '');
   var plazo = $('#plazo').val();
   if(isEmpty(monto)){
     $('#errorMonto').show();

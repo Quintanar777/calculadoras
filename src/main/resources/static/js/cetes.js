@@ -205,41 +205,51 @@ var formCetes = new Vue({
                           //inversion cetes, se toma del mes 1
                           result2.inversionCetes = data[1].inversionCetes
 
+/*
                           for(var i=1; i<data.length; i++){
                             //Se suma inversion bonddia, interes bruto e isr
                             inversionBonddia = inversionBonddia + parseFloat( data[i].inversionBonddia.replace(/[^\d\.\-]/g,'') )
                             interesBruto = interesBruto + parseFloat( data[i].interesBruto.replace(/[^\d\.\-]/g,'') )
                             isr = isr + parseFloat( data[i].isr.replace(/[^\d\.\-]/g,'') )
                           }
-                          result2.inversionBonddia = dosDecimales(inversionBonddia);
-                          result2.interesBruto = dosDecimales(interesBruto);
-                          result2.isr = dosDecimales(isr);
 
+                          result2.inversionBonddia = inversionBonddia;
+                          result2.interesBruto = interesBruto;
+                          result2.isr = isr;
+*/
                           result2.montoTotal= data[data.length - 1].montoTotal
                           result2.noTitulosBonddia= data[data.length - 1].noTitulosBonddia
                           result2.noTitulosCetes= data[data.length - 1].noTitulosCetes
                           result2.tasaBrutaBonddia= data[data.length - 1].tasaBrutaBonddia
                           result2.tasaBrutaCetes= data[data.length - 1].tasaBrutaCetes
 
+/*
                           if(periodos > 1){
                             var inversionBonddia = 0.0;
                             var interesBruto = 0.0;
                             var isr = 0.0;
 
                             for(var i=1; i<data.length; i++){
-                              inversionBonddia = inversionBonddia + parseFloat( data[i].inversionBonddia )
-                              interesBruto = interesBruto + parseFloat( data[i].interesBruto )
-                              isr = isr + parseFloat(data[i].isr)
+                             inversionBonddia = inversionBonddia + parseFloat( data[i].inversionBonddia.replace(/[^\d\.\-]/g,'') )
+                             interesBruto = interesBruto + parseFloat( data[i].interesBruto.replace(/[^\d\.\-]/g,'') )
+                            isr = isr + parseFloat(data[i].isr.replace(/[^\d\.\-]/g,''))
+
+                              alert("InversionBonddia " + inversionBonddia + " interesBruto " + interesBruto + " isr " + isr)
                             }
-                            result2.inversionBonddia= dosDecimales(inversionBonddia)
-                            result2.interesBruto= dosDecimales(interesBruto)
-                            result2.isr= dosDecimales(isr)
+
+                            result2.inversionBonddia= inversionBonddia
+                            result2.interesBruto= interesBruto
+                            result2.isr= isr
 
                           }else{
                             result2.inversionBonddia= data[data.length - 1].inversionBonddia
                             result2.interesBruto= data[data.length - 1].interesBruto
                             result2.isr= data[data.length - 1].isr
                           }
+*/
+                        result2.inversionBonddia= data[data.length - 1].inversionBonddia
+                        result2.interesBruto= data[data.length - 1].interesBruto
+                        result2.isr= data[data.length - 1].isr
 
                           $('#result-2').show();
                           $('#labelReinvertir').show();
@@ -357,6 +367,11 @@ var formCetes = new Vue({
                           result2.tasaBrutaBonddia= data.responseCetes28[data.responseCetes28.length - 1].tasaBrutaBonddia
                           result2.tasaBrutaCetes= data.responseCetes28[data.responseCetes28.length - 1].tasaBrutaCetes
 
+                          result2.interesBruto = data.responseCetes28[data.responseCetes28.length - 1].interesBruto
+                          result2.isr = data.responseCetes28[data.responseCetes28.length - 1].isr
+                          result2.inversionBonddia = data.responseCetes28[data.responseCetes28.length - 1].inversionBonddia
+
+/*
                           //fix a la reinversion, se suma a partir del mes 2
                           var inversionBonddia = 0.0;
                           var interesBruto = 0.0;
@@ -374,6 +389,7 @@ var formCetes = new Vue({
                           result2.interesBruto = dosDecimales(interesBruto);
                           result2.isr = dosDecimales(isr);
                           result2.inversionBonddia = dosDecimales(inversionBonddia);
+*/
 
                           //Resultado para plazo 91
                           result4.montoTotal= data.responseCetes91[data.responseCetes91.length - 1].montoTotal
@@ -382,6 +398,14 @@ var formCetes = new Vue({
                           result4.tasaBrutaBonddia= data.responseCetes91[data.responseCetes91.length - 1].tasaBrutaBonddia
                           result4.tasaBrutaCetes= data.responseCetes91[data.responseCetes91.length - 1].tasaBrutaCetes
 
+                          //inversion cetes, se toma del mes 1
+                          result4.inversionCetes = data.responseCetes91[1].inversionCetes
+
+                          result4.interesBruto = data.responseCetes91[data.responseCetes91.length - 1].interesBruto
+                          result4.isr = data.responseCetes91[data.responseCetes91.length - 1].isr
+                          result4.inversionBonddia = data.responseCetes91[data.responseCetes91.length - 1].inversionBonddia
+
+/*
                           //fix a la reinversion, se suma a partir del mes 2
                           var inversionBonddia = 0.0;
                           var interesBruto = 0.0;
@@ -398,6 +422,7 @@ var formCetes = new Vue({
                           result4.inversionBonddia = dosDecimales(inversionBonddia);
                           result4.interesBruto = dosDecimales(interesBruto);
                           result4.isr = dosDecimales(isr);
+*/
 
                           //Resultado para plazo 182
                           result6.montoTotal= data.responseCetes182[data.responseCetes182.length - 1].montoTotal
@@ -406,6 +431,13 @@ var formCetes = new Vue({
                           result6.tasaBrutaBonddia= data.responseCetes182[data.responseCetes182.length - 1].tasaBrutaBonddia
                           result6.tasaBrutaCetes= data.responseCetes182[data.responseCetes182.length - 1].tasaBrutaCetes
 
+                          //inversion cetes, se toma del mes 1
+                          result6.inversionCetes = data.responseCetes182[1].inversionCetes
+                          result6.inversionBonddia = data.responseCetes182[data.responseCetes182.length - 1].inversionBonddia
+                          result6.interesBruto = data.responseCetes182[data.responseCetes182.length - 1].interesBruto
+                          result6.isr = data.responseCetes182[data.responseCetes182.length - 1].isr
+
+/*
                           //fix a la reinversion, se suma a partir del mes 2
                           var inversionBonddia = 0.0;
                           var interesBruto = 0.0;
@@ -422,7 +454,7 @@ var formCetes = new Vue({
                           result6.inversionBonddia = dosDecimales(inversionBonddia);
                           result6.interesBruto = dosDecimales(interesBruto);
                           result6.isr = dosDecimales(isr);
-
+*/
                           //Resultado para plazo 360
                           result8.montoTotal= data.responseCetes360[data.responseCetes360.length - 1].montoTotal
                           result8.noTitulosBonddia= data.responseCetes360[data.responseCetes360.length - 1].noTitulosBonddia
@@ -430,6 +462,14 @@ var formCetes = new Vue({
                           result8.tasaBrutaBonddia= data.responseCetes360[data.responseCetes360.length - 1].tasaBrutaBonddia
                           result8.tasaBrutaCetes= data.responseCetes360[data.responseCetes360.length - 1].tasaBrutaCetes
 
+                          //inversion cetes, se toma del mes 1
+                          result8.inversionCetes = data.responseCetes360[1].inversionCetes
+
+                          result8.inversionBonddia = data.responseCetes360[data.responseCetes360.length - 1].inversionBonddia
+                          result8.interesBruto = data.responseCetes360[data.responseCetes360.length - 1].interesBruto
+                          result8.isr = data.responseCetes360[data.responseCetes360.length - 1].isr
+
+/*
                           //fix a la reinversion, se suma a partir del mes 2
                           var inversionBonddia = 0.0;
                           var interesBruto = 0.0;
@@ -446,7 +486,7 @@ var formCetes = new Vue({
                           result8.inversionBonddia = dosDecimales(inversionBonddia);
                           result8.interesBruto = dosDecimales(interesBruto);
                           result8.isr = dosDecimales(isr);
-
+*/
                           console.log('mostrar re inversio - comparar: ' );
                           if($('#plazo').val() == '28'){
                             $('#result-2').show();
@@ -503,10 +543,10 @@ var divcharts =  new Vue({
       if(showComparar){
         var arrayCetes = [];
         var arrayBonddia = [];
-        cat.push('Periodo CETES 28');
-        cat.push('Periodo CETES 91');
-        cat.push('Periodo CETES 182');
-        cat.push('Periodo CETES 360');
+        cat.push('CETES 28');
+        cat.push('CETES 91');
+        cat.push('CETES 182');
+        cat.push('CETES 360');
 
         //Se agregan los data series de n periodos
         //CETES
@@ -553,7 +593,7 @@ var divcharts =  new Vue({
 
           for(var i=0; i<dataPeridos.length;i++){
             //Se agregan las catagorias de n periodos
-            cat.push('Periodo ' + (i+1));
+            cat.push(i+1);
             //Se agregan los data series de n periodos
             arrayCetes.push(parseFloat(dataPeridos[i].inversionCetes.replace(/[^\d\.\-]/g,'')));
             arrayBonddia.push(parseFloat(dataPeridos[i].interesBruto.replace(',','')));
