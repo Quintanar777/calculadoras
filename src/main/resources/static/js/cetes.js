@@ -140,6 +140,11 @@ var formCetes = new Vue({
       $('#result-8').hide();
       showComparar = false;
 
+      $('#result-1').hide();
+      $('#result-2').hide();
+      $('#labelReinvertir').hide();
+      $('#div-graficar').hide();
+
       if(validaCampos()){ //true si todos los campos son capturados
         console.log('calculando cetes...');
         $('#div-graficar').show();
@@ -649,8 +654,8 @@ var divcharts =  new Vue({
           dataSeries.push(datBonddia);
         }
       }
-
-      Highcharts.chart('chart', {
+alert("Antes grafica");
+      chart = new Highcharts.chart('chart', {
         chart: {
             type: 'column'
         },
@@ -690,9 +695,14 @@ var divcharts =  new Vue({
         },
         series:dataSeries
     });
+
     }
   }
 })
+
+chart.load({
+  done: function() {$(window).trigger('resize');}
+});
 
 //funcion para validar campos obligatorios
 function validaCampos() {

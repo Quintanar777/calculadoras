@@ -7,7 +7,17 @@
     <link rel="stylesheet" href="/calculadoras/css/font-awesome.css"/>
     <link rel="stylesheet" href="/calculadoras/css/smart-forms.css"/>
     <link rel="stylesheet" href="/calculadoras/css/main-styles.css"/>
+
+    <link rel='stylesheet' href='/calculadoras/css/jquery-ui.css'/>
+
+
+
+
+
   </head>
+
+
+
   <body>
     <nav class="navbar navbar-expand-sm bg-blue navbar-blue fixed-top" style="background-color:#1C83C6;">
       <ul class="navbar-nav">
@@ -116,12 +126,12 @@
               </div>
               <div class="row row-cetes">
                 <div class="col-4"><span class="label-calc pull-right">Cetes:</span></div>
-                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosCetes }}</span></div>
-                <div class="col-3 col-result"><span class="label-resultado pull-right">{{ tasaBrutaCetes }} %</span></div>
+                <div class="col-3 col-result"><span class="label-resultado pull-right">{{ noTitulosCetes }}</span></div>
+                <div class="col-3 col-result"><span class="label-resultado pull-right">{{ tasaBrutaCetes }}%</span></div>
               </div>
               <div class="row row-cetes">
                 <div class="col-4"><span class="label-calc pull-right">Bonddia:</span></div>
-                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosBonddia }}</span></div>
+                <div class="col-3 col-result"><span class="label-resultado pull-right">{{ noTitulosBonddia }}</span></div>
                 <div class="col-3 col-result"><span class="label-resultado pull-right">{{ tasaBrutaBonddia }}%</span></div>
               </div>
               <div class="line"></div>
@@ -508,7 +518,7 @@
           </div>
           <div class="row justify-content-start" style="margin-bottom: 3rem; margin-top: 1rem; display:none;" id="div-graficar">
             <div class="col-3">
-              <input id="buttonGraficar" type="button" name="" value="Graficar" class="button btn-primary" v-on:click="graficar"/>
+              <input id="buttonGraficar" type="button" name=""  data-toggle="modal" value="Graficar" class="button btn-primary" v-on:click="graficar"/>
             </div>
           </div>
         </div>
@@ -535,54 +545,63 @@
     </div>
   </body>
   <script src="/calculadoras/js/jquery-3.2.1.js" charset="utf-8"></script>
+  <script src="/calculadoras/js/jquery-ui.min.js" charset="utf-8"></script>
   <script src="/calculadoras/js/bootstrap.js" charset="utf-8"></script>
   <script src="/calculadoras/js/util.js" charset="utf-8"></script>
   <script src="/calculadoras/js/vue.js" charset="utf-8"></script>
   <script src="/calculadoras/js/highcharts.js" charset="utf-8"></script>
   <script src="/calculadoras/js/cetes.js" charset="utf-8"></script>
+
+  <script src="/calculadoras/js/index.js" charset="utf-8"></script>
+
+
 <script >
-    (function($, undefined) {
+(function($, undefined) {
 
-	"use strict";
+"use strict";
 
-	// When ready.
-	$(function() {
+// When ready.
+$(function() {
 
-		var $form = $( "#form-cetes" );
-	//	var $input = $form.find( "monto" );
-    var $input = $("input[name=monto]");
+var $form = $( "#form-cetes" );
+//	var $input = $form.find( "monto" );
+var $input = $("input[name=monto]");
 
-		$input.on( "keyup", function( event ) {
-
-
-			// When user select text in the document, also abort.
-			var selection = window.getSelection().toString();
-			if ( selection !== '' ) {
-				return;
-			}
-
-			// When the arrow keys are pressed, abort.
-			if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
-				return;
-			}
+$input.on( "keyup", function( event ) {
 
 
-			var $this = $( this );
+  // When user select text in the document, also abort.
+  var selection = window.getSelection().toString();
+  if ( selection !== '' ) {
+    return;
+  }
 
-			// Get the value.
-			var input = $this.val();
-
-			var input = input.replace(/[\D\s\._\-]+/g, "");
-					input = input ? parseInt( input, 10 ) : 0;
-
-					$this.val( function() {
-						return ( input === 0 ) ? "" : input.toLocaleString( "en-US" );
-					} );
-		} );
+  // When the arrow keys are pressed, abort.
+  if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
+    return;
+  }
 
 
+  var $this = $( this );
 
-	});
+  // Get the value.
+  var input = $this.val();
+
+  var input = input.replace(/[\D\s\._\-]+/g, "");
+      input = input ? parseInt( input, 10 ) : 0;
+
+      $this.val( function() {
+        return ( input === 0 ) ? "" : input.toLocaleString( "en-US" );
+      } );
+} );
+
+
+
+});
 })(jQuery);
+
+
+
+
    </script>
 </html>
