@@ -141,6 +141,7 @@ public class CetesDelegate {
         cetes.setInteresBruto(arreglo[13]);
         cetes.setIsr(arreglo[3]);
         cetes.setMontoTotal(arreglo[11]);
+        cetes.setMontoInicial(arreglo[0]);
 
         return formatCetes(cetes);
     }
@@ -159,6 +160,7 @@ public class CetesDelegate {
         cetesDto.setInteresBruto(CommonsUtil.doubleToFormatString(cetes.getInteresBruto()));
         cetesDto.setIsr(CommonsUtil.doubleToFormatString(cetes.getIsr()));
         cetesDto.setMontoTotal(CommonsUtil.doubleToFormatString(cetes.getMontoTotal()));
+        cetesDto.setMontoInicial(CommonsUtil.doubleToFormatString(cetes.getMontoInicial()));
 
         return cetesDto;
     }

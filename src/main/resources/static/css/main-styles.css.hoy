@@ -29,11 +29,6 @@
   font-weight: bold;
 }
 
-.label-obtienes-final{
-  color: #1C83C6;
-  font-weight: bold;
-}
-
 .label-resultado{
   color: #1C83C6;
   font-weight: bold;
@@ -105,27 +100,4 @@ input[type="range"]::-ms-fill-lower {
 }
 input[type="range"]::-ms-fill-upper {
   background-color: #1C83C6;
-}
-
-.pull-bottom {
-    display: inline-block;
-    vertical-align: bottom;
-    float: none;
-}
-
-.modal
-{
-    overflow: hidden;
-}
-.modal-dialog{
-    margin-right: 0;
-    margin-left: 0;
-}
-
-.modal-body{
-  color:#888;
-}
-.modal-body p {
-  text-align:center;
-  padding-top:10px;
 }

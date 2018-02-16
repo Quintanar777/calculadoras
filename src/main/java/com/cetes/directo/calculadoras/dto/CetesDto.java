@@ -15,4 +15,5 @@ public class CetesDto {
     private String interesBruto;
     private String isr;
     private String montoTotal;
+    private String montoInicial;
 }
