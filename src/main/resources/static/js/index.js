@@ -1,12 +1,8 @@
-$(function(){
-	$('#modalResizable')
-		.draggable()
-		.resizable();
+		$("#modalGrafica").draggable({
+      handle: ".modal-header"
+  });
+
+	$('.modal-content').resizable({
+    //alsoResize: ".modal-dialog",
+  handles: 'e, w'
 });
-
-$(function(){
-	$('.modal-content')
-		.draggable()
-		.resizable();
-
-		});

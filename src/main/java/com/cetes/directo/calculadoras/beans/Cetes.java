@@ -17,4 +17,5 @@ public class Cetes {
     private double interesBruto;
     private double isr;
     private double montoTotal;
+    private double montoInicial;
 }
