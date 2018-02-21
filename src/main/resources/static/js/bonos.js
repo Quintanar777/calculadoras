@@ -91,7 +91,7 @@ var graficar = new Vue({
       var inversion = {
         name: 'Inversion',
         data: arrayInversion,
-        color: '#ed7d31',
+        color: '#12258e',
         tooltip: {
           valuePrefix: '$',
         },
@@ -107,7 +107,7 @@ var graficar = new Vue({
       var rendimiento = {
         name: 'Rendimiento',
         data: arrayRendimiento,
-        color: '#4472c4',
+        color: '#45a6d3',
         tooltip: {
           valuePrefix: '$',
         },

@@ -7,29 +7,45 @@
     <link rel="stylesheet" href="/calculadoras/css/font-awesome.css"/>
     <link rel="stylesheet" href="/calculadoras/css/smart-forms.css"/>
     <link rel="stylesheet" href="/calculadoras/css/main-styles.css"/>
+
+    <link rel='stylesheet' href='/calculadoras/css/jquery-ui.css'/>
+
+    <style>
+    #modalGrafica {
+      top:10%;
+      left:47%;
+      outline: none;
+    }
+    </style>
+
   </head>
   <body>
-    <nav class="navbar navbar-expand-sm bg-blue navbar-blue fixed-top" style="background-color:#1C83C6;">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a style="color:#ffffff;" class="nav-link" href="/calculadoras/cetes">CETES</a>
+    <nav class="navbar navbar-expand-sm bg-blue navbar-blue fixed-top" style="background-color:#FFFFFF;">
+      <ul class="nav nav-pills mb-3 ul" id="myPills">
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="pill" href="/calculadoras/cetes" role="tab" aria-controls="pillsCetes"
+          aria-selected="true">CETES</a>
         </li>
-        <li class="nav-item active">
-          <a style="color:#ffffff;" class="nav-link" href="/calculadoras/bondes">BONDES</a>
+        <li class="nav-item">
+          <a class="nav-link"  data-toggle="pill" href="/calculadoras/bonos" role="tab" aria-controls="pillsBonos"
+          aria-selected="false">BONOS</a>
         </li>
-        <li class="nav-item active">
-          <a style="color:#ffffff;" class="nav-link" href="/calculadoras/bonos">BONOS</a>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="pill" href="/calculadoras/bondes" role="tab" aria-controls="pillsBondes"
+          aria-selected="false">BONDES</a>
         </li>
-        <li class="nav-item active">
-          <a style="color:#ffffff;" class="nav-link" href="/calculadoras/udibonos">UDIBONOS</a>
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="pill" href="/calculadoras/udibonos" role="tab" aria-controls="pillsUdibonos"
+          aria-selected="false">UDIBONOS</a>
         </li>
-        <li class="nav-item active">
-          <a style="color:#ffffff;" class="nav-link" href="/calculadoras/bonddia">BONDDIA</a>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="pill" href="/calculadoras/bonddia" role="tab" aria-controls="pillsBonddia"
+          aria-selected="true">BONDDIA</a>
         </li>
       </ul>
     </nav>
 
-    <div class="container-fluid" style="margin-top:50px">
+    <div class="container-fluid" style="margin-top:60px">
       <div class="row smart-forms">
         <div class="col-2 seccion">
           <form style="margin-top: 20px;" id="form-udibonos">
@@ -74,12 +90,12 @@
               </div>
               <div class="row row-cetes">
                 <div class="col-4"><span class="label-calc pull-right">Cetes:</span></div>
-                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosCetes }}</span></div>
-                <div class="col-3 col-result"><span class="label-resultado pull-right">{{ tasaBrutaCetes }} %</span></div>
+                <div class="col-3 col-result"><span class="label-resultado pull-right">{{ noTitulosCetes }}</span></div>
+                <div class="col-3 col-result"><span class="label-resultado pull-right">{{ tasaBrutaCetes }}%</span></div>
               </div>
               <div class="row row-cetes">
                 <div class="col-4"><span class="label-calc pull-right">Bonos:</span></div>
-                <div class="col-3 col-result"><span class="label-resultado">{{ noTitulosBonos }}</span></div>
+                <div class="col-3 col-result"><span class="label-resultado pull-right">{{ noTitulosBonos }}</span></div>
                 <div class="col-3 col-result"><span class="label-resultado pull-right">{{ tasaBrutaBonos }}%</span></div>
               </div>
               <div class="line"></div>
@@ -87,17 +103,17 @@
 
               <div class="row row-cetes">
                 <div class="col-1"><img src="/calculadoras/images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Capital con el que se realiza la inversión inicial en cetes"/> </div>
-                <div class="col-6"><span class="label-calc pull-right">Inversion Cetes:</span></div>
+                <div class="col-6"><span class="label-calc pull-right">Inversión Cetes:</span></div>
                 <div class="col-4 col-result"><span class="label-resultado pull-right">$ {{ inversionCetes }}</span></div>
               </div>
               <div class="row row-cetes">
                 <div class="col-1"><img src="/calculadoras/images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Al no alcanzar para otro titulo en cetes, el remanente se invierte en el fondo diario Bonddia y genera intereses"/> </div>
-                <div class="col-6"><span class="label-calc pull-right">Inversion Bonos:</span></div>
+                <div class="col-6"><span class="label-calc pull-right">Inversión Bonos:</span></div>
                 <div class="col-4 col-result"><span class="label-resultado pull-right">$ {{ inversionBonos }}</span></div>
               </div>
               <div class="row row-cetes">
                 <div class="col-1"><img src="/calculadoras/images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Intereses ganados antes de impuestos"/> </div>
-                <div class="col-6"><span class="label-calc pull-right">Interes Bruto:</span></div>
+                <div class="col-6"><span class="label-calc pull-right">Interés Bruto:</span></div>
                 <div class="col-4 col-result"><span class="label-resultado pull-right">$ {{ interesBruto }}</span></div>
               </div>
               <div class="row row-cetes">
@@ -132,7 +148,7 @@
               <div class="line"></div>
               <br/>
               <div class="row row-cetes">
-                <div class="col-1"><img src="/calculadoras/images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Es el capital final que incluye los intereses ganados y el remanente de la inversón menos el ISR"/> </div>
+                <div class="col-1"><img src="/calculadoras/images/question.png" alt="" data-toggle="tooltip" data-placement="right" title="Es el capital final que incluye los intereses ganados y el remanente de la inversión menos el ISR"/> </div>
                 <div class="col-6"><span class="label-calc pull-right">Monto total:</span></div>
                 <div class="col-4 col-result"><span class="label-resultado pull-right">$ {{ montoTotal }}</span></div>
               </div>
@@ -165,11 +181,15 @@
     </div>
   </body>
   <script src="/calculadoras/js/jquery-3.2.1.js" charset="utf-8"></script>
+  <script src="/calculadoras/js/jquery-ui.min.js" charset="utf-8"></script>
   <script src="/calculadoras/js/bootstrap.js" charset="utf-8"></script>
   <script src="/calculadoras/js/util.js" charset="utf-8"></script>
   <script src="/calculadoras/js/vue.js" charset="utf-8"></script>
   <script src="/calculadoras/js/highcharts.js" charset="utf-8"></script>
   <script src="/calculadoras/js/udibonos.js" charset="utf-8"></script>
+
+  <script src="/calculadoras/js/index.js" charset="utf-8"></script>
+
   <script >
       (function($, undefined) {
 
@@ -214,5 +234,15 @@
 
     });
   })(jQuery);
+
+  $('#myPills a').click(function (e) {
+
+    var url = $(this).attr("href");
+    //$(this).load(url);
+    window.location.replace(url);
+
+
+  });
+
      </script>
 </html>

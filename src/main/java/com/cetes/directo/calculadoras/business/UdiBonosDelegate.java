@@ -85,12 +85,12 @@ public class UdiBonosDelegate {
         dto.setIsr(CommonsUtil.doubleToFormatString(bondes.getIsr()));
         dto.setTotal(CommonsUtil.doubleToFormatString(bondes.getTotal()));
         dto.setMontoBonos(CommonsUtil.doubleToFormatString(bondes.getMontoBonos()));
-        dto.setTituloBonos(CommonsUtil.doubleToFormatString(bondes.getTituloBonos()));
+        dto.setTituloBonos(CommonsUtil.doubleToFormatString_NoDecimals(bondes.getTituloBonos()));
         dto.setCorteCupon(CommonsUtil.doubleToFormatString(bondes.getCorteCupon()));
         dto.setImpuestoCorteCupon(CommonsUtil.doubleToFormatString(bondes.getImpuestoCorteCupon()));
         dto.setRemanenteCetes(CommonsUtil.doubleToFormatString(bondes.getRemanenteCetes()));
         dto.setMontoCetes(CommonsUtil.doubleToFormatString(bondes.getMontoCetes()));
-        dto.setTitulosCetes(CommonsUtil.doubleToFormatString(bondes.getTitulosCetes()));
+        dto.setTitulosCetes(CommonsUtil.doubleToFormatString_NoDecimals(bondes.getTitulosCetes()));
         dto.setRendimientoCetes(CommonsUtil.doubleToFormatString(bondes.getRendimientoCetes()));
         dto.setImpuestoCetes(CommonsUtil.doubleToFormatString(bondes.getImpuestoCetes()));
         dto.setRemanenteBonddia(CommonsUtil.doubleToFormatString(bondes.getRemanenteBonddia()));

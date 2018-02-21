@@ -5,7 +5,6 @@ var showComparar = false;
 var result1 = new Vue({
   el: '#result-1',
   data: {
-    montoInicial: "0.0",
     interesBruto: "0.0",
     inversionBonddia: "0.0",
     inversionCetes: "0.0",
@@ -22,7 +21,6 @@ var result1 = new Vue({
 var result2 = new Vue({
   el: '#result-2',
   data: {
-    montoInicial: "0.0",
     interesBruto: "0.0",
     inversionBonddia: "0.0",
     inversionCetes: "0.0",
@@ -137,17 +135,6 @@ var formCetes = new Vue({
       $('#result-5').hide();
       $('#result-7').hide();
 
-      $('#titulo_normal').show();
-
-      $('#titulo_comparar').hide();
-      $('#titulo28').hide();
-      $('#titulo91').hide();
-      $('#titulo182').hide();
-      $('#titulo360').hide();
-
-      $('#div-reinvertir').show();
-      $('#div-label-reinvertir').show();
-
       $('#result-4').hide();
       $('#result-6').hide();
       $('#result-8').hide();
@@ -164,16 +151,12 @@ var formCetes = new Vue({
 
         var monto1 = $('#monto').val();
         var monto = parseFloat(monto1.replace(/[^\d]/g, ''));
-        var plazo = $('#plazo').val();
+
 
         var data = {}
   //      data["monto"] = $('#monto').val();
         data["monto"] = monto;
         data["plazo"] = $('#plazo').val();
-
-
-
-
 
         $.ajax({
             type: "POST",
@@ -183,14 +166,6 @@ var formCetes = new Vue({
 		        dataType: 'json',
             success: function (data) {
                 console.log(data);
-
-                if (plazo==28) { $('#titulo28').show(); }
-                if (plazo==91) { $('#titulo91').show(); }
-                if (plazo==182) { $('#titulo182').show(); }
-                if (plazo==360) { $('#titulo360').show(); }
-
-
-                result1.montoInicial=data.montoInicial
                 result1.interesBruto= data.interesBruto
                 result1.inversionBonddia= data.inversionBonddia
                 result1.inversionCetes= data.inversionCetes
@@ -252,9 +227,8 @@ var formCetes = new Vue({
                           result2.noTitulosCetes= data[data.length - 1].noTitulosCetes
                           result2.tasaBrutaBonddia= data[data.length - 1].tasaBrutaBonddia
                           result2.tasaBrutaCetes= data[data.length - 1].tasaBrutaCetes
-                          result2.periodos=data.periodos
 
-
+/*
                           if(periodos > 1){
                             var inversionBonddia = 0.0;
                             var interesBruto = 0.0;
@@ -265,7 +239,7 @@ var formCetes = new Vue({
                              interesBruto = interesBruto + parseFloat( data[i].interesBruto.replace(/[^\d\.\-]/g,'') )
                             isr = isr + parseFloat(data[i].isr.replace(/[^\d\.\-]/g,''))
 
-                          //                    alert("InversionBonddia " + inversionBonddia + " interesBruto " + interesBruto + " isr " + isr)
+                              alert("InversionBonddia " + inversionBonddia + " interesBruto " + interesBruto + " isr " + isr)
                             }
 
                             result2.inversionBonddia= inversionBonddia
@@ -277,25 +251,13 @@ var formCetes = new Vue({
                             result2.interesBruto= data[data.length - 1].interesBruto
                             result2.isr= data[data.length - 1].isr
                           }
-
-                  //      result2.inversionBonddia= data[data.length - 1].inversionBonddia
-                  //      result2.interesBruto= data[data.length - 1].interesBruto
-                  //      result2.isr= data[data.length - 1].isr
+*/
+                        result2.inversionBonddia= data[data.length - 1].inversionBonddia
+                        result2.interesBruto= data[data.length - 1].interesBruto
+                        result2.isr= data[data.length - 1].isr
 
                           $('#result-2').show();
                           $('#labelReinvertir').show();
-
-                          var poner = document.getElementById("label-inversion");
-
-                          if ((periodos-1)==1) {
-                            poner.innerHTML = "Más " + (periodos-1) + " mes de reinversión automática";
-
-                          } else {
-                            poner.innerHTML = "Más " + (periodos-1) + " meses de reinversión automática";
-                          }
-
-
-
                       }
                   });
 
@@ -373,29 +335,13 @@ var formCetes = new Vue({
                 result7.tasaBrutaBonddia= data.comp360.tasaBrutaBonddia
                 result7.tasaBrutaCetes= data.comp360.tasaBrutaCetes
 
-                $('#result-2').hide();
-                $('#labelReinvertir').hide();
-                $('#div-reinvertir').hide();
-                $('#div-label-reinvertir').hide();
-
-                $('#titulo_normal').hide();
-                $('#titulo_comparar').show();
-
-                $('#titulo28').hide();
-                $('#titulo91').hide();
-                $('#titulo182').hide();
-                $('#titulo360').hide();
-
                 $('#result-1').show();
                 $('#result-3').show();
                 $('#result-5').show();
                 $('#result-7').show();
                 $('#titulosComparar').show();
 
-
-
                 //validar si sera con re inversión
-                /*
                 if ($('#check-reinvertir').is(':checked') ) {
 
                   var monto1 = $('#monto').val();
@@ -430,6 +376,26 @@ var formCetes = new Vue({
                           result2.isr = data.responseCetes28[data.responseCetes28.length - 1].isr
                           result2.inversionBonddia = data.responseCetes28[data.responseCetes28.length - 1].inversionBonddia
 
+/*
+                          //fix a la reinversion, se suma a partir del mes 2
+                          var inversionBonddia = 0.0;
+                          var interesBruto = 0.0;
+                          var isr = 0.0;
+                          //inversion cetes, se toma del mes 1
+                          result2.inversionCetes = data.responseCetes28[1].inversionCetes
+
+                          for(var i=1; i<data.responseCetes28.length; i++){
+                            //Se suma inversion bonddia, interes bruto e isr
+                            inversionBonddia = inversionBonddia + parseFloat( data.responseCetes28[i].inversionBonddia.replace(/[^\d\.\-]/g,'') )
+                            interesBruto = interesBruto + parseFloat( data.responseCetes28[i].interesBruto.replace(/[^\d\.\-]/g,'') )
+                            isr = isr + parseFloat( data.responseCetes28[i].isr.replace(/[^\d\.\-]/g,'') )
+                          }
+
+                          result2.interesBruto = dosDecimales(interesBruto);
+                          result2.isr = dosDecimales(isr);
+                          result2.inversionBonddia = dosDecimales(inversionBonddia);
+*/
+
                           //Resultado para plazo 91
                           result4.montoTotal= data.responseCetes91[data.responseCetes91.length - 1].montoTotal
                           result4.noTitulosBonddia= data.responseCetes91[data.responseCetes91.length - 1].noTitulosBonddia
@@ -444,6 +410,25 @@ var formCetes = new Vue({
                           result4.isr = data.responseCetes91[data.responseCetes91.length - 1].isr
                           result4.inversionBonddia = data.responseCetes91[data.responseCetes91.length - 1].inversionBonddia
 
+/*
+                          //fix a la reinversion, se suma a partir del mes 2
+                          var inversionBonddia = 0.0;
+                          var interesBruto = 0.0;
+                          var isr = 0.0;
+                          //inversion cetes, se toma del mes 1
+                          result4.inversionCetes = data.responseCetes91[1].inversionCetes
+
+                          for(var i=1; i<data.responseCetes91.length; i++){
+                            //Se suma inversion bonddia, interes bruto e isr
+                            inversionBonddia = inversionBonddia + parseFloat( data.responseCetes91[i].inversionBonddia.replace(/[^\d\.\-]/g,'') )
+                            interesBruto = interesBruto + parseFloat( data.responseCetes91[i].interesBruto.replace(/[^\d\.\-]/g,'') )
+                            isr = isr + parseFloat( data.responseCetes91[i].isr.replace(/[^\d\.\-]/g,'') )
+                          }
+                          result4.inversionBonddia = dosDecimales(inversionBonddia);
+                          result4.interesBruto = dosDecimales(interesBruto);
+                          result4.isr = dosDecimales(isr);
+*/
+
                           //Resultado para plazo 182
                           result6.montoTotal= data.responseCetes182[data.responseCetes182.length - 1].montoTotal
                           result6.noTitulosBonddia= data.responseCetes182[data.responseCetes182.length - 1].noTitulosBonddia
@@ -457,6 +442,24 @@ var formCetes = new Vue({
                           result6.interesBruto = data.responseCetes182[data.responseCetes182.length - 1].interesBruto
                           result6.isr = data.responseCetes182[data.responseCetes182.length - 1].isr
 
+/*
+                          //fix a la reinversion, se suma a partir del mes 2
+                          var inversionBonddia = 0.0;
+                          var interesBruto = 0.0;
+                          var isr = 0.0;
+                          //inversion cetes, se toma del mes 1
+                          result6.inversionCetes = data.responseCetes182[1].inversionCetes
+
+                          for(var i=1; i<data.responseCetes182.length; i++){
+                            //Se suma inversion bonddia, interes bruto e isr
+                            inversionBonddia = inversionBonddia + parseFloat( data.responseCetes182[i].inversionBonddia.replace(/[^\d\.\-]/g,'') )
+                            interesBruto = interesBruto + parseFloat( data.responseCetes182[i].interesBruto.replace(/[^\d\.\-]/g,'') )
+                            isr = isr + parseFloat( data.responseCetes182[i].isr.replace(/[^\d\.\-]/g,'') )
+                          }
+                          result6.inversionBonddia = dosDecimales(inversionBonddia);
+                          result6.interesBruto = dosDecimales(interesBruto);
+                          result6.isr = dosDecimales(isr);
+*/
                           //Resultado para plazo 360
                           result8.montoTotal= data.responseCetes360[data.responseCetes360.length - 1].montoTotal
                           result8.noTitulosBonddia= data.responseCetes360[data.responseCetes360.length - 1].noTitulosBonddia
@@ -471,6 +474,24 @@ var formCetes = new Vue({
                           result8.interesBruto = data.responseCetes360[data.responseCetes360.length - 1].interesBruto
                           result8.isr = data.responseCetes360[data.responseCetes360.length - 1].isr
 
+/*
+                          //fix a la reinversion, se suma a partir del mes 2
+                          var inversionBonddia = 0.0;
+                          var interesBruto = 0.0;
+                          var isr = 0.0;
+                          //inversion cetes, se toma del mes 1
+                          result8.inversionCetes = data.responseCetes360[1].inversionCetes
+
+                          for(var i=1; i<data.responseCetes360.length; i++){
+                            //Se suma inversion bonddia, interes bruto e isr
+                            inversionBonddia = inversionBonddia + parseFloat( data.responseCetes360[i].inversionBonddia.replace(/[^\d\.\-]/g,'') )
+                            interesBruto = interesBruto + parseFloat( data.responseCetes360[i].interesBruto.replace(/[^\d\.\-]/g,'') )
+                            isr = isr + parseFloat( data.responseCetes360[i].isr.replace(/[^\d\.\-]/g,'') )
+                          }
+                          result8.inversionBonddia = dosDecimales(inversionBonddia);
+                          result8.interesBruto = dosDecimales(interesBruto);
+                          result8.isr = dosDecimales(isr);
+*/
                           console.log('mostrar re inversio - comparar: ' );
                           if($('#plazo').val() == '28'){
                             $('#result-2').show();
@@ -495,7 +516,7 @@ var formCetes = new Vue({
                   $('#result-6').hide();
                   $('#result-8').hide();
                 }
-*/
+
 
             }
         });
@@ -548,7 +569,7 @@ var divcharts =  new Vue({
         var datCetes = {
           name: 'Inversión Cetes',
           data: arrayCetes,
-          color: '#12258e',
+          color: '#ed7d31',
           tooltip: {
             valuePrefix: '$',
           },
@@ -559,7 +580,7 @@ var divcharts =  new Vue({
         var datBonddia = {
           name: 'Rendimiento',
           data: arrayBonddia,
-          color: '#45a6d3',
+          color: '#4472c4',
           tooltip: {
             valuePrefix: '$',
           },
@@ -585,7 +606,7 @@ var divcharts =  new Vue({
           var datCetes = {
             name: 'Inversion',
             data: arrayCetes,
-            color: '#12258e',
+            color: '#ed7d31',
             tooltip: {
               valuePrefix: '$',
             },
@@ -596,7 +617,7 @@ var divcharts =  new Vue({
           var datBonddia = {
             name: 'Rendimiento',
             data: arrayBonddia,
-            color: '#45a6d3',
+            color: '#4472c4',
             tooltip: {
               valuePrefix: '$',
             },
@@ -611,7 +632,7 @@ var divcharts =  new Vue({
           var datCetes = {
             name: 'Inversion',
             data: [parseFloat(result1.inversionCetes.replace(/[^\d\.\-]/g,''))],
-            color: '#12258e',
+            color: '#ed7d31',
             tooltip: {
               valuePrefix: '$',
             },
@@ -622,7 +643,7 @@ var divcharts =  new Vue({
           var datBonddia = {
             name: 'Rendimiento',
             data: [parseFloat(result1.interesBruto.replace(',',''))],
-            color: '#45a6d3',
+            color: '#4472c4',
             tooltip: {
               valuePrefix: '$',
             },
@@ -633,7 +654,7 @@ var divcharts =  new Vue({
           dataSeries.push(datBonddia);
         }
       }
-//alert("Antes grafica");
+alert("Antes grafica");
       chart = new Highcharts.chart('chart', {
         chart: {
             type: 'column'
@@ -679,17 +700,9 @@ var divcharts =  new Vue({
   }
 })
 
-$(window).resize(function(){
-//  alert("Entre aqui");
-    var chart = $('#chart').highcharts();
-
-    console.log('redraw');
-    var w = $('#chart').closest(".modalGrafica").width()
-    // setsize will trigger the graph redraw
-    chart.setSize(
-        w,w * (3/4),false
-    );
- });
+chart.load({
+  done: function() {$(window).trigger('resize');}
+});
 
 //funcion para validar campos obligatorios
 function validaCampos() {
@@ -723,7 +736,6 @@ function validaCampos() {
 var slider = document.getElementById("myRange");
 var output = document.getElementById("dias-inversion");
 output.innerHTML = slider.value + " mes";
-
 
 
 slider.oninput = function() {
